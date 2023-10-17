@@ -36,7 +36,7 @@ const items = [{
 //! Método: GET /items        -> Recuperarlos Todos
 app.get('/items', function (req, res) {
   //! Retornamos todos los items
-  return res.json(items);
+  return res.status(200).json(items);
 });
 
 //! Método: GET /items/:id    -> Recuperar uno(1)
@@ -48,7 +48,7 @@ app.get('/items/:id', function (req, res) {
   //? Corrección convertir a número el valor del Id
   const itemsFounded = items.find(item => item.id === Number(id));
   //! Retornamos el Item hallado
-  return res.json(itemsFounded);
+  return res.status(200).json(itemsFounded);
 });
 
 //! Método: POST /items       -> Crear uno nuevo
@@ -62,7 +62,7 @@ app.post('/items', function (req, res) {
   //! Simplemente se añade al arreglo con un `push`
   items.push(newItem);
   //! Finalmente retornamos el nuevo elemento
-  return res.json(newItem);
+  return res.status(200).json(newItem);
 });
 
 //! Método: PUT /items/:id    -> Modificar uno(1)
@@ -75,10 +75,12 @@ app.put('/items/:id', function (req, res) {
   // const itemsFounded = items.find(item => item.id === id);// Error este id hay q convertirlo a número 
   //? Corrección del id en número
   const itemsFounded = items.find(item => item.id === Number(id));
+  //? Deberiamos valorar si no lo halla y devolver un error 404
+  if (!itemsFounded) { return res.status(404).json(); }
   //! Y hacemos una mutación directa
   itemsFounded.content = content; //* OJO: Esto no se debe hacer jamás en producción
   //! Retornamos el Item hallado
-  return res.json(itemsFounded);
+  return res.status(200).json(itemsFounded);
 });
 
 //! Método: DELETE /items/:id -> Borrar uno(1)
@@ -89,6 +91,8 @@ app.delete('/items/:id', function (req, res) {
   // const itemIndex = items.findIndex(item => items.id === id);// Error este id hay q convertirlo a número
   //? Corrección del id en número
   const itemIndex = items.findIndex(item => items.id === Number(id));
+  //? Deberiamos valorar si no lo halla y devolver un error 404
+  if (itemIndex !== -1) { return res.status(404).json(); }
   //! Usamos el `splice` para eliminar un dato del arreglo
   items.splice(itemIndex, 1);
   //! Solo retornamos el `status(200)`
