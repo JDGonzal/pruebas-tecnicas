@@ -1,0 +1,13 @@
+{
+  "name": "20231019-javascript",
+  "version": "1.0.0",
+  "description": "[PRUEBA TÉCNICA: MEJORA tus habilidades de PROGRAMACIÓN](https://www.youtube.com/watch?v=uFLgPKU2gmY&t=183s)",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
