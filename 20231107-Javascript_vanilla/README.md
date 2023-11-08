@@ -46,14 +46,24 @@
       newTaskInput: newTaskInput,
     }
 ```
-17. Funciones para operaciones básicas, como la creación de tareas:
-```js
-    function createTask(title, isCompleted = false) {
-      return {
-        id: Date.now(),
-        title,
-        isCompleted
-      }
+17. Funciones para operaciones básicas, :
+* `function createTask(title, isCompleted = false) { ... }`
+* `function addTaskToList(task, tasksList) { ... }`
+* `function addTask(app) { ... }`
+* `function createTaskElement(task) { ... }`
+
+18. Cambio el color del botón de borrado en el **styles.css** 
+```json
+    .delete-button{
+      background-color: red;
     }
 ```
-
+19. Regresando al archivo  **main.js**, pongo un evento-escucha para cuando se presiona el Click sobre el botón de Ingresar tarea.
+```js
+    addTaskButton.addEventListener("click", ()=>{
+      addTask(app);
+    })
+```
+20. Añado otro evento-escucha para cuando se presiona la tecla hacia abajo en el `input`:
+```js
+``` 
