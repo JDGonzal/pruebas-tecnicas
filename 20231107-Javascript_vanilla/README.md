@@ -66,4 +66,48 @@
 ```
 20. Añado otro evento-escucha para cuando se presiona la tecla hacia abajo en el `input`:
 ```js
+    newTaskInput.addEventListener("keydown", (event)=>{
+      if (event.key === "Enter"){
+        addTask(app);
+      }
+    })
 ``` 
+21. Añadimos en **styles.css**, algo relacionado con la clase `.completed`
+```json
+    .completed {
+      text-decoration: line-through;
+    }
+```
+22. El botón eleiminar en **main.js**, son dos cosas, uno quitarlo de pantalla y otro eliminarlo del arreglo:
+```js
+      taskDeleteButton.addEventListener('click', () => {
+        taskElement.remove();
+        const taskIndex = app.tasks.indexOf(task);
+        if (taskIndex !== -1) {
+          app.tasks.splice(taskIndex, 1);
+        }
+      })
+```
+23. Creamos una función para almacenar el arreglo en el `LocalStorage`:
+```js
+    function saveTasksToLocaStorage(tasks) {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+```
+24. Creamos una función para traerlo del `LocalStorage` y ponerlo en el arreglo:
+```js
+    window.onload = () => {
+      const savedTasks = JSON.parse(localStorage.getItem('tasks')) || [];
+      app.tasks = savedTasks.map((task) => {
+        return createTask(task.title, task.isCompleted);
+      });
+      app.tasks.forEach((task) => {
+        return addTaskToList(task, app.tasksList);
+      })
+    }
+```
+25. Llamamos la función `saveTasksToLocaStorage` desde `addTask()`
+26. Llamamos la función `saveTasksToLocaStorage` desde `taskDeleteButton.addEventListener()`.
+27. Llamamos la función `saveTasksToLocaStorage` desde `taskCheckbox.addEventListener()`.
+
+> **Note** Completada la generación de Tareas y almacenamiento local
