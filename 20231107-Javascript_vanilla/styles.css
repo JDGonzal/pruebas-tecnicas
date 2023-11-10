@@ -44,7 +44,7 @@ li {
   background-color: lightblue;
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: space-between;
   margin-bottom: 10px;
   padding: 10px;
   border-radius: 4px;
@@ -52,6 +52,10 @@ li {
 
 .delete-button{
   background-color: red;
+}
+
+.edit-button{
+  background-color: blue;
 }
 
 .completed {

@@ -77,14 +77,7 @@ function createTaskElement(task) {
   // El valor sería lo q esté en `isCompleted`
   taskCheckbox.checked = task.isCompleted;
   // Añadimos una Evento-Escucha
-  taskCheckbox.addEventListener('change', () => { // 'click', () => {
-    // Ponemos en la tarea el valor o el estado de `checked`
-    task.isCompleted = taskCheckbox.checked;
-    // Añadimos o quitamos una clase al elemento
-    taskText.classList.toggle('completed', task.isCompleted);
-    // Justo despues de alterar el arreglo, lo volvemos a grabar en el `localStoarage`
-    saveTasksToLocaStorage(app.tasks);
-  });
+  taskCheckbox.addEventListener('change', (evt) => onChangeCheckBox(task, taskCheckbox, taskText));
 
   // Añadimos un elemento de `taskText` de tipo `span`
   const taskText = document.createElement('span');
@@ -92,6 +85,14 @@ function createTaskElement(task) {
   taskText.textContent = task.title;
   // Reconfirmo la clase "completed"
   taskText.classList.toggle("completed", task.isCompleted);
+  // Creamos un elemento de tipo `button`, para editar la tarea
+  const taskEditButton = document.createElement('button');
+  // Le ponemos el nombre a mostar o emoji
+  taskEditButton.textContent = '✏️';
+  // Ponemos un nombre de clase
+  taskEditButton.className = 'edit-button';
+  // Añadimos el evento-escuha
+  taskEditButton.addEventListener('click', (evt) => onClickEditButton(task, taskElement));
   // Creamos un elemento de tipo `button`, para borrar la tarea
   const taskDeleteButton = document.createElement('button');
   // Le ponemos el nombre a mostar o emoji
@@ -99,44 +100,29 @@ function createTaskElement(task) {
   // Ponemos un nombre de clase
   taskDeleteButton.className = 'delete-button';
   // Añadimos el evento-escuha
-  taskDeleteButton.addEventListener('click', () => {
-    // console.log('Eliminamos la tarea de la lista:', task.id);
-    // Removemos el elemento del DOM o HTML
-    taskElement.remove();
-    // Guardamos el índice del arreglo
-    const taskIndex = app.tasks.indexOf(task);
-    // Si el índice es diferente de -1, es porque existe
-    if (taskIndex !== -1) {
-      // Lo borramos simplemente
-      app.tasks.splice(taskIndex, 1);
-    }
-    // Justo despues de alterar el arreglo, lo volvemos a grabar en el `localStoarage`
-    saveTasksToLocaStorage(app.tasks);
-  })
+  taskDeleteButton.addEventListener('click', (evt) => onClickDeleteButton(task, taskElement))
 
   // Añadimos el elemento del checkbox en el HTML
   taskElement.appendChild(taskCheckbox);
   // Añadimos el elemento del texto en el HTML
   taskElement.appendChild(taskText);
+  //Vamos a Contner los botones dentro de un div
+  const divElement = document.createElement('div');
+  // Añadimos el elemento del Botón de editar en el HTML
+  divElement.appendChild(taskEditButton);
   // Añadimos el elemento del Botón de borrado en el HTML
-  taskElement.appendChild(taskDeleteButton);
+  divElement.appendChild(taskDeleteButton);
+  // Añadimos el div al elemnto de la tarea
+  taskElement.appendChild(divElement);
 
   //Por último devolvemos el Elemento
   return taskElement;
 }
 
 // Evento-Escucha para el botón de `Ingresar Tarea`
-addTaskButton.addEventListener("click", () => {
-  // Lamamos simplemente la función addTask()
-  addTask(app);
-})
+addTaskButton.addEventListener("click", (evt) => onClickAddButton());
 
 // Evento-escucha para cuando presiono cualquier tecla, lueggo valido cual
-newTaskInput.addEventListener("keydown", (event) => {
-  // Pregunto si la tecla es el `Enter`
-  if (event.key === "Enter") {
-    addTask(app);
-  }
-})
+newTaskInput.addEventListener("keydown", (evt) => onKeyDownInput(evt));
 
 //
