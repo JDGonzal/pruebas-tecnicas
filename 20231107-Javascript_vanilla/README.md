@@ -53,7 +53,7 @@
 * `function createTaskElement(task) { ... }`
 
 18. Cambio el color del botón de borrado en el **styles.css** 
-```json
+```css
     .delete-button{
       background-color: red;
     }
@@ -73,7 +73,7 @@
     })
 ``` 
 21. Añadimos en **styles.css**, algo relacionado con la clase `.completed`
-```json
+```css
     .completed {
       text-decoration: line-through;
     }
@@ -111,3 +111,62 @@
 27. Llamamos la función `saveTasksToLocaStorage` desde `taskCheckbox.addEventListener()`.
 
 > **Note** Completada la generación de Tareas y almacenamiento local
+
+## Mejoras y Añadiendo el Editar
+1. Crear un archivo llamado **events.js**, para los Evento-escucha.
+2. Añado el script dento del **index.html**
+```html
+  <script src="./events.js"></script>
+```
+3. Lo que dejo en **main.js** para el elemento `textbox` es:
+`taskCheckbox.addEventListener('change', (evt) => onChangeCheckBox(task, taskCheckbox, taskText));` y paso el resto a **events.js**:
+```js
+    const onChangeCheckBox = (task, taskCheckbox, taskText) => { 
+      task.isCompleted = taskCheckbox.checked;
+      taskText.classList.toggle('completed', task.isCompleted);
+      saveTasksToLocaStorage(app.tasks);
+    }
+```
+4. Añado el editar en **main.js** como opcion adicional 
+```js
+      const taskEditButton = document.createElement('button');
+      // Le ponemos el nombre a mostar o emoji
+      taskEditButton.textContent = '✏️';
+      // Ponemos un nombre de clase
+      taskEditButton.className = 'edit-button';
+      // Añadimos el evento-escuha
+      taskEditButton.addEventListener('click', (evt) => onClickEditButton(task));
+```
+y la parte requerida en **events.js**, pendiente por completar :
+```js
+    const onClickEditButton=(task, taskElement)=>{
+      console.log('Editamos la tarea', task.id);
+    }
+```
+5. Añadimos el elemento del Botón de editar en el HTML en **main.js**
+  `taskElement.appendChild(taskEditButton);`.
+6. Lo que dejo en **main.js** para el elemento `button` de borrar es: 
+`taskDeleteButton.addEventListener('click', (evt) => onClickDeleteButton(task, taskElement))` y paso el resto a **events.js**:
+```js
+    const onClickDeleteButton=(task, taskElement) => {
+      // console.log('Eliminamos la tarea de la lista:', task.id);
+      // Removemos el elemento del DOM o HTML
+      taskElement.remove();
+      // Guardamos el índice del arreglo
+      const taskIndex = app.tasks.indexOf(task);
+      // Si el índice es diferente de -1, es porque existe
+      if (taskIndex !== -1) {
+        // Lo borramos simplemente
+        app.tasks.splice(taskIndex, 1);
+      }
+      // Justo despues de alterar el arreglo, lo volvemos a grabar en el `localStoarage`
+      saveTasksToLocaStorage(app.tasks);
+    }
+```
+7. Muevo lo realcionado con el `button` de Adicionar y el dar [Enter] en el `input`.
+8. En el **styles.css** añado lo relacionado con el botón editar:
+```css
+    .edit-button{
+      background-color: blue;
+    }
+```
