@@ -1,35 +1,70 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import { ItemsInterface } from './models/items.model';
+
+const initialItems: ItemsInterface[] = [
+  {
+    id: crypto.randomUUID(),
+    timestamp: Date.now(),
+    text: 'Videojuegos 🎮',
+  },
+  {
+    id: crypto.randomUUID(),
+    timestamp: Date.now(),
+    text: 'Libros 📚',
+  }
+];
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [items, setItems] = useState(initialItems);
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    // Primero siempre en el Submit es el `preventDefault`
+    event.preventDefault();
+    // Recuperamos del formulario el currentTarget y de ellos los `elements`
+    const { elements } = event.currentTarget;
+    // Estrategia 1, trampa de TypeScript
+    // Tomamos un elementos llamado `item`:
+    // const input = elements.namedItem('item') as HTMLInputElement; // No es recomendable
+    // Estrategia 2, es asegurarse q el elemento si exista 
+    const input = elements.namedItem('item');
+    // Se valida q sea una instancia
+    const isInput = input instanceof HTMLInputElement;
+    if (!isInput || input === null) return;
+    // Llenamos una variable con los datos q vamos a usar
+    const newItem: ItemsInterface = {
+      id: crypto.randomUUID(),
+      timestamp: Date.now(),
+      text: input.value,
+    }
+    //Almaceno el valor en los `items` definidos en `useState`
+    setItems((prevItems)=>{
+      return[...prevItems, newItem];
+    });
+    // Limpiamos el imput value
+    input.value='';
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <main>
+      <aside>
+        <h1>Prueba Técnica de React</h1>
+        <h2>Añadir y eliminar elementos de una lista</h2>
+        <form action="" onSubmit={handleSubmit}>
+          <label htmlFor="">Elemento a Ingresar
+            <input type="text" name="item" required placeholder="Elemento a Ingresar" />
+          </label>
+          <button>Adicionar</button>
+        </form>
+      </aside>
+      <section>
+        <h2>Lista de Elementos</h2>
+        <ul>
+          {items.map((item) => <li key={item.id} id={item.id} >{item.text}</li>)}
+        </ul>
+      </section>
+    </main>
   )
 }
 
-export default App
+export default App;

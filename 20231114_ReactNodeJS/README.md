@@ -115,3 +115,176 @@ pnpm i
 ```bash
 pnpm dev
 ```
+> **Note** Añado al **.gitignore** principal o de la raíz lo relacionado con vite q no se debe subir:
+>```yml
+># Logs
+>...
+>pnpm-debug.log*
+>
+># Dependency directories
+>...
+>dist
+>dist-ssr
+>*.local
+>.vite
+>
+># Editor directories and files
+>.vscode/*
+>!.vscode/extensions.json
+>.idea
+>.DS_Store
+>*.suo
+>*.ntvs*
+>*.njsproj
+>*.sln
+>*.sw?
+>```
+
+## Pasos Iniciales para el Ejercicio #1
+
+1. Elimino de **src/App.css** lo no requerido, dejo solamente:
+```css
+    #root {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem;
+      text-align: center;
+    }
+```
+2. Por ahora no cambio el archivo **src/index.css**.
+3. Limpio el **src/App.tsx**, para dejar lo básico:
+```js
+    import './App.css';
+    function App() {
+      return (
+        <main>
+          <h1> Mi Prueba Técnica</h1>
+        </main>
+      )
+    }
+    export default App;
+```
+4. Mejoro el esqueleto HTML de **src/App.tsx**:
+```js
+      return (
+        <main>
+          <aside>
+            <h1>Prueba Técnica de React</h1>
+            <h2>Añadir y eliminar elementos de una lista</h2>
+            <form action="">
+              <label htmlFor="">Elemento a Ingresar
+                <input type="text" name="item" required placeholder="Elemento a Ingresar" />
+              </label>
+              <button>Adicionar</button>
+            </form>
+          </aside>
+          <section>
+            <h2>Lista de Elementos</h2>
+            <ul>
+              <li>Videjuegos 🎮</li>
+              <li>Libros 📚</li>
+              <li>Series 📺</li>
+              <li>Películas 🎥</li>
+            </ul>
+          </section>
+        </main>
+      )
+```
+5. Agregamos Estilos en **src/App.css**:
+```css
+    main {
+      display: grid;
+      grid-template-columns: minmax(450px, 1fr) 1fr;
+      gap: 16px;
+    }
+    h1{
+      font-size:2em;
+      line-height: 1.1;
+      margin: 0;
+    }
+    h2{
+      font-weight: 500;
+      font-size: 1.1em;
+      line-height: 1.1;
+      margin: 0;
+      opacity: 75%;
+    }
+    form {
+      margin-top: 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    label{
+      font-size:.8em;
+    }
+```
+6. Aprovechamos los estilos del botón en **src/index.css**, para añadir el `input`:
+```css
+    button, input {
+      ...
+    }
+    input {
+      background:#222;
+      border-radius: 4px;
+      cursor: default;
+      border: 1px solid #555;
+      display: block;
+      margin-bottom: 16px;
+      width: 50%;
+    }
+```
+7. Creamos el archivo **models/items.model.ts*, con la estructura a usar en los `items`:
+```js
+    export interface ItemsInterface{
+      id:`${string}-${string}-${string}-${string}-${string}`, /*string,*/
+      timestamp: number,
+      text: string,
+    }
+```
+8. Construimos los `items` en forma de arreglo de objetos, dentro de **src/App.tsx**.
+```js
+  const initialItems: ItemsInterface[] = [
+    {
+      id: crypto.randomUUID(),
+      timestamp: Date.now()
+      text: 'Videojuegos 🎮'
+    },
+    {
+      id: crypto.randomUUID(),
+      timestamp: Date.now(),
+      text: 'Libros 📚'
+    }
+  ];
+```
+9. Los asignamos a un `useState`: `const [items, setItems]= useState(initialItems);`.
+10. Cambiamos los `<li>` manuales por un `map` dentro de los `items`:
+```js
+              {items.map((item) => <li key={item.id} id={item.id} >{item.text}</li>)}
+```
+11. Creamos una funcion llamada `handleSubmit` dentro de **src/App.tsx**, para el control del botón del formulario. 
+* `event.preventDefault()`, Siempre se pone en los submit.
+* Recuperamos del formulario el `currentTarget` y de ellos los `elements`.
+* Se valida q sea una instancia con `instanceof`.
+* Si es falso solo se sale y ya.
+* Llenamos una variable con los datos q vamos a usar.
+* Almaceno el valor en los `items` definidos en `useState`.
+* Limpiamos el imput value.
+```js
+      const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const { elements } = event.currentTarget;
+        const input = elements.namedItem('item');
+        const isInput = input instanceof HTMLInputElement;
+        if (!isInput || input === null) return;
+        const newItem: ItemsInterface = {
+          id: crypto.randomUUID(),
+          timestamp: Date.now(),
+          text: input.value,
+        }
+        setItems((prevItems)=>{
+          return[...prevItems, newItem];
+        });
+        input.value='';
+      }
+```
