@@ -130,11 +130,8 @@
 4. Añado el editar en **main.js** como opcion adicional 
 ```js
       const taskEditButton = document.createElement('button');
-      // Le ponemos el nombre a mostar o emoji
       taskEditButton.textContent = '✏️';
-      // Ponemos un nombre de clase
       taskEditButton.className = 'edit-button';
-      // Añadimos el evento-escuha
       taskEditButton.addEventListener('click', (evt) => onClickEditButton(task));
 ```
 y la parte requerida en **events.js**, pendiente por completar :
@@ -149,17 +146,11 @@ y la parte requerida en **events.js**, pendiente por completar :
 `taskDeleteButton.addEventListener('click', (evt) => onClickDeleteButton(task, taskElement))` y paso el resto a **events.js**:
 ```js
     const onClickDeleteButton=(task, taskElement) => {
-      // console.log('Eliminamos la tarea de la lista:', task.id);
-      // Removemos el elemento del DOM o HTML
       taskElement.remove();
-      // Guardamos el índice del arreglo
       const taskIndex = app.tasks.indexOf(task);
-      // Si el índice es diferente de -1, es porque existe
       if (taskIndex !== -1) {
-        // Lo borramos simplemente
         app.tasks.splice(taskIndex, 1);
       }
-      // Justo despues de alterar el arreglo, lo volvemos a grabar en el `localStoarage`
       saveTasksToLocaStorage(app.tasks);
     }
 ```
@@ -168,5 +159,67 @@ y la parte requerida en **events.js**, pendiente por completar :
 ```css
     .edit-button{
       background-color: blue;
+    }
+```
+9. En el **index.html** pongo un botón para cancelar cuando se Adiciona o Editar.
+10. en **main.js** completo elementos a utilizar en el objeto global `app`:
+```js
+    const app = {
+      tasks: tasks,
+      tasksList: tasksList,
+      newTaskInput: newTaskInput,
+      addTaskButton: addTaskButton,
+      ADDTASK: { text: 'Adicionar Tarea', class: 'add-task-btn' },
+      EDITTASK: { text: 'Editar Tarea', class: 'edit-task-btn' },
+      editingId: 0,
+    }
+```
+11. Pongo en **events.js** el uso de este botón de cancelar: 
+`const onClickCancelButton = () => {cancelTask(app);}`
+12. Se crea el `cancelTask(app)` en el  **main.js**:
+```js
+    function cancelTask(app) {
+      if (app.addTaskButton.textContent === app.EDITTASK.text) {
+        app.addTaskButton.textContent = app.ADDTASK.text;
+        app.addTaskButton.classList.toggle(app.ADDTASK.class);
+        app.addTaskButton.classList.toggle(app.EDITTASK.class);
+      }
+      app.newTaskInput.value = '';
+}
+```
+13. Cambio el `onKeyDownInput` dentro de **events.js**:
+```js
+    const onKeyDownInput = (evt) => {
+      console.log(evt.key);
+      if (evt.key === "Enter") {
+        addTask(app);
+      } else if (evt.key === "Escape") {
+          cancelTask(app);
+        }
+    }
+```
+14. Pongo en la misma función `addTask(app)` de **main.js**, para separar si estoy Editando o Añadiendo:
+```js
+    function addTask(app) {
+      const newTaskTitle = app.newTaskInput.value;
+      if (app.addTaskButton.textContent === app.EDITTASK.text) {
+        const taskFounded = app.tasks.find(item => item.id === Number(app.editingId));
+        if (taskFounded) {
+          console.log(taskFounded, newTaskTitle);
+          taskFounded.title = newTaskTitle; //* OJO: Esto jamás en producción
+          const li_span = document.getElementById(app.editingId)
+          .getElementsByTagName('span');
+          li_span[0].innerHTML = newTaskTitle;
+        }
+        app.addTaskButton.textContent = app.ADDTASK.text;
+        app.addTaskButton.classList.toggle(app.ADDTASK.class);
+        app.addTaskButton.classList.toggle(app.EDITTASK.class);
+      } else {
+        const newTask = createTask(newTaskTitle);
+        app.tasks.push(newTask);
+        addTaskToList(newTask, app.tasksList);
+      }
+      saveTasksToLocaStorage(app.tasks);
+      app.newTaskInput.value = '';
     }
 ```

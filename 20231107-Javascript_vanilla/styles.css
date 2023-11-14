@@ -26,9 +26,17 @@ button {
 }
 
 button {
-  background-color: green;
+  
   color: #fff;
   cursor: pointer;
+}
+
+.add-task-btn{
+  background-color: green;
+}
+
+.edit-task-btn{
+  background-color: orange;
 }
 
 input {

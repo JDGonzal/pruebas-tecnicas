@@ -2,6 +2,7 @@
 const tasksList = document.querySelector('#tasks-list');
 const newTaskInput = document.querySelector('#new-task-input');
 const addTaskButton = document.querySelector('#add-task-button');
+const cancelTaskButton = document.querySelector('#cancel-task-button');
 
 // Almacenamiento de Tareas en un arreglo
 const tasks = [];
@@ -11,6 +12,10 @@ const app = {
   tasks: tasks,
   tasksList: tasksList,
   newTaskInput: newTaskInput,
+  addTaskButton: addTaskButton,
+  ADDTASK: { text: 'Adicionar Tarea', class: 'add-task-btn' },
+  EDITTASK: { text: 'Editar Tarea', class: 'edit-task-btn' },
+  editingId: 0,
 }
 
 // Grabamos el arreglo en el `LocalStorage`
@@ -54,14 +59,49 @@ function addTaskToList(task, tasksList) {
 function addTask(app) {
   // Tomamos el valor del `input`
   const newTaskTitle = app.newTaskInput.value;
-  // Llamamos la función de crear la tarea, q nos retorna un objeto
-  const newTask = createTask(newTaskTitle);
-  // Añadimos al arreglo
-  app.tasks.push(newTask);
-  // Lllamamo la funcion para renderizar en pantall
-  addTaskToList(newTask, app.tasksList);
+  // Consultamos si estamos "Editando o Añadiendo"
+  if (app.addTaskButton.textContent === app.EDITTASK.text) {
+    // Localizamos la tarea con base en el numer guardado
+    const taskFounded = app.tasks.find(item => item.id === Number(app.editingId));
+    if (taskFounded) {
+      console.log(taskFounded, newTaskTitle);
+      // Y hacemos una mutación directa
+      taskFounded.title = newTaskTitle; //* OJO: Esto jamás en producción
+      // Primero se captura con el ID q tiene el `<li>` y dentro de este el `<span>`
+      const li_span = document.getElementById(app.editingId)
+      .getElementsByTagName('span');
+      // Como es un arreglo, debo apuntar la posición cero y cambiar el `innerHTML`
+      li_span[0].innerHTML = newTaskTitle;
+    }
+    // Al finalizar devolvemos el título al botón
+    app.addTaskButton.textContent = app.ADDTASK.text;
+    // Cambiamos el color del botón principal por adicionar
+    app.addTaskButton.classList.toggle(app.ADDTASK.class);
+    app.addTaskButton.classList.toggle(app.EDITTASK.class);
+  } else {
+    // Llamamos la función de crear la tarea, q nos retorna un objeto
+    const newTask = createTask(newTaskTitle);
+    // Añadimos al arreglo
+    app.tasks.push(newTask);
+    // Llamamos la funcion para renderizar en pantalla
+    addTaskToList(newTask, app.tasksList);
+  }
   // Justo cuando se muestra en pantalla se almacena en el `LocalStorage`
   saveTasksToLocaStorage(app.tasks);
+  // Limpiamos el valor del input
+  app.newTaskInput.value = '';
+}
+
+// Funcion para cancelar el processo de Añadir o Editars
+function cancelTask(app) {
+  // Consultamos si estamos "Editando o Añadiendo"
+  if (app.addTaskButton.textContent === app.EDITTASK.text) {
+    // Al finalizar devolvemos el título al botón
+    app.addTaskButton.textContent = app.ADDTASK.text;
+    // Cambiamos el color del botón principal por adicionar
+    app.addTaskButton.classList.toggle(app.ADDTASK.class);
+    app.addTaskButton.classList.toggle(app.EDITTASK.class);
+  }
   // Limpiamos el valor del input
   app.newTaskInput.value = '';
 }
@@ -70,6 +110,8 @@ function addTask(app) {
 function createTaskElement(task) {
   // Creat el elemento q lo representa en el HTML
   const taskElement = document.createElement('li');
+  // Añadimos el id a este elemento, par buscarlo mas facil al editar
+  taskElement.id = task.id;
   // Creamos un Checkbox 
   const taskCheckbox = document.createElement('input');
   // Añadimos el tipo para saber como se va a representar
@@ -122,7 +164,8 @@ function createTaskElement(task) {
 // Evento-Escucha para el botón de `Ingresar Tarea`
 addTaskButton.addEventListener("click", (evt) => onClickAddButton());
 
+// Evento-escucha para cancelar la tarea
+cancelTaskButton.addEventListener("click", (evt) => onClickCancelButton());
+
 // Evento-escucha para cuando presiono cualquier tecla, lueggo valido cual
 newTaskInput.addEventListener("keydown", (evt) => onKeyDownInput(evt));
-
-//
