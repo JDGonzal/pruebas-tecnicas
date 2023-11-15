@@ -57,7 +57,7 @@ function App() {
       <aside>
         <h1>Prueba Técnica de React</h1>
         <h2>Añadir y eliminar elementos de una lista</h2>
-        <form action="" onSubmit={handleSubmit}>
+        <form action="" onSubmit={handleSubmit} aria-label='Adicionar elementos a la lista'>
           <label htmlFor="">Elemento a Ingresar
             <input type="text" name="item" required placeholder="Elemento a Ingresar" />
           </label>
