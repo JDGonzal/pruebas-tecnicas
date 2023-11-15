@@ -38,11 +38,18 @@ function App() {
       text: input.value,
     }
     //Almaceno el valor en los `items` definidos en `useState`
-    setItems((prevItems)=>{
-      return[...prevItems, newItem];
+    setItems((prevItems) => {
+      return [...prevItems, newItem];
     });
     // Limpiamos el imput value
-    input.value='';
+    input.value = '';
+  }
+
+  const onClickDelete = (item: ItemsInterface) => {
+    // Filto Todos xcecpto el que quiero borrar
+    setItems(prevItems => {
+      return (prevItems.filter(currentItem => item.id !== currentItem.id))
+    });
   }
 
   return (
@@ -59,9 +66,23 @@ function App() {
       </aside>
       <section>
         <h2>Lista de Elementos</h2>
-        <ul>
-          {items.map((item) => <li key={item.id} id={item.id} >{item.text}</li>)}
-        </ul>
+        {
+          items.length === 0 ?
+            <p>No hay Ítems</p> :
+            <ul>
+              {items.map((item) => {
+                return (
+                  <li key={item.id} id={item.id} >
+                    {item.text}
+                    <button onClick={() => onClickDelete(item)} className='delete-button' >
+                      🗑️
+                    </button>
+                  </li>
+                )
+              })
+              }
+            </ul>
+        }
       </section>
     </main>
   )
