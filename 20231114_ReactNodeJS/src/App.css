@@ -12,13 +12,13 @@ main {
   gap: 16px;
 }
 
-h1{
-  font-size:2em;
+h1 {
+  font-size: 2em;
   line-height: 1.1;
   margin: 0;
 }
 
-h2{
+h2 {
   font-weight: 500;
   font-size: 1.1em;
   line-height: 1.1;
@@ -33,10 +33,15 @@ form {
   gap: 4px;
 }
 
-label{
-  font-size:.8em;
+label {
+  font-size: .8em;
 }
-input{
+
+input {
   color: #fff;
 }
 
+.delete-button {
+  background: red;
+  padding: 0;
+}

@@ -288,3 +288,21 @@ pnpm dev
         input.value='';
       }
 ```
+12. Añadimos el botón para borrar el `item`, empezando en **App.tsx**:
+```js
+                <li key={item.id} id={item.id} >
+                  {item.text}
+                  <button onClick={() => onClickDelete(item)} className='delete-button' >
+                    🗑️
+                  </button>
+                </li>
+```
+13. La función `onClickDelete()`, con el proceso para el borrado:
+```js
+      const onClickDelete = (item: ItemsInterface) => {
+        // Filto Todos xcecpto el que quiero borrar
+        setItems(prevItems => {
+          return (prevItems.filter(currentItem => item.id !== currentItem.id))
+        });
+      }
+```
