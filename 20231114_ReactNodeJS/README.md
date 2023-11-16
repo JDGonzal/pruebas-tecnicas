@@ -582,3 +582,70 @@ pnpm install -D @testing-library/user-event
       )
     }
 ```
+
+## Hacer un **SEO** (*Search Engine Optimization*) 
+> **Note** 
+> SEO es la sigla para Search Engine Optimization, que significa "optimización para motores de búsqueda". Consiste en una serie de técnicas, disciplinas y estrategias de optimización que se implementan en las páginas de un sitio web o blog para mejorar su posicionamiento en los buscadores.
+>
+> [SEO: la guía completa...](https://rockcontent.com/es/blog/que-es-seo/#:~:text=SEO%20es%20la%20sigla%20para,su%20posicionamiento%20en%20los%20buscadores.)
+
+1. Cambiamos el título del tabulador en el archivo, empecemos creando un archivo **src/hooks/useSEO.ts**.
+2. Esto iria dentro del hook personalizado:
+```js
+    import { useEffect } from "react";
+
+    export function useSEO({ title, description }: { title: string, description: string }) {
+      useEffect(() => {
+        document.title = title;
+        document.querySelector('meta[name="description"]')
+          ?.setAttribute("content", description);
+      }, [title, description]);
+    }
+```
+3. Llamamos el nuevo hook en **src/App.tsx**:
+```js
+      useSEO({
+        title: `[${items.length}] Prueba técnica de React`,
+        description: 'Añadir y eliminar elementos de una lista'
+      });
+```
+
+## Hacemos test de los Hook
+1. Creamos el archivo **tests/useItems.test.ts**:
+```js
+    // Lo básico para las pruebas
+    import { describe, test, expect } from 'vitest';
+    // Quiero el q renderiza los Hook y act
+    import { renderHook, act } from '@testing-library/react';
+    // Importamos la aplicación a renderizar
+    import { useItems, initialItems } from '../src/hooks/useItems';
+
+    describe('el hook de useItems', () => {
+      test('Debe Adicionar y remover Items', async () => {
+        // Guardo el resultado del hook para trabajarlo
+        const { result } = renderHook(() => useItems());
+        // Consulo lo esperado para validar
+        expect(result.current.items).toEqual(initialItems);
+        // Guardo lo voy a Escribir y luego comparar para borrar
+        const typewriter = 'Películas 🎥';
+        // Añado directamente usando el hook , dentro de `act`
+        act(() => {
+          result.current.addItem(typewriter);
+        });
+        expect(result.current.items.length).toBe(3);
+        // borro directamente usando el hook , dentro de `act`
+        act(() => {
+          result.current.removeItem(result.current.items[2].id);
+        });
+        expect(result.current.items.length).toBe(2);
+      })
+    });
+```
+
+## Desplegar el proyecto
+1. Se corre el proceso de `build`:
+```bash
+pnpm build
+``` 
+2. Entramos a la pagina [Netlify Drop - Drag & drop](https://app.netlify.com/drop).
+3. Arrastramos la carpeta **dist** desde el `Explorador de Windows` y esperamos la magia.
