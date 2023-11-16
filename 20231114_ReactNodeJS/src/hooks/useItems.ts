@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ItemId, ItemsInterface } from "../models/items.model";
 
-const initialItems: ItemsInterface[] = [
+export const initialItems: ItemsInterface[] = [
   {
     id: crypto.randomUUID(),
     timestamp: Date.now(),

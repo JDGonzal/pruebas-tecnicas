@@ -1,11 +1,17 @@
 import './App.css';
 import Items from './components/Items';
 import { useItems } from './hooks/useItems';
+import { useSEO } from './hooks/useSEO';
 import { ItemId } from './models/items.model';
 
 function App() {
   // Acá cambiamos el `useState` con mi propio `useItems`.
   const {items, addItem, removeItem}=useItems();
+  // Llamamos el nuevo `useSEO`
+  useSEO({
+    title: `[${items.length}] Prueba técnica de React`,
+    description: 'Añadir y eliminar elementos de una lista'
+  })
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // Primero siempre en el Submit es el `preventDefault`
     event.preventDefault();
