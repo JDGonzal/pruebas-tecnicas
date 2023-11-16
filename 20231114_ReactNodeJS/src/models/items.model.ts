@@ -1,5 +1,6 @@
+export type ItemId = `${string}-${string}-${string}-${string}-${string}`;
 export interface ItemsInterface{
-  id:`${string}-${string}-${string}-${string}-${string}`, /*string,*/
+  id:ItemId, /*string,*/
   timestamp: number,
   text: string,
 }

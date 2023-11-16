@@ -115,7 +115,8 @@ pnpm i
 ```bash
 pnpm dev
 ```
-> **Note** Añado al **.gitignore** principal o de la raíz lo relacionado con vite q no se debe subir:
+> **Note** 
+> Añado al **.gitignore** principal o de la raíz lo relacionado con vite q no se debe subir:
 >```yml
 ># Logs
 >...
@@ -440,4 +441,144 @@ pnpm install -D @testing-library/user-event
 ```js
 <form action="" onSubmit={handleSubmit} aria-label='Adicionar elementos a la lista'>
 ```
-15. 
+
+## Refactorizar con Componentes y mas
+
+1. Crer una carpeta **src/components**.
+2. Crear un archivo **src/components/Items.tsx**, ejecuto el *snippet* `rfce` y borro la primer línea de `import`.
+> **Note**:
+> El nombre de un `component` lleva la primera siempre en Mayúscula y la extensión **tsx**.
+3. Paso de **src/App.tsx**, la parte del `<li>` al nuevo archivo  **src/components/Items.tsx**:
+```js
+    function items() {
+      return (
+        <li key={item.id} id={item.id} >
+          {item.text}
+          <button onClick={() => onClickDelete(item)} className='delete-button' >
+            🗑️
+          </button>
+        </li>
+      )
+    }
+```
+4. Debemos pasar el `id` y el `text` a modo de `props`:
+```js
+    import { ItemId } from "../models/items.model";
+    function Items({ id, text, handleClick}:
+      { id: ItemId, text: string, handleClick: () => void}) {
+      return (
+        <li id={id} >
+          {text}
+          <button onClick={handleClick} className='delete-button' >
+            🗑️
+          </button>
+        </li>
+      )
+    }
+
+    export default Items;
+```
+5. Así llamamos el componente `Items` el valor desde **src/App.tsx**:
+```js
+                  {items.map((item) => {
+                    return (
+                      <Items
+                      {...item}
+                      handleClick={createHandleRemoveItem(item.id)}
+                      key={item.id} />)
+                  })
+                  }
+```
+6. Cambiamos la función `onClickDelete = (item: ItemsInterface) => {` por `createHandleRemoveItem = (id: ItemId) =>()=> {`, por ende toda la función quedaría así:
+```js
+      const createHandleRemoveItem = (id: ItemId) =>()=> {
+        // Filto todos excecpto el que quiero borrar
+        setItems(prevItems => {
+          return (prevItems.filter(currentItem => id !== currentItem.id))
+        });
+      }
+```
+7. Crea una carpeta llamada **src/hooks**.
+8. Crear un archivo **src/hooks/useItems.ts**.
+```js
+    export const useItems=()=> {
+
+    }
+```
+9. Movemos el `useState` y lo q lo inicializa de **src/App.ts** a **src/hooks/useItems.ts**:
+```js
+    const initialItems: ItemsInterface[] = [
+      {
+        id: crypto.randomUUID(),
+        timestamp: Date.now(),
+        text: 'Videojuegos 🎮',
+      },
+      {
+        id: crypto.randomUUID(),
+        timestamp: Date.now(),
+        text: 'Libros 📚',
+      }
+    ];
+
+    export const useItems = () => {
+      const [items, setItems] = useState(initialItems);
+    }
+```
+10. Movemos la lógica **src/App.ts** a **src/hooks/useItems.ts**, las funciones `addItem` y `removeItem`:
+```js
+    export const useItems = () => {
+      const [items, setItems] = useState(initialItems);
+
+      const addItem = (text: string) => {
+        // Llenamos una variable con los datos q vamos a usar
+        const newItem: ItemsInterface = {
+          id: crypto.randomUUID(),
+          timestamp: Date.now(),
+          text: text,
+        }
+        //Almaceno el valor en los `items` definidos en `useState`
+        setItems((prevItems) => {
+          return [...prevItems, newItem];
+        });
+      }
+
+      const removeItem =(id:ItemId)=>{
+        // Filto todos excecpto el que quiero borrar
+        setItems(prevItems => {
+          return (prevItems.filter(currentItem => id !== currentItem.id))
+        });
+      }
+
+      return{
+        items,
+        addItem,
+        removeItem,
+      }
+    }
+```
+11. El archivo **src/App.tsx** , queda reducido a esto:
+```js
+    import ...Importaciones requeridas
+    function App() {
+      const {items, addItem, removeItem}=useItems();
+      const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const { elements } = event.currentTarget;
+        const input = elements.namedItem('item');
+        const isInput = input instanceof HTMLInputElement;
+        if (!isInput || input === null) return;
+        // Llamamos el hook de `useItems`
+        addItem(input.value);
+        input.value = '';
+      }
+
+      const createHandleRemoveItem = (id: ItemId) => () => {
+        // Llamamos el hook de `useItems`
+        removeItem(id);
+      }
+
+      return (
+        ...Acá va todo lo del HTML o JSX.
+      )
+    }
+```
