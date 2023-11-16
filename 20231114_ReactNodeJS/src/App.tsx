@@ -1,23 +1,11 @@
-import { useState } from 'react';
 import './App.css';
-import { ItemsInterface } from './models/items.model';
-
-const initialItems: ItemsInterface[] = [
-  {
-    id: crypto.randomUUID(),
-    timestamp: Date.now(),
-    text: 'Videojuegos 🎮',
-  },
-  {
-    id: crypto.randomUUID(),
-    timestamp: Date.now(),
-    text: 'Libros 📚',
-  }
-];
+import Items from './components/Items';
+import { useItems } from './hooks/useItems';
+import { ItemId } from './models/items.model';
 
 function App() {
-  const [items, setItems] = useState(initialItems);
-
+  // Acá cambiamos el `useState` con mi propio `useItems`.
+  const {items, addItem, removeItem}=useItems();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     // Primero siempre en el Submit es el `preventDefault`
     event.preventDefault();
@@ -31,25 +19,15 @@ function App() {
     // Se valida q sea una instancia
     const isInput = input instanceof HTMLInputElement;
     if (!isInput || input === null) return;
-    // Llenamos una variable con los datos q vamos a usar
-    const newItem: ItemsInterface = {
-      id: crypto.randomUUID(),
-      timestamp: Date.now(),
-      text: input.value,
-    }
-    //Almaceno el valor en los `items` definidos en `useState`
-    setItems((prevItems) => {
-      return [...prevItems, newItem];
-    });
+    // Llamamos el hook de `useItems`
+    addItem(input.value);
     // Limpiamos el imput value
     input.value = '';
   }
 
-  const onClickDelete = (item: ItemsInterface) => {
-    // Filto Todos xcecpto el que quiero borrar
-    setItems(prevItems => {
-      return (prevItems.filter(currentItem => item.id !== currentItem.id))
-    });
+  const createHandleRemoveItem = (id: ItemId) => () => {
+    // Llamamos el hook de `useItems`
+    removeItem(id);
   }
 
   return (
@@ -72,13 +50,10 @@ function App() {
             <ul>
               {items.map((item) => {
                 return (
-                  <li key={item.id} id={item.id} >
-                    {item.text}
-                    <button onClick={() => onClickDelete(item)} className='delete-button' >
-                      🗑️
-                    </button>
-                  </li>
-                )
+                  <Items
+                    {...item}
+                    handleClick={createHandleRemoveItem(item.id)}
+                    key={item.id} />)
               })
               }
             </ul>
