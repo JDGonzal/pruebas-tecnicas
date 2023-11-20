@@ -170,3 +170,67 @@ pnpm dev
                   >
 ```
 
+## Ajustando el Final del juego
+> **Note**
+> ❌ ESTO ESTA MAL
+>
+> Jamás se debe mutar las `props` y el `estado`, ejemplo:
+>```js
+>     board[index] = turn; // Se deben tratar como si fueran inmutables
+>     setBoard(board); // Grabamos el arreglo recien obtenido
+>```
+> ✅ ESTO ES LO CORRECTO
+>
+> Separar en una nueva variable y luego grabar ese nuevo valor, ejemplo:
+>```js
+>     const newBoard = [...board] //Clonamos el arreglo llamado board
+>     newBoard[index] = turn; // Asignamos el valor al índice
+>     setBoard(newBoard); // Grabamos el arreglo recien obtenido
+>```
+1. Se sale y no se hace nada si hay valores en esa posición
+```js
+        if(board[index]) return;
+```
+2. Creamos un estado con valores: null no hay ganador, false hay empate:
+```js
+      const [winner, setWinner] = useState(null);
+```
+3. Definición de comnos ganadores:
+```js
+    const WINNER_COMBOS = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+    ];
+```
+4. Revisamos si hay ganador: `const newWinner = checkWinner(newBoard);` y si hay ganador se define la variable: `if (newWinner) setWinner(newWinner);`
+5. Añadimos una `<section>` para mostrar una modal:
+```js
+          {winner !== null && (
+            <section className="winner">
+              <div className="text">
+                <h2>
+                  {winner ? 'Ganó' : 'Empate'}
+                </h2>
+                <header className="win">
+                  {winner && <Square>{winner}</Square>}
+                </header>
+                <footer>
+                  <button onClick={resetGame}>Empezar de nuevo</button>
+                </footer>
+              </div>
+            </section>
+          )}
+```
+6. Creamos la función `resetGame`:
+```js
+      const resetGame = () => {
+        setBoard(initBoard);
+        setTurn(TURNS.X);
+        setWinner(null);
+      }
+```
+7. Ponemos otro botón debajo del título para reiniciar el juego:
+```js
+
+```
