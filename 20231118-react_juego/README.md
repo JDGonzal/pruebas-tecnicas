@@ -117,3 +117,56 @@ pnpm dev
             <Square>{TURNS.O}</Square>
           </section>
 ```
+## Interacción con el tablero
+1. Añadimos al llamado el envio de una función llamad `updateBoard` el archivo **src/App**.
+2. Añado a **src/componets/Square.tsx** el signo interrogante (?) si el valor no es obligatorio a ser recibido.
+3. Pongo la nueva funcion `updateBoard` relacionada al `onClick`, en **src/componets/Square.tsx**:
+```js
+      return (
+        <div className={className} onClick={updateBoard}>
+          {children}
+        </div>
+      )
+```
+4. Lo mejoramos poniendo el `updateBoard` dentro de otra función:
+```js
+      const handleClick = () =>{
+        if(!updateBoard) return;
+        updateBoard();
+      }
+      
+      return (
+        <div className={className} onClick={handleClick}>
+          {children}
+        </div>
+      )
+```
+5. Configuramos el turno en dos funciones:
+```js
+    const [turn, setTurn] = useState(TURNS.X);
+
+      const updateBoard = ()=>{
+        const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
+      }
+```
+6. Dentro del `updateBoard` recibimos el `index` y lo dibujamos en el tablero antes del cambio de turno:
+```js
+      const updateBoard = (index: number) => {
+        const newBoard = [...board] //Clonamos el arreglo llamado board
+        newBoard[index] = turn; // Asignamos el valor al índice
+        setBoard(newBoard); // Grabamos el arreglo recien obtenido
+        // Alamacenamos el Proximo turno cuando se cambia de turno
+        const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
+        // Actualiza el estado de Turno
+        setTurn(newTurn);
+      }
+```
+7. Como se llama correctamente esta función enviando el índice es:
+```js
+                  <Square
+                    key={index}
+                    index={index}
+                    updateBoard={() => updateBoard(index)}
+                  >
+```
+
