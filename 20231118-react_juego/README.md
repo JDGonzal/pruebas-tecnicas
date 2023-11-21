@@ -232,5 +232,98 @@ pnpm dev
 ```
 7. Ponemos otro botón debajo del título para reiniciar el juego:
 ```js
+    <button onClick={resetGame}>Empezar de nuevo</button>
+```
 
+## Completamos el juego y separamos componentes
+1. Completamos el `//TODO: Verificar si el juego está terminado (Game is over)`.
+```js
+        if (newWinner) setWinner(newWinner)
+        //TODO: Verificar si el juego está terminado (Game is over)
+        else if (checkEndGame(newBoard as [])) {
+          setWinner(false); //Empate
+```
+2. Y esta será a función `checkEndGame`:
+```js
+      const checkEndGame = (newBoard: []) => {
+        // Revisamos si hay empate, si no hay espacios vacíos en el tablero
+        return newBoard.every((square) => square !== null);
+      }
+```
+3. Instalemos confetti y el manejo de tipo (`@types`)
+```bash
+pnpm i canvas-confetti @types/canvas-confetti -E
+```
+4. La Importamos y la usamos:
+```js
+      if (newWinner) {
+        confetti();
+        setWinner(newWinner)
+      } //TODO: Verificar si el juego está terminado (Game is over)
+      else if (checkEndGame(newBoard as [])) {
+        setWinner(false); //Empate
+      }
+```
+5. Creamos una carpeta de **src/utils** y dentro un archivo **constans.ts**, pasamos lo siguiente:
+```js
+    export const TURNS = {
+      X: "❌",
+      O: "⭕",
+    };
+
+    export const initBoard = Array(9).fill(null); 
+
+    export const WINNER_COMBOS = [
+      [0, 1, 2], [3, 4, 5], [6, 7, 8],
+      [0, 3, 6], [1, 4, 7], [2, 5, 8],
+      [0, 4, 8], [2, 4, 6]
+    ];
+```
+6. Crear en la carpeta **src/utils** el archivo **board.ts** y movemos esto:
+```js
+    import { WINNER_COMBOS } from ".";
+
+    // Función para detectar si hubo ganador:
+    export const checkWinner = (boardToCheck: []) => {
+      // Recorremos los WINNER_COMBOS
+      for (const combo of WINNER_COMBOS) {
+        // Separamos cada valor del combo
+        const [a, b, c] = combo;
+        // Comparamos los datos con el arreglo
+        if (
+          boardToCheck[a] && //Hay algún valor
+          boardToCheck[a] === boardToCheck[b] && //
+          boardToCheck[a] === boardToCheck[c] // 
+        ) {
+          return boardToCheck[a];
+        }
+      }
+      //Si no hay ganador retornamos el null
+      return null;
+    }
+```
+7. Crear en la carpeta **src/components** el archivo **WinnerModal.tsx**, correr el comando `rfce` y borrar la primera línea, y luego con esto:
+```js
+    import { Square } from "."
+    function WinnerModal({ winner, resetGame }: { winner: boolean | null, resetGame: () => void }) {
+      if (winner === null) return null;
+      return (
+        <>
+          <section className="winner">
+            <div className="text">
+              <h2>
+                {winner ? 'Ganó' : 'Empate'}
+              </h2>
+              <header className="win">
+                {winner && <Square>{winner}</Square>}
+              </header>
+              <footer>
+                <button onClick={resetGame}>Empezar de nuevo</button>
+              </footer>
+            </div>
+          </section>
+        </>
+      )
+    }
+    export default WinnerModal;
 ```
