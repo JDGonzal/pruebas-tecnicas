@@ -1,13 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { Square, WinnerModal } from "./components";
 import confetti from 'canvas-confetti';
-import { checkWinner, initBoard, TURNS } from "./utils";
+import { checkWinner, initBoard, resetGameStorage, saveGameToStorage, TURNS } from "./utils";
 
 function App() {
   // Ponemos el tablero en forma de estado
-  const [board, setBoard] = useState(initBoard);
+  const [board, setBoard] = useState(() => {
+    // Primero obtenemos el valor almacenado en el local storage
+    const boardFromStorage = window.localStorage.getItem('board');
+    // Si no lo halla retorna el valor inicial
+    if (!boardFromStorage) return initBoard;
+    // Si lo hallo simplemente regresamos el valor del storage
+    return JSON.parse(boardFromStorage);
+  });
   // Creamos los turnos y se inicializa con el valor de la X
-  const [turn, setTurn] = useState(TURNS.X);
+  const [turn, setTurn] = useState(() => {
+    // Leemos del storage
+    const turnFromStorage = window.localStorage.getItem('turn');
+    // el Doble interrogante mira si es `Null` o `undefiened`
+    return turnFromStorage ?? TURNS.X;
+  });
   // valores: null no hay ganador, false hay empate
   const [winner, setWinner] = useState<boolean | null>(null);
 
@@ -15,6 +28,8 @@ function App() {
   const resetGame = () => {
     setBoard(initBoard);
     setTurn(TURNS.X);
+    // Acá removemos la partida y el turno del LocalStorage
+    resetGameStorage();
     setWinner(null);
   }
 
@@ -39,13 +54,15 @@ function App() {
     const newTurn = turn === TURNS.X ? TURNS.O : TURNS.X;
     // Actualiza el estado de Turno
     setTurn(newTurn);
+    // Acá Almacenamos la partida y el turno en  el LocalStorage
+    saveGameToStorage({newBoard:newBoard, newTurn: newTurn});
     // Revisamos si hay ganador
     const newWinner = checkWinner(newBoard as []);
     // Si hay ganador se define la variable
     if (newWinner) {
       confetti();
       setWinner(newWinner)
-    } //TODO: Verificar si el juego está terminado (Game is over)
+    }
     else if (checkEndGame(newBoard as [])) {
       setWinner(false); //Empate
     }
@@ -57,7 +74,7 @@ function App() {
       <button onClick={resetGame}>Empezar de nuevo</button>
       <section className="game">
         { // Simplemente mostramos el arreglo por pantalla
-          board.map((_, index) => {
+          board.map((_: any, index: number) => {
             return (
               <Square
                 key={index}
