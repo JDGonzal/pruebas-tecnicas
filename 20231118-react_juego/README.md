@@ -327,3 +327,51 @@ pnpm i canvas-confetti @types/canvas-confetti -E
     }
     export default WinnerModal;
 ```
+
+## Almacenar en LocalStorage
+1. El Momento de guardar la partida y el turno es cuando se configura el nuevo turno:
+```js
+        setTurn(newTurn);
+        // Acá Almacenamos la partida y el turno en  el LocalStorage
+        window.localStorage.setItem("board", JSON.stringify(newBoard));
+        window.localStorage.setItem("turn", newTurn);
+```
+2. Recuperamos el localstorage al momento del dato inicial del `board` en el `useState`:
+```js
+      const [board, setBoard] = useState(() => {
+        const boardFromStorage = window.localStorage.getItem('board');
+        if (!boardFromStorage) return initBoard;
+        return JSON.parse(boardFromStorage);
+      });
+```
+3. Recuperamos el localstorage al momento del dato inicial del `turn` en el `useState`:
+```js
+      const [turn, setTurn] = useState(() => {
+        const turnFromStorage = window.localStorage.getItem('turn');
+        return turnFromStorage ?? TURNS.X;
+      });
+```
+4. Otro momento clave para guardar los datos en el Storage es cuando se reinicia el juego:
+```js
+      const resetGame = () => {
+        setBoard(initBoard);
+        setTurn(TURNS.X);
+        window.localStorage.removeItem("board");
+        window.localStorage.removeItem("turn");
+        setWinner(null);
+      }
+```
+5. Sacamos el Guardar y reinicar el juego en un archivo en **src/utils**, llamado **localStorage.ts** con esto:
+```js
+    export const saveGameToStorage = ({ newBoard, newTurn }: { newBoard: []|any, newTurn: string }) => {
+      window.localStorage.setItem("board", JSON.stringify(newBoard));
+      window.localStorage.setItem("turn", newTurn);
+    }
+
+    export const resetGameStorage = ()=>{
+      window.localStorage.removeItem("board");
+      window.localStorage.removeItem("turn");
+    }
+```
+
+6. Se importan y llaman en el **App.tsx**.
