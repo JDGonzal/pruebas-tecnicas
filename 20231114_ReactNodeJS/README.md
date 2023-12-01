@@ -78,9 +78,9 @@ Por favor, confirma que lo has recibido y vas a comenzar la prueba en el botón 
 1. Crear el proyecto con el comando `npm create vite@latest` 
 
 ```bash
-√ Project name: ... 20231114_ReactNodeJS
-√ Target directory "20231114_ReactNodeJS" is not empty. Remove existing files and continue? ... yes
-√ Package name: ... 20231114-reactnodejs
+√ Project name: ... 20231118-react_juego
+√ Target directory "20231118-react_juego" is not empty. Remove existing files and continue? ... yes
+√ Package name: ... 20231118-react_juego
 √ Select a framework: » React
 ? Select a variant: » TypeScript + SWC
 ```
