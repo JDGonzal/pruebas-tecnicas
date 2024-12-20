@@ -9,3 +9,4 @@ Pruebas y ejercicios siguiendo varios canales de Youtube
 - [2023-11-14 Prueba técnica React y Nodejs](./20231114_ReactNodeJS/README.md)
 - [2023-11-18 React useState y useEffect con de 3 en raya](./20231118-react_juego/README.md)
 - [2023-12-01 Prueba Técnica de React para Juniors y Trainee](./20231201-react_cats/README.md)
+- [2024-12-19 Polyrhythms JavaScript Project Tutorial](./20241219_Polyrhythms/README.MD)
