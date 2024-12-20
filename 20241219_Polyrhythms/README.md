@@ -137,3 +137,84 @@ track.draw(ctx); // Dibujo el círculo
 ```js
 import Track from './track.js'; // Importo la clase `Track`
 ```
+
+## 3. Dibujo una bola usando el `canvas` en **`ball.js`**
+
+1. Creamos el archivo **`ball.js`**, con una clase que exportamos:
+```js
+class Ball{
+  constructor(){
+
+  }
+
+  draw(ctx){
+
+  }
+}
+
+export default Ball; // Exporto la clase `Ball` para poder importarla en otro archivo
+```
+2. En **`script.js`**, debajo del `track = new Track`, instanciamos
+la clase `Ball`:
+```js
+  const ball = new Ball(track, ballRadius, ballSpeed); // Defino el objeto
+```
+3. Importo en **`script.js`**, la clase `Ball`:
+```js
+import Ball from './ball.js'; // Importo la clase `Ball`
+```
+4. Debajo de `track.draw(ctx);` en **`script.js`**, también dibujo
+la bola:
+```js
+  ball.draw(ctx); // Dibujo la bola
+```
+5. Definimos las constantes que nos faltan: `ballRadius`, 
+y `ballSpeed`:
+```js
+  const ballRadius = 10; // Radio de la bola
+  const ballSpeed = 0.1; // Velocidad de la bola
+```
+6. Completamos la clase en el archivo **`ball.js`**:
+```js
+class Ball {
+  constructor(track, radius, speed) {
+    this.track = track;
+    this.radius = radius;
+    this.speed = speed;
+    this.offset = 0;
+    this.center = this.track.getPosition(this.offset);
+  }
+
+  draw(ctx) {
+    ctx.beginPath();
+    ctx.arc(this.center.x, this.center.y, this.radius, 0, 2 * Math.PI);
+    ctx.strokeStyle = 'white';
+    ctx.stroke();
+  }
+}
+
+export default Ball; // Exporto la clase `Ball` para poder importarla en otro archivo
+```
+7. En el archivo **`track.js`**, añadimos el método, que está
+llamando en la clase `Ball` de nombre: `getPosition()`:
+```js
+  getPosition(offset) {
+    return {
+      x: this.center.x + Math.cos(offset) * this.radius,
+      y: this.center.y + Math.sin(offset) * this.radius,
+    };
+  }
+```
+
+>[!NOTE]
+>Así se ve la imagen hasta el momento en el browser:  
+>![Minuto 11:09](images/2024-12-20_163228.png "Minuto 11:09")
+
+>[!TIP]
+>Creo una carpeta de nombre **"components"** y muevo ahí
+>los archivos **`track.js`** y **`ball.js`**, 
+>por ende las importaciones de **`script.js`**, van a cambiar:
+>```js
+>import Track from './components/track.js'; // Importo la clase `Track`
+>import Ball from './components/ball.js'; // Importo la clase `Ball`
+>```
