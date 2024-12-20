@@ -96,3 +96,44 @@ const setInit = () => {
   myCanvas.height = size;
 }
 ```
+
+## 2. Dibujo un círulo usando el `canvas` en **`track.js`**
+
+1. En el archivo **`script.js`**, definimos otra constante del contexto 
+del `canvas`:
+```js
+const ctx = myCanvas.getContext('2d'); // Obtengo el contexto del canvas
+```
+2. En el archivo **`script.js`**, definimos el `track` o recorrido:
+```js
+const trackCenter = { x: size / 2, y: size / 2 }; // Centro del canvas
+const trackRadius = size / 3; // Radio del círculo
+const track = new Track(trackCenter, trackRadius); // Defino el objeto `track`
+```
+3. Creamos el archivo **`track.js`**, con al menos una clase:
+```js
+class Track{
+  constructor(center, radius){
+    this.center = center;
+    this.radius = radius;
+  }
+
+  draw(ctx){
+    ctx.beginPath();
+    ctx.arc(this.center.x, this.center.y, this.radius, 0, 2 * Math.PI);
+    ctx.strokeStyle = 'white';
+    ctx.stroke();
+  }
+}
+
+export default Track; // Exporto la clase `Track` para poder importarla en otro archivo
+```
+4. En el archivo **`script.js`**, en el método `setInit()`, invocamos el
+método `draw()`:
+```js
+track.draw(ctx); // Dibujo el círculo
+```
+5. En el archivo **`script.js`**, importar la clase `Track`:
+```js
+import Track from './track.js'; // Importo la clase `Track`
+```
