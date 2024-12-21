@@ -218,3 +218,57 @@ llamando en la clase `Ball` de nombre: `getPosition()`:
 >import Track from './components/track.js'; // Importo la clase `Track`
 >import Ball from './components/ball.js'; // Importo la clase `Ball`
 >```
+
+## 4. Dándole movimiento a la `ball` dentro del `track`
+
+1. En el archivo **`script.js`** debajo de donde se instanciaron los 
+dos objetos y antes del `.draw(ctx)` de cada objeto, llamamos una 
+función de nombre `animate()` y justo debajo, la función en cuestión:
+```js
+// Función para inicializar el ambiente
+const setInit = () => {
+ ...
+
+  animate(track, ball); // Llamo la función
+
+};
+
+// Función para que se llame a sí misma cada segundo
+function animate(track, ball) {
+  ctx.clearRect(0, 0, size, size); // Limpio el canvas
+  track.draw(ctx); // Dibujo el círculo
+  ball.draw(ctx); // Dibujo la bola
+  requestAnimationFrame(() => animate(track, ball)); // Hago la animación
+}
+```
+2. En la función `animate()`, llamamos una nueva función de nombre
+`ball.move()`, depués de `track.draw()` y antes de `ball.draw()`,
+ que vamos a crear en la clase `Ball` del archivo **`ball.js`**:
+```js
+  move() {
+    this.offset += this.speed; // Incrementamos el offset
+    this.center = this.track.getPosition(this.offset); // Obtenemos la nueva posición
+  }
+```
+
+>[!TIP]  
+> Así luce en pantalla con el movimiento:  
+>![Minuto 12:52](images/2024-12-21_094810.gif "Minuto 12:52")
+
+3. Hago un ajuste, puesto que en mi ejercicio se mueve en el sentido
+de las manecillas del reloj, y al instructor se ve en sentido opuesto
+y esto se hace en el archivo **`track.js`**, en la función 
+`getPosition()`, restando la posición de `y` en vez de sumarla:
+```js
+  getPosition(offset) {
+    return {
+      x: this.center.x + Math.cos(offset) * this.radius,
+      y: this.center.y - Math.sin(offset) * this.radius,
+    };
+  }
+
+```
+
+>[!TIP]  
+> Así luce en pantalla con el movimiento, después de la corrección:  
+>![Minuto 12:55](images/2024-12-21_100425.gif "Minuto 12:55")
