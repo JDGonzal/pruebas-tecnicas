@@ -272,3 +272,74 @@ y esto se hace en el archivo **`track.js`**, en la función
 >[!TIP]  
 > Así luce en pantalla con el movimiento, después de la corrección:  
 >![Minuto 12:55](images/2024-12-21_100425.gif "Minuto 12:55")
+
+## 5. Mejorando la forma de `draw()` en la clase `Track`
+1. En el archivo **`track.js`**, hacemos un cambio en el método
+`draw()`:
+```js
+  draw(ctx) {
+    ctx.beginPath();
+    // ctx.arc(this.center.x, this.center.y, this.radius, 0, 2 * Math.PI);
+    for (let a = 0; a < 2 * Math.PI; a += 0.4) {
+      ctx.lineTo(
+        this.center.x + Math.cos(a) * this.radius,
+        this.center.y - Math.sin(a) * this.radius
+      );
+    }
+    ctx.closePath(); // Cierro el círculo o figura de muchos lados
+    ctx.strokeStyle = 'white';
+    ctx.stroke();
+  }
+}
+```
+* Así se ve:  
+![Minuto 15:14](images/2024-12-21_180345.gif "Minuto 15:14")
+2. Si la condición en el `for` para el incremento lo hago mas pequeño
+se verá mas fluida la forma, es decir cambiar el `a += 0.4` por
+`a += 0.1`
+* Así se ve:  
+![Minuto 15:23](images/2024-12-21_181130.gif "Minuto 15:23")
+3. Si cambio las fórmulas en las funciones `getPosition()` y
+`draw()`, en el archivo **`track.js`**,
+cambiamos la forma de la imagen y el movimiento:
+```js
+  getPosition(offset) {
+    return {
+      x: this.center.x + Math.cos(offset * 3) * this.radius,
+      y: this.center.y - Math.sin(offset) * this.radius,
+    };
+  }
+
+  draw(ctx) {
+...
+    for (let a = 0; a < 2 * Math.PI; a += 0.1) {
+      ctx.lineTo(
+        this.center.x + Math.cos(a * 3) * this.radius,
+        this.center.y - Math.sin(a) * this.radius
+      );
+    }
+...
+  }
+```
+4. Cambiamos el valor de `ballSpeed` en **`script.js`** de 
+`0.1` a `0.01`.
+* Así se ve:  
+![Minuto 16:18](images/2024-12-21_182035.gif "Minuto 16:18")
+5. Para qué tener una copia del código tanto para la función
+`getPostion` como para el `for` de `draw()`, se hacen estos cambios
+en el método `draw()` de el archivo **`track.js`**, por ahí derecho
+mejoramos el fluido de la línea del `track` cambiando el valor
+en el `for` de `a += 0.1` por `a += 0.01`:
+```js
+  draw(ctx) {
+...
+    for (let a = 0; a < 2 * Math.PI; a += 0.01) {
+      const pos = this.getPosition(a);
+      ctx.lineTo(pos.x, pos.y);
+    }
+...
+  }
+```
+6. Regresamos la fórmula de la función `getPosidion()` sin la 
+multiplicación por tres (`Math.cos(offset * 3)`), para que se 
+vea un círculo simple.

@@ -1,10 +1,9 @@
-class Track{
-  constructor(center, radius){
+class Track {
+  constructor(center, radius) {
     this.center = center;
     this.radius = radius;
   }
 
-  
   getPosition(offset) {
     return {
       x: this.center.x + Math.cos(offset) * this.radius,
@@ -12,9 +11,14 @@ class Track{
     };
   }
 
-  draw(ctx){
+  draw(ctx) {
     ctx.beginPath();
-    ctx.arc(this.center.x, this.center.y, this.radius, 0, 2 * Math.PI);
+    // ctx.arc(this.center.x, this.center.y, this.radius, 0, 2 * Math.PI);
+    for (let a = 0; a < 2 * Math.PI; a += 0.01) {
+      const pos = this.getPosition(a);
+      ctx.lineTo(pos.x, pos.y);
+    }
+    ctx.closePath(); // Cierro el círculo o figura de muchos lados
     ctx.strokeStyle = 'white';
     ctx.stroke();
   }
