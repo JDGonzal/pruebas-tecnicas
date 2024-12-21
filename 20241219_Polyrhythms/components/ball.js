@@ -7,6 +7,11 @@ class Ball {
     this.center = this.track.getPosition(this.offset);
   }
 
+  move() {
+    this.offset += this.speed; // Incrementamos el offset
+    this.center = this.track.getPosition(this.offset); // Obtenemos la nueva posición
+  }
+
   draw(ctx) {
     ctx.beginPath();
     ctx.arc(this.center.x, this.center.y, this.radius, 0, 2 * Math.PI);

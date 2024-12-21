@@ -22,6 +22,16 @@ const setInit = () => {
 
   const track = new Track(trackCenter, trackRadius); // Defino el objeto
   const ball = new Ball(track, ballRadius, ballSpeed); // Defino el objeto
-  track.draw(ctx); // Dibujo el círculo
-  ball.draw(ctx); // Dibujo la bola
+
+  animate(track, ball); // Llamo la función
+
 };
+
+// Función para que se llame a sí misma cada segundo
+function animate(track, ball) {
+  ctx.clearRect(0, 0, size, size); // Limpio el canvas
+  track.draw(ctx); // Dibujo el círculo
+  ball.move();
+  ball.draw(ctx); // Dibujo la bola
+  requestAnimationFrame(() => animate(track, ball)); // Hago la animación
+}
