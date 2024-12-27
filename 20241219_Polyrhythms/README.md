@@ -362,7 +362,7 @@ condicional para cambiar la `direction`:
 ```
 4. Cambiemos la `ballSpeed` en el archivo **`script.js`**, a
 `0.05`, así se ve el rebote:  
-![](images/2024-12-27_162015.gif)
+![Rebote de la `ball`](images/2024-12-27_162015.gif "Rebote de la `ball`")
 
 ## 7. Sonido al rebotar la `ball`
 
@@ -428,3 +428,64 @@ constante:
   envelope.gain.linearRampToValueAtTime(1, audioCtx.currentTime + 0.05);
   envelope.gain.linearRampToValueAtTime(0, audioCtx.currentTime + duration);
 ```
+
+## 8. Múltiples `ball` y múltiples `track`
+
+1. En el archivo **`script.js`**, definimos tres constantes, arriba:
+```js
+  const tracks = []; // Arreglo vacío de `tracks`
+  const balls = []; // Arreglo vacío de `balls`
+  const N = 20; // Número total de elementos
+```
+2. Debajo añadimos un ciclo `for`, donde definiremos el nuevo
+`trackRadius` y por ende la variable anterior del mismo nombre
+la vamos a cambiar por `trackMinRadius` y definir otra constante
+de nombre `trackStep`:
+```js
+  const trackMinRadius = size / 3; // Radio del círculo o `track`
+  const trackStep = 15; // Separación entre `track`
+...
+
+  for (let i = 0; i < N; i++) {
+    const trackRadius = trackMinRadius + i * trackStep;
+    
+  }
+```
+3. Subimos las instanciaciones de `track` y `ball` dentro del 
+ciclo `for` y añadimos a los arreglos el correspondiente valor:
+```js
+  for (let i = 0; i < N; i++) {
+    const trackRadius = trackMinRadius + i * trackStep;
+    // Obtengo los dos objetos
+    const track = new Track(trackCenter, trackRadius);
+    const ball = new Ball(track, ballRadius, ballSpeed);
+    // Añado a los arreglos
+    tracks.push(track);
+    balls.push(ball);
+  }
+```
+4. Hacemos un cambio grande en el método `animate()` para incluir
+cada `track` de `tracks` y cada `ball` de `balls`:
+```js
+function animate() {
+  ctx.clearRect(0, 0, size, size); // Limpio el canvas
+  tracks.forEach((track) => {
+    track.draw(ctx); // Dibujo el círculo
+  });
+
+  balls.forEach((ball) => {
+    ball.move();
+    ball.draw(ctx); // Dibujo la bola
+  });
+
+  requestAnimationFrame(() => animate()); // Hago la animación
+}
+```
+5. El llamado a la función `animate()` desde el método `setInit()`,
+no requiere parámetros.
+6. El valor del `trackMinRadius` lo cambié a `size / 10`, aunque el 
+instructor sugiere `100`.
+
+>[!TIP]  
+>Así se ve en el browser:  
+>![Múltiples track y ball](images/2024-12-27_182239.gif "Múltiples `track` y `ball`")
