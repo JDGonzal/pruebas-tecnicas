@@ -18,7 +18,7 @@ const setInit = () => {
   const trackCenter = { x: size / 2, y: size / 2 }; // Centro del canvas
   const trackRadius = size / 3; // Radio del círculo
   const ballRadius = 10; // Radio de la bola
-  const ballSpeed = 0.01; // Velocidad de la bola
+  const ballSpeed = 0.05; // Velocidad de la bola
 
   const track = new Track(trackCenter, trackRadius); // Defino el objeto
   const ball = new Ball(track, ballRadius, ballSpeed); // Defino el objeto
