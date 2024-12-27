@@ -1,3 +1,5 @@
+import playSound from "./sound.js";
+
 class Ball {
   constructor(track, radius, speed) {
     this.track = track;
@@ -15,7 +17,8 @@ class Ball {
     this.center = this.track.getPosition(this.offset);
     // Condicional para cambiar la `direction`
     if (this.center.y > this.track.center.y) {
-      this.direction *= -1;
+      this.direction *= -1; // Cambiamos `direction`
+      playSound();
     }
   }
 

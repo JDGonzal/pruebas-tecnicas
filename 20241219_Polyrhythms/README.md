@@ -363,3 +363,68 @@ condicional para cambiar la `direction`:
 4. Cambiemos la `ballSpeed` en el archivo **`script.js`**, a
 `0.05`, así se ve el rebote:  
 ![](images/2024-12-27_162015.gif)
+
+## 7. Sonido al rebotar la `ball`
+
+1. Creamos el archivo en la carpeta **"components"** de nombre
+**`sound.js`**, con esto básico de una clase:
+```js
+function playSound() {}
+
+export default playSound;
+```
+2. En la condicional del método `move()` en el archivo
+**`ball.js`**, llamamos la nueva función `playSound()`, por ende
+se hace la importación respectiva:
+```js
+import playSound from "./sound.js";
+...
+  move() {
+    ...
+    if (this.center.y > this.track.center.y) {
+      ...
+      playSound();
+    }
+  }
+```
+3. En el archivo **`sound.js`**, usamos una `api` propia de 
+`window`:
+```js
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+```
+4. Completamos la función `playSound()` en **`sound.js`**
+:
+```js
+  function playSound(frecuency = 440, duration = 1) {
+    const osc = audioCtx.createOscillator();
+    osc.connect(audioCtx.destination);
+
+    osc.frequency.setValueAtTime(frecuency, audioCtx.currentTime);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  }
+```
+>[!WARNING]  
+>Si miramos el `inspect` (`[F12]`) del browser, nos parece un 
+>error y no hay sonido:
+>```diff
+>-sound.js:1 The AudioContext was not allowed to start. It must be >resumed (or created) after a user gesture on the page. >https://goo.gl/7K7WLu
+>```
+>Si Damos click en la imagen del browser, interactuamos con el sitio
+y el empieza a generar el sonido.
+
+5. Agregamos en **`sound.js`**, en la función `playSound()`, otra
+constante:
+```js
+    const envelope = audioCtx.createGain();
+
+    osc.connect(envelope);
+    envelope.connect(audioCtx.destination);
+```
+6. Incrementamos a `envelope`, para que incremente el sonido:
+```js
+  envelope.gain.setValueAtTime(0, audioCtx.currentTime);
+  envelope.gain.linearRampToValueAtTime(1, audioCtx.currentTime + 0.05);
+  envelope.gain.linearRampToValueAtTime(0, audioCtx.currentTime + duration);
+```
