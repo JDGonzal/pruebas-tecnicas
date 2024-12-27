@@ -343,3 +343,23 @@ en el `for` de `a += 0.1` por `a += 0.01`:
 6. Regresamos la fórmula de la función `getPosidion()` sin la 
 multiplicación por tres (`Math.cos(offset * 3)`), para que se 
 vea un círculo simple.
+
+## 6. Rebotando la `ball`
+
+1. Agregamos la constante `direction` en el archivo **`ball.js`**,
+este irá entre los valore `+1` y `-1`.
+2. Simplemente al obtener el `offset`, lo multiplicamos por 
+`direction`, en el método `move()`:
+```js
+    this.offset += this.speed * this.direction;
+```
+3. En el método `move()` de **`ball.js`**, establecemos una 
+condicional para cambiar la `direction`:
+```js
+    if (this.center.y > this.track.center.y) {
+      this.direction *= -1;
+    }
+```
+4. Cambiemos la `ballSpeed` en el archivo **`script.js`**, a
+`0.05`, así se ve el rebote:  
+![](images/2024-12-27_162015.gif)
