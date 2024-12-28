@@ -489,3 +489,69 @@ instructor sugiere `100`.
 >[!TIP]  
 >Así se ve en el browser:  
 >![Múltiples track y ball](images/2024-12-27_182239.gif "Múltiples `track` y `ball`")
+
+## 9. Cambio de frecuencias para cada `ball`
+
+1. En el archivo **`script.js`** cambiamos la constante `ballSpeed` 
+por `ballMinSpeed` y la 
+inicializamos en `0.01`.
+2. Creamos la constante `ballSpeedStep` con valor de `-0.0001`.
+3. En el archivo **`script.js`**, en el `for` del método `setInit()`
+Cambiamos la `ballSpeed`:
+```js
+    const ballSpeed = ballMinSpeed + i * ballSpeedStep;
+```
+
+>[!TIP]  
+>Así se ve en el browser:  
+>![Diferentes Velocidades](images/2024-12-28_074236.gif "Diferentes Velocidades")
+
+4. Creamos la constante `soundFrecuencies` como un arreglo al tope:
+```js
+const soundFrecuencies = [
+  1760, 1567.98, 1396.91, 1318.51, 1174.66, 1046.5, 987.77, 880, 783.99, 698.46,
+  659.25, 587.33, 523.25, 493.88, 440, 392, 349.23, 329.63, 293.66, 261.63,
+]; // Arreglo de `soundFrecuencies`
+```
+5. Asignamos en el `for` del método `setInit()` esta nueva 
+constante a `ballSoundFrecuency` y luego usándola para enviar a 
+la clase `Ball`:
+```js
+  for (let i = 0; i < N; i++) {
+    ...
+    const ballSoundFrecuency = soundFrecuencies[i];
+    ...
+    const ball = new Ball(track, ballRadius, ballSpeed, ballSoundFrecuency);
+    ...
+  }
+```
+6. Ahora bien en la clase `Ball` del archivo **`ball.js`**, hacemos
+uso del valor en el `constructor`:
+```js
+class Ball {
+  constructor(track, radius, speed, soundFrecuency) {
+    ...
+    this.soundFrecuency = soundFrecuency;
+    ...
+  }
+  ...
+}
+```
+7. En el archivo **`ball.js`** al llamar la función `playSound()`, lo
+llamamos con el parámetro obtenido de `this.soundFrecuency`:
+```js
+      playSound(this.soundFrecuency);
+```
+>[!TIP]  
+>Ya el sonido de cada bola es diferente, el parámetro ya existía
+>en la función `playSound()`.
+
+8. Cambiamos en el archivo **`sound.js`** el valor de 
+`envelope.gain...` de `1` a `0.05`, y el sonido será mas fluído y 
+menos brusco.
+9. El momento de llamar el método `playSoubnd()` desde 
+**`ball.js`**, añadimos el parámetro de `duration` a un valor fijo 
+de 2:
+```js
+
+```

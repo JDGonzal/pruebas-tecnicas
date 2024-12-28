@@ -1,10 +1,11 @@
 import playSound from "./sound.js";
 
 class Ball {
-  constructor(track, radius, speed) {
+  constructor(track, radius, speed, soundFrecuency) {
     this.track = track;
     this.radius = radius;
     this.speed = speed;
+    this.soundFrecuency = soundFrecuency;
     this.offset = 0;
     this.direction = 1; // se va a mover entre +1 y -1
     this.center = this.track.getPosition(this.offset);
@@ -18,7 +19,7 @@ class Ball {
     // Condicional para cambiar la `direction`
     if (this.center.y > this.track.center.y) {
       this.direction *= -1; // Cambiamos `direction`
-      playSound();
+      playSound(this.soundFrecuency, 2);
     }
   }
 
