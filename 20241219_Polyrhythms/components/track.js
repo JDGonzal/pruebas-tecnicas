@@ -2,19 +2,21 @@ class Track {
   constructor(center, radius) {
     this.center = center;
     this.radius = radius;
+    this.period = Math.PI;
   }
 
   getPosition(offset) {
     return {
       x: this.center.x + Math.cos(offset) * this.radius,
       y: this.center.y - Math.sin(offset) * this.radius,
+      round: Math.floor(offset / this.period),
     };
   }
 
   draw(ctx) {
     ctx.beginPath();
-    // ctx.arc(this.center.x, this.center.y, this.radius, 0, 2 * Math.PI);
-    for (let a = 0; a < 2 * Math.PI; a += 0.01) {
+    // ctx.arc(this.center.x, this.center.y, this.radius, 0, 2 * this.period);
+    for (let a = 0; a < 2 * this.period; a += 0.01) {
       const pos = this.getPosition(a);
       ctx.lineTo(pos.x, pos.y);
     }

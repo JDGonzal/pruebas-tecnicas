@@ -1,4 +1,4 @@
-import playSound from "./sound.js";
+import playSound from './sound.js';
 
 class Ball {
   constructor(track, radius, speed, soundFrecuency) {
@@ -7,19 +7,21 @@ class Ball {
     this.speed = speed;
     this.soundFrecuency = soundFrecuency;
     this.offset = 0;
-    this.direction = 1; // se va a mover entre +1 y -1
-    this.center = this.track.getPosition(this.offset);
+    this.round = 0; // Valor de base en PI
+    this.center = {};
   }
 
   move() {
     // Incrementamos el offset
-    this.offset += this.speed * this.direction;
+    this.offset += this.speed ;
     // Obtenemos la nueva posición
-    this.center = this.track.getPosition(this.offset);
+    const res = this.track.getPosition(this.offset);
+    // Asignamos la posición `center` de la `ball`
+    this.center = { x: res.x, y: res.y };
     // Condicional para cambiar la `direction`
-    if (this.center.y > this.track.center.y) {
-      this.direction *= -1; // Cambiamos `direction`
+    if (this.round !== res.round) {
       playSound(this.soundFrecuency, 2);
+      this.round = res.round;
     }
   }
 
