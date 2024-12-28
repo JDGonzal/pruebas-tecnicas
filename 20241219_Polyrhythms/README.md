@@ -555,3 +555,61 @@ de 2:
 ```js
 
 ```
+
+## 10. Mejorando el fluído en vez del rebote con algo de matemáticas
+
+1. En el archivo **`ball.js`**, cambiamos la constante `direction`
+por `round` en el constructor y lo inicalizamos en `0`.
+2. En el constructor de **`track`**, defino otro valor de nombre
+`period` con el valore de `PI`:
+```js
+  constructor(center, radius) {
+    ...
+    this.period = Math.PI;
+  }
+```
+3. En el archivo **`track`**, devolveremos `round` en el método
+`getPosition()`:
+```js
+  getPosition(offset) {
+    return {
+      x: this.center.x + Math.cos(offset) * this.radius,
+      y: this.center.y - Math.sin(offset) * this.radius,
+      round: Math.floor(offset / this.period),
+    };
+  }
+```
+4. Dado el cambio de `return` en `getPosition()`, cambiamos esto
+en el archivo **`ball.js`** , empezando en el `constructor`:
+```js
+  constructor(track, radius, speed, soundFrecuency) {
+    this.track = track;
+    this.radius = radius;
+    this.speed = speed;
+    this.soundFrecuency = soundFrecuency;
+    this.offset = 0;
+    this.round = 0; // Valor de base en PI
+    this.center = {};
+  }
+```
+5. También el método `move()`, hacemos estos cambios, ya que
+`direction` fue reemplazada por `round`:
+```js
+  move() {
+    // Incrementamos el offset
+    this.offset += this.speed ;
+    // Obtenemos la nueva posición
+    const res = this.track.getPosition(this.offset);
+    // Asignamos la posición `center` de la `ball`
+    this.center = { x: res.x, y: res.y };
+    // Condicional para cambiar la `direction`
+    if (this.round !== res.round) {
+      playSound(this.soundFrecuency, 2);
+      this.round = res.round;
+    }
+  }
+```
+
+>[!TIP]  
+>Así se ve el movimiento fluido en el `track`  
+>![Movimiento continuo en el `track`](images/2024-12-28_171819.gif "Movimiento continuo en el `track`")
