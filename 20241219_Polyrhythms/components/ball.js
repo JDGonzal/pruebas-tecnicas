@@ -13,23 +13,35 @@ class Ball {
 
   move() {
     // Incrementamos el offset
-    this.offset += this.speed ;
+    this.offset += this.speed;
     // Obtenemos la nueva posición
     const res = this.track.getPosition(this.offset);
     // Asignamos la posición `center` de la `ball`
     this.center = { x: res.x, y: res.y };
-    // Condicional para cambiar la `direction`
+    // Condicional para cambiar el `round`
     if (this.round !== res.round) {
       playSound(this.soundFrecuency, 2);
       this.round = res.round;
     }
   }
 
-  draw(ctx) {
+  drawBall(ctx, x, y, radius) {
     ctx.beginPath();
-    ctx.arc(this.center.x, this.center.y, this.radius, 0, 2 * Math.PI);
+    ctx.arc(x, y, radius, 0, 2 * Math.PI);
+
     ctx.strokeStyle = 'white';
     ctx.stroke();
+    // ctx.fillStyle = 'white';
+    // ctx.fill();
+  }
+
+  draw(ctx) {
+    const fakeY = 2 * this.track.center.y - this.center.y;
+    if (fakeY > this.center.y) {
+      this.drawBall(ctx, this.center.x, this.center.y, this.radius);
+    } else {
+      this.drawBall(ctx, this.center.x, fakeY, this.radius);
+    }
   }
 }
 
