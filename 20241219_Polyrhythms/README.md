@@ -613,3 +613,58 @@ en el archivo **`ball.js`** , empezando en el `constructor`:
 >[!TIP]  
 >Así se ve el movimiento fluido en el `track`  
 >![Movimiento continuo en el `track`](images/2024-12-28_171819.gif "Movimiento continuo en el `track`")
+
+## 11. Mostrando solo medio escenario
+
+1. Agregamos un grupo de `ball` en movimiento opuesto a modo de 
+espejo, en el `draw()` de **`ball.js`**:
+```js
+  drawBall(ctx, x, y, radius) {
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2 * Math.PI);
+    ctx.strokeStyle = 'white';
+    ctx.stroke();
+  }
+
+  draw(ctx) {
+    const fakeY = 2 * this.track.center.y - this.center.y;
+    this.drawBall(ctx, this.center.x, this.center.y, this.radius);
+    this.drawBall(ctx, this.center.x, fakeY, this.radius);
+  }
+```
+
+>[!TIP]  
+>Así se ve ese movimiento en espejo  
+>![Minuto 36:50](images/2024-12-28_174339.gif "Minuto 36:50")
+
+2. Ahora solo veremos la mitad del campo en pantalla, para dar la 
+impresión que las bolas están rebotando, en el achivo **`script.js`**
+poneinto la `height` el valor dividido por 2:
+```js
+  myCanvas.height = size / 2;
+```
+
+>[!TIP]  
+>Así se ve ese movimiento en la mitad del círculo 
+>![Minuto 37:13](images/2024-12-28_175445.gif "Minuto 37:13")
+
+3. Hacemos encajar todos el `track`, cambiando en el archivo
+**`script.js`**, el valor de `trackMinRadius` con el valor de 
+`50`. Ahora los semi círculos encajan en el espacio:  
+![Minuto 37:41](images/2024-12-28_180136.png "Minuto 37:41")
+4. En el archivo **`ball.js`**, solo dibujamos el que sea mayor
+en la posición `y` que el otro en el método `draw()`:
+```js
+  draw(ctx) {
+    const fakeY = 2 * this.track.center.y - this.center.y;
+    if (fakeY > this.center.y) {
+      this.drawBall(ctx, this.center.x, this.center.y, this.radius);
+    } else {
+      this.drawBall(ctx, this.center.x, fakeY, this.radius);
+    }
+  }
+```
+
+>[!TIP]  
+>Así se ve ese movimiento solo mostrando el correcto
+>![Minuto 38:26](images/2024-12-28_181125.gif "Minuto 38:26")

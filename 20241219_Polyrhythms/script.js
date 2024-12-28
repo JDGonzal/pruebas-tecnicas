@@ -20,10 +20,10 @@ window.onload = () => {
 // Función para inicializar el ambiente
 const setInit = () => {
   myCanvas.width = size;
-  myCanvas.height = size;
+  myCanvas.height = size / 2;
 
   const trackCenter = { x: size / 2, y: size / 2 }; // Centro del canvas
-  const trackMinRadius = size / 10; // Radio del círculo o `track`
+  const trackMinRadius = 50; // Radio del círculo o `track`
   const trackStep = 15; // Separación entre `track`
   const ballRadius = 10; // Radio de la bola
   const ballMinSpeed = 0.01; // Velocidad inicial de la bola
