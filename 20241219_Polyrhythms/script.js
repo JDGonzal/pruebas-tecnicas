@@ -20,12 +20,12 @@ window.onload = () => {
 // Función para inicializar el ambiente
 const setInit = () => {
   myCanvas.width = size;
-  myCanvas.height = size;
+  myCanvas.height = size / 2;
 
   const trackCenter = { x: size / 2, y: size / 2 }; // Centro del canvas
   const trackMinRadius = 50; // Radio del círculo o `track`
   const trackStep = 15; // Separación entre `track`
-  const ballRadius = 10; // Radio de la bola
+  const ballRadius = 6; // Radio de la bola
   const ballMinSpeed = 0.01; // Velocidad inicial de la bola
   const ballSpeedStep = -0.0001; // Incremento de la velocidad de la bola
 
@@ -36,9 +36,17 @@ const setInit = () => {
     const ballSpeed = ballMinSpeed + i * ballSpeedStep;
     // Asigno una frecuencia a cada bola
     const ballSoundFrecuency = soundFrecuencies[i];
+    // Creo colores para cada `track` y `ball`
+    const hue = (i * 360) / N;
     // Obtengo los dos objetos
-    const track = new Track(trackCenter, trackRadius);
-    const ball = new Ball(track, ballRadius, ballSpeed, ballSoundFrecuency);
+    const track = new Track(trackCenter, trackRadius, hue);
+    const ball = new Ball(
+      track,
+      ballRadius,
+      ballSpeed,
+      ballSoundFrecuency,
+      hue
+    );
     // Añado a los arreglos
     tracks.push(track);
     balls.push(ball);

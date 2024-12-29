@@ -698,3 +698,121 @@ en el archivo **`script.js`**.
 >Así se ve ese movimiento con el `track` solo en positivo y con
 >el escenario completo:  
 >![Minuto 40:34](images/2024-12-29_135834.gif "Minuto 40:34")
+
+## 13. Mejoras de la presentación
+1. En el archivo **`script.js`**, volvemos a dividir por dos 
+al momento de crear el `canvas`, en el método `setInit()`:
+```js
+  myCanvas.height = size / 2;
+```
+2. Cambio el color del canvas a `black` en el archivo 
+**`style.css`**.
+3. Vamos a generar colores, creamos la constante `hue` en el 
+`for` de `setInit` en el aerchivo **`script.js`**:
+```js
+    // Creo colores para cada `track` y `ball`
+    const hue = (i * 360) / N;
+```
+4. Agregamos como parámetro al momento de instanciar los dos
+objetos de `track` y `ball`:
+```js
+    // Obtengo los dos objetos
+    const track = new Track(trackCenter, trackRadius, hue);
+    const ball = new Ball(
+      track,
+      ballRadius,
+      ballSpeed,
+      ballSoundFrecuency,
+      hue
+    );
+```
+5. Por ende debemos colocar en el `constructor` del archivo
+**`track.js`**, este nuevo parámetro y utilizarlo:
+```js
+class Track {
+  constructor(center, radius, hue) {
+    ...
+    this.hue = hue;
+    ...
+  }
+  ...
+  draw(ctx) {
+    ...
+    ctx.strokeStyle = `hsl(${this.hue}, 100%, 50%)`;
+    ...
+  }
+}
+```
+6. Hacemos algo similar en la clase `Ball` del archivo
+**`ball.js`**:
+```js
+class Ball {
+  constructor(track, radius, speed, soundFrecuency, hue) {
+    ...
+    this.hue = hue;
+    ...
+  }
+  ...
+  draw(ctx) {
+    ctx.beginPath();
+    ctx.arc(this.center.x, this.center.y, this.radius, 0, 2 * Math.PI);
+
+    ctx.strokeStyle = 'white';
+    ctx.stroke();
+    ctx.fillStyle = `hsl(${this.hue}, 100%, 50%)`;
+    ctx.fill();
+  }
+}
+```
+
+>[!TIP]  
+>Esta sería la forma de verlo en varios colores:  
+>![Minuto 43:39](images/2024-12-29_152436.gif "Minuto 43:39")
+
+7. Ajustamos unos estilos en el archivo **`ball.js`**, para el
+método `draw()`: 
+```js
+    ctx.lineWidth = 2;
+```
+8. En el archivo **`script.js`**, cambiamos el valor de `ballRadius`
+de `10` a `6`.
+9. Pondermos en blanco la `ball`, cuando llegue a uno de los 
+extremos, lo hacemos en el archivo **`ball.js`** empezando en el 
+`constructor`:
+```js
+  constructor(track, radius, speed, soundFrecuency, hue) {
+    ...
+    this.progress = 0;
+    ...
+  }
+
+  move() {
+    ...
+    this.progress = res.progress
+    ...
+    }
+```
+10. En el archivo **`track.js`** en el método `getPosition()`
+se añade en el `return` el valor de `progress`:
+```js
+  getPosition(offset) {
+    return {
+      ...
+      progress: (offset % this.period) / this.period,
+    };
+  }
+```
+11. De regreso en el archivo **`ball.js`** en el método `draw()`,
+usamos el valor de `progress`:
+```js
+  draw(ctx) {
+    ...
+    const lightness = 100 - 50 * this.progress;
+    ctx.stroke();
+    ctx.fillStyle = `hsl(${this.hue}, 100%, ${lightness}%)`;
+    ctx.fill();
+  }
+```
+>[!TIP]  
+>Cambio de colores y tonos en cada `ball`:  
+>![Minuto 45:53](images/2024-12-29_161718.gif "Minuto 45:53")
