@@ -668,3 +668,33 @@ en la posición `y` que el otro en el método `draw()`:
 >[!TIP]  
 >Así se ve ese movimiento solo mostrando el correcto
 >![Minuto 38:26](images/2024-12-28_181125.gif "Minuto 38:26")
+
+## 12. Dibubar solo medio `track` en un `canvas` completo
+
+1. Usemos la matemática para simplificar la lógica, empezamos
+con el archivo **`ball.js`**, regresando a borrar lo relacionado
+con `fakeY`:
+```js
+  draw(ctx) {
+    this.drawBall(ctx, this.center.x, this.center.y, this.radius);
+  }
+```
+2. En el archivo **`track.js`**, en el método `getPosition()`, 
+cambiamos la fórmula al asignar la `y` con la función `abs()`:
+```js
+  getPosition(offset) {
+    return {
+      x: this.center.x + Math.cos(offset) * this.radius,
+      y: this.center.y - Math.abs(Math.sin(offset)) * this.radius,
+      round: Math.floor(offset / this.period),
+    };
+  }
+```
+
+3. Regresamos el tamaño del `canvas` eliminando la división por dos
+en el archivo **`script.js`**.
+
+>[!TIP]  
+>Así se ve ese movimiento con el `track` solo en positivo y con
+>el escenario completo:  
+>![Minuto 40:34](images/2024-12-29_135834.gif "Minuto 40:34")

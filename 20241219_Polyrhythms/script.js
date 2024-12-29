@@ -20,7 +20,7 @@ window.onload = () => {
 // Función para inicializar el ambiente
 const setInit = () => {
   myCanvas.width = size;
-  myCanvas.height = size / 2;
+  myCanvas.height = size;
 
   const trackCenter = { x: size / 2, y: size / 2 }; // Centro del canvas
   const trackMinRadius = 50; // Radio del círculo o `track`
