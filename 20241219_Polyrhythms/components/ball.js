@@ -36,12 +36,7 @@ class Ball {
   }
 
   draw(ctx) {
-    const fakeY = 2 * this.track.center.y - this.center.y;
-    if (fakeY > this.center.y) {
-      this.drawBall(ctx, this.center.x, this.center.y, this.radius);
-    } else {
-      this.drawBall(ctx, this.center.x, fakeY, this.radius);
-    }
+    this.drawBall(ctx, this.center.x, this.center.y, this.radius);
   }
 }
 
