@@ -1,5 +1,7 @@
+import drawStar from './items/01-star.js'; // Importo la función drawStar
 const cellSize = 200; // Tamaño de la celda
 const calendar = document.getElementById('calendar'); // Obtengo el div con id calendar
+const drawItemFunctions = []; // Creo un array para guardar las funciones
 
 // Cuando se muestra la pantalla
 window.onload = () => {
@@ -8,6 +10,7 @@ window.onload = () => {
 
 // Función para inicializar el ambiente
 const setInit = () => {
+  drawItemFunctions[1] = drawStar; // Asigno la función drawStar al array
   for (let day = 1; day <= 24; day++) {
     const canvas = document.createElement('canvas'); // Creo un canvas
     canvas.width = cellSize; // Asigno el ancho
@@ -22,17 +25,19 @@ const setInit = () => {
 const fillCell = (canvas, index) => {
   const ctx = canvas.getContext('2d'); // Obtengo el contexto del canvas
   const x = canvas.width / 2; // Obtengo la mitad del ancho
-  const y = canvas.height / 2; // Obtengo la mitad del alto 
+  const y = canvas.height / 2; // Obtengo la mitad del alto
   const itemSize = canvas.width * 0.6; // Defino el tamaño del item
 
-  drawNmber(ctx, index, x, y, itemSize); // Llamo la función drawNumber
-}
+  const drawItem = drawItemFunctions[index]; // Obtengo la función a dibujar
+  if (drawItem) drawItem(ctx, x, y, itemSize); // Llamo la función drawItem
+  else drawNumber(ctx, index, x, y, itemSize); // Llamo la función drawNumber
+};
 
 // Función para dibujar el número
-const drawNmber = (ctx, number, x, y, size) => {
+const drawNumber = (ctx, number, x, y, size) => {
   ctx.font = size + 'px Arial'; // Asigno la fuente
   ctx.textAlign = 'center'; // Asigno la alineación
   ctx.textBaseline = 'middle'; // Asigno la base del texto
   ctx.fillText(number, x, y); // Dibujo el número
-  ctx.fillStyle = 'black'; // Asigno el color 
-}
+  ctx.fillStyle = 'black'; // Asigno el color
+};

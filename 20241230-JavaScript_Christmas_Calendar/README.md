@@ -130,3 +130,105 @@ const drawNmber = (ctx, number, x, y, size) => {
 >[!TIP]  
 >Los números aparecen centrados en cada celda:  
 >![Minuto 6:58](images/2024-12-30_185505.png "Minuto 6:58")
+
+## 3. Día primero con **`01-start.js`**
+
+1. Creamos en la parte superior de **`script.js`** la definicón
+de un arreglo de nombre `drawImtemFunctions`:
+```js
+const drawItemFunctions = []; // Creo un array para guardar las funciones
+```
+2. En el método `setInit()`, antes del `for`, cargo el primer valor
+como `drawStar`;
+```js
+  drawItemFunctions[1] = drawStar; // Asigno la función drawStar al array
+```
+3. En la función `fillCell` colocamos esto antes de llamar la función
+`drawNumber()`:
+```js
+  const drawItem = drawItemFunctions[index]; // Obtengo la función a dibujar
+  if (drawItem)
+    drawItem(ctx, x, y, itemSize); // Llamo la función drawItem
+  else drawNumber(ctx, index, x, y, itemSize); // Llamo la función drawNumber
+``` 
+4. Creamos la carpeta de nombre **"items"**.
+5. La función la vamos a crear en un archivo nuevo de nombre
+**`01-start.js`**, dentro de la carpeta **"items"**, con al menos
+este código:
+```js
+function drawStar(ctx, x, y, size) {}
+
+export default drawStar;
+```
+6. Regreso a **`script.js`** y en el principio añado la importación
+de la función del archivo **`01-start.js`**:
+```js
+import drawStar from './items/01-start.js'; // Importo la función drawStar
+```
+7. En la función `drawStar()` de  **`01-start.js`**, coloco
+este código:
+```js
+  const radius = size / 2; // Defino el radio
+  const pointCount = 5; // Defino la cantidad de puntos
+  ctx.beginPath(); // Comienzo el trazo
+  for (let i = 0; i < pointCount; i++) {
+    const angle = (i / pointCount) * Math.PI * 2; // Defino el ángulo
+    const surfaceX = x + radius * Math.cos(angle); // Defino la superficie x
+    const surfaceY = y + radius * Math.sin(angle); // Defino la superficie y
+    ctx.lineTo(surfaceX, surfaceY); // Dibujo la línea
+  }
+  ctx.fillStyle = 'yellow'; // Asigno el color
+  ctx.fill(); // Relleno
+```
+
+>[!TIP]  
+>Tenemos un pentágono en la primer celda:  
+>![Minuto 11:13](images/2024-12-31_161802.png "Minuto 11:13")
+
+8. Cambiamos el número de puntos de `pointCount` a `10`, y el nombre de
+la constante `radius` por otras dos nuevas:
+```js
+  const outerRadius = size / 2; // Defino el radio externo
+  const innerRadius = size / 4; // Defino el radio interno
+  const pointCount = 10; // Defino la cantidad de puntos
+```
+9. Justo después de obtener el `angle`, obtengo el `radius`:
+```js
+    const radius = (i % 2 === 0) ? outerRadius : innerRadius; // Defino el radio
+```
+* Así se ve la estrella como "rellenita":  
+![Minuto 12:07](images/2024-12-31_163757.png "Minuto 12:07")
+
+10. Cambio el valor de `innerRadius` de `size / 4` a 
+`size / 5`, y se ve la estrella mejor:  
+![Ajuste `innerRadius`](images/2024-12-31_164527.png "Ajuste `innerRadius`")
+11. Finalmente encuentro una fórmula mejor para hacer la estrella
+y cambio el código por esto:
+```js
+  ctx.fillStyle = 'yellow'; // Asigno el color
+  ctx.beginPath(); // Comienzo el trazo
+  ctx.moveTo(x, y - size / 2); // Muevo el trazo
+  for (let i = 0; i < 10; i++) {
+    const angle = (i * Math.PI) / 5; // Defino el ángulo
+    const radius = i % 2 === 0 ? size * 0.5 : size * 0.2; // Defino el radio
+    ctx.lineTo(x + radius * Math.sin(angle), y - radius * Math.cos(angle)); // Dibujo la línea
+  }
+  ctx.closePath(); // Cierro el trazo
+  ctx.fill(); // Relleno
+```
+* Veo mejor la estrella de esta forma:  
+![Cambio todo el código](images/2024-12-31_164932.png "Cambio todo el código")
+
+12. El Instructor corrije el código para que se vea también la 
+punta arriba, cambiando `surfaceX` y `surfaceY` de esta manera:
+```js
+    const surfaceX = x + radius * Math.sin(angle); // Defino la superficie x
+    const surfaceY = y - radius * Math.cos(angle); // Defino la superficie y
+```
+13. El instructor también sugiere un cambio de colores de forma 
+aleatoria, usando una constante `hue` y poniendo dicho color así:
+```js
+  const hue = Math.floor(Math.random() * 360); // Defino el color
+  ctx.fillStyle = `hsl(${hue}, 50%, 50%)`; // Asigno el color
+```
+* Pero prefiero dejarlo en el color constante de `'yellow'`.
