@@ -78,3 +78,55 @@ canvas {
 >[!TIP]  
 >Así se ve el browser hasta el momento:  
 >![Minuto 4:23](images/2024-12-30_173858.png "Minuto 4:23")
+
+## 2. Dibujando números en las celdas
+
+1. Empezamos a llenar las celdas con algo. En el archivo 
+**`script.js`**, en el `for` de `setInit()`, debajo del 
+`appendChild`, agregamos esto:
+```js
+    fillCell(canvas, day); // Llamo la función fillCell
+```
+2. Creo la función `fillCell()` y empiezo esto en el código:
+```js
+// Función para llenar la celda
+const fillCell = (canvas, index) => {
+  const ctx = canvas.getContext('2d'); // Obtengo el contexto del canvas
+  const x = canvas.width / 2; // Obtengo la mitad del ancho
+  const y = canvas.height / 2; // Obtengo la mitad del alto 
+}
+```
+3. Definimos el tamaño de los elementos en el canvas con esto dentro
+de la función `fillCell()`:
+```js
+  const itemSize = canvas.width * 0.6; // Defino el tamaño del item
+```
+4. Por ahora vamos a dibujar un número en cada una de las celdas, 
+en la función `fillCell()`:
+```js
+  drawNmber(ctx, index, x, y, itemSize); // Llamo la función drawNumber
+```
+5. Creo la función `drawNumber()`:
+```js
+// Función para dibujar el número
+const drawNmber = (ctx, number, x, y, size) => {
+  ctx.font = size + 'px Arial'; // Asigno la fuente
+  ctx.fillText(number, x, y); // Dibujo el número
+  ctx.fillStyle = 'black'; // Asigno el color 
+}
+``` 
+
+>[!TIP]  
+>En cada celda aparece un número:  
+>![Minuto 6:40](images/2024-12-30_180513.png "Minuto 6:40")
+
+6. Añadimos en la función `drawNmber()`, un `textAlign` y un
+`textBaseline`:
+```js
+  ctx.textAlign = 'center'; // Asigno la alineación
+  ctx.textBaseline = 'middle'; // Asigno la base del texto
+```
+
+>[!TIP]  
+>Los números aparecen centrados en cada celda:  
+>![Minuto 6:58](images/2024-12-30_185505.png "Minuto 6:58")
