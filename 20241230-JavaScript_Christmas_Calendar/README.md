@@ -350,3 +350,104 @@ import draw from '../utils/draw.js';
 ```
 * Así se ve la bola y el anillo en la celda 2:  
 ![Minuto 25:12](images/2024-12-31_185905.png "Minuto 25:12")
+
+## 5. Implementar manejo de colores
+
+1. Creamos el archivo **`color.js`** en la carpeta **"utils"**, 
+añadimos el método `color`:
+```js
+const color = {}
+
+color.darkest = (hue) => `hsl(${hue}, 100%, 10%)`;
+color.dark = (hue) => `hsl(${hue}, 100%, 30%)`;
+color.normal = (hue) => `hsl(${hue}, 100%, 50%)`;
+color.light = (hue) => `hsl(${hue}, 100%, 70%)`;
+color.lightest = (hue) => `hsl(${hue}, 100%, 90%)`;
+
+export default color;
+```
+2. Agregamos el elemento `hue` en el archivo **`script.js`**,
+en el método `fillCell()`:
+```js
+const fillCell = (canvas, index) => {
+  ...
+  const hue = Math.floor(Math.random() * 360); // Defino el color
+  ...
+  if (drawItem) drawItem(ctx, x, y, itemSize, hue); // Llamo la función drawItem
+  else drawNumber(ctx, index, x, y, itemSize); // Llamo la función drawNumber
+};
+```
+3. Ahora bien tanto para **`01-start.js`**, como para 
+**`02-ball.js`**, agrego el parámetro `hue` y lo utilizo en
+las definiciones del color:
+* **`01-start.js`**
+```js
+import color from '../utils/color.js';
+
+function drawStar(ctx, x, y, size, hue) {
+  ...
+  ctx.fillStyle = color.normal(hue); // Asigno el color
+}
+```
+* **`02-ball.js`**
+```js
+import color from '../utils/color.js';
+import draw from '../utils/draw.js';
+
+function drawBall(ctx, x, y, size, hue) {
+  ...
+  const ring = {
+    ...,
+    color: color.darkest(hue),
+  };
+  ...
+  const ball = {
+    ...,
+    color: color.normal(hue),
+  };
+}
+```
+4. Para darle volúmen a la `ball`, en el archivo **`ball.js`**
+añadimos la constante `highlight`, antes de dibujar la `ball`:
+```js
+  const highlight = {
+    x: ball.x - ball.radius * 0.3,
+    y: ball.y - ball.radius * 0.3,
+  };
+```
+5. Otra constante para el gradiente de nombre `grd`:
+```js
+  // Definimos el gradiente radial
+  const grd = ctx.createRadialGradient(
+    highlight.x, highlight.y, 0, 
+    highlight.x, highlight.y, ball.radius
+  );
+```
+6. Ajustamos el uso del gradiente en la bola
+```js
+  grd.addColorStop(0, color.light(hue));
+  grd.addColorStop(1, color.dark(hue));
+
+  //dibujamos la bola
+  draw.circle(ctx, ball.x, ball.y(), ball.radius, {
+    fillStyle: grd,
+  });
+```
+* Así se ve la bola con el gradiente:  
+![Minuto 28:38](images/2025-01-01_095647.png "Minuto 28:38")
+7. Mejoramos la gradiente y la imagen se verá mejor:
+```js
+  // Definimos el gradiente radial
+  const grd = ctx.createRadialGradient(
+    highlight.x, highlight.y, 0,
+    highlight.x, highlight.y, ball.radius * 2
+  );
+  grd.addColorStop(0, color.lightest(hue));
+  grd.addColorStop(0.3, color.normal(hue));
+  grd.addColorStop(0.8, color.dark(hue));
+  grd.addColorStop(1, color.darkest(hue));
+```
+* Así se ve con mas opciones en el gradiente:  
+![Minuto 29:18](images/2025-01-01_100722.png "Minuto 29:18")
+8. Borramos de **`02-ball.js`**, la variable innecesaria
+`const left = x - size / 2;`
