@@ -30,9 +30,10 @@ const fillCell = (canvas, index) => {
   const x = canvas.width / 2; // Obtengo la mitad del ancho
   const y = canvas.height / 2; // Obtengo la mitad del alto
   const itemSize = canvas.width * 0.6; // Defino el tamaño del item
+  const hue = Math.floor(Math.random() * 360); // Defino el color
 
   const drawItem = drawItemFunctions[index]; // Obtengo la función a dibujar
-  if (drawItem) drawItem(ctx, x, y, itemSize); // Llamo la función drawItem
+  if (drawItem) drawItem(ctx, x, y, itemSize, hue); // Llamo la función drawItem
   else drawNumber(ctx, index, x, y, itemSize); // Llamo la función drawNumber
 };
 

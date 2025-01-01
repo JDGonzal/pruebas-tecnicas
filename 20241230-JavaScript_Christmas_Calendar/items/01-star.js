@@ -1,4 +1,6 @@
-function drawStar(ctx, x, y, size) {
+import color from '../utils/color.js';
+
+function drawStar(ctx, x, y, size, hue) {
   const outerRadius = size / 2; // Defino el radio externo
   const innerRadius = size / 5; // Defino el radio interno
   const pointCount = 10; // Defino la cantidad de puntos
@@ -12,7 +14,7 @@ function drawStar(ctx, x, y, size) {
   }
   // const hue = Math.floor(Math.random() * 360); // Defino el color
   // ctx.fillStyle = `hsl(${hue}, 50%, 50%)`; // Asigno el color
-  ctx.fillStyle = 'yellow'; // Asigno el color
+  ctx.fillStyle = color.normal(hue); // Asigno el color
   ctx.fill(); // Relleno
 
   // ctx.fillStyle = 'yellow'; // Asigno el color
