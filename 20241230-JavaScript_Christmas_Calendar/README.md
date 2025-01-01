@@ -232,3 +232,121 @@ aleatoria, usando una constante `hue` y poniendo dicho color así:
   ctx.fillStyle = `hsl(${hue}, 50%, 50%)`; // Asigno el color
 ```
 * Pero prefiero dejarlo en el color constante de `'yellow'`.
+
+## 4. Dia segundo con **`02-ball.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[2]`:
+```js
+  drawItemFunctions[2] = drawBall; // Asigno la función drawBall al array
+```
+2. Creamos enla carpeta **"items"** el arhivo **`02-ball.js`**,
+con al menos esta función:
+```js
+function drawBall(ctx, x, y, size) {}
+
+export default drawBall;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawBall from './items/02-ball.js'; // Importo la función drawBall
+```
+3. Ahora si empiezo a poner el código en la función `drawBall()`
+del archivo **`02-ball.js`**:
+```js
+  const top = y - size / 2;
+  const left = x - size / 2;
+
+  // Definimos el anillo de la bola
+  const ring ={
+    radius: size * 0.1,
+    x,
+    get y() {return top + this.radius},
+    color: 'black'
+  }
+
+  //dibujamos el anillo
+  ctx.beginPath();
+  ctx.arc(ring.x, ring.y, ring.radius, 0, Math.PI * 2);
+  ctx.strokeStyle = ring.color;
+  ctx.stroke();
+```
+* Así se ve lo que llevamos de la segunda celda:  
+![Anillo base](images/2024-12-31_181631.png "Anillo base")
+4. Agrego en el objeto `ring` el valor de `lineWidth`:
+```js
+  const ring = {
+    radius: size * 0.1,
+    x,
+    get y() {
+      return top + this.radius;
+    },
+    lineWidth: size * 0.05,
+    color: 'orange',
+  };
+```
+5. Ajustamos en el dibujo del `arc()` con estos valores:
+```js
+  ctx.arc(ring.x, ring.y, ring.radius - ring.lineWidth / 2, 0, Math.PI * 2);
+```
+5. Mejoramos el código par dibuar el `ring` de esta manera:
+```js
+  draw.circle(ctx, ring.x, ring.y, ring.radius, {
+    strokeStyle: ring.color,
+    lineWidth: ring.lineWidth,
+    outline: 'inside'
+  });
+```
+6. Creamos una carpeta en la raíz de nombre **"utils"**.
+7. En la carpeta **"utils"**, creamos el archivo **`draw.js`**,
+con al menos la función `circle()`:
+```js
+const draw = {};
+
+draw.circle = function(ctx, x, y, radius, { fillStyle, strokeStyle, lineWidth, outline }) {
+  ctx.beginPath();
+  if (outline === 'inside') { 
+    radius -= lineWidth / 2;
+  }
+  ctx.arc(x, y, radius, 0, Math.PI * 2);
+  if (fillStyle) {
+    ctx.fillStyle = fillStyle;
+    ctx.fill();
+  }
+  if (strokeStyle) {
+    ctx.strokeStyle = strokeStyle;
+    ctx.lineWidth = lineWidth;
+    ctx.stroke();
+  }
+
+  ctx.closePath();
+}
+
+export default draw;
+```
+8. En el archivo **`02-ball.js`**, importamos este método
+múltiple de nombre `draw`:
+```js
+import draw from '../utils/draw.js';
+```
+* Anillo dibujado con la utilidad `draw`:  
+![Anillo dibujado con la utilidad `draw`](images/2024-12-31_184855.png "Anillo dibujado con la utilidad `draw`")
+9. Definimos un nuevo objeto en el archivo **`02-ball.js`**:
+```js
+  const ball = {
+    radius: size * 0.45,
+    x,
+    y() {
+      return top + ring.radius + this.radius;
+    },
+    color: 'red',
+  };
+```
+10. Usamos el `draw` para completar la bola:
+```js
+  draw.circle(ctx, ball.x, ball.y(), ball.radius, {
+    fillStyle: ball.color,
+  });
+```
+* Así se ve la bola y el anillo en la celda 2:  
+![Minuto 25:12](images/2024-12-31_185905.png "Minuto 25:12")
