@@ -1,4 +1,6 @@
 import drawStar from './items/01-star.js'; // Importo la función drawStar
+import drawBall from './items/02-ball.js'; // Importo la función drawBall
+
 const cellSize = 200; // Tamaño de la celda
 const calendar = document.getElementById('calendar'); // Obtengo el div con id calendar
 const drawItemFunctions = []; // Creo un array para guardar las funciones
@@ -11,6 +13,7 @@ window.onload = () => {
 // Función para inicializar el ambiente
 const setInit = () => {
   drawItemFunctions[1] = drawStar; // Asigno la función drawStar al array
+  drawItemFunctions[2] = drawBall; // Asigno la función drawBall al array
   for (let day = 1; day <= 24; day++) {
     const canvas = document.createElement('canvas'); // Creo un canvas
     canvas.width = cellSize; // Asigno el ancho
