@@ -251,7 +251,7 @@ export default drawBall;
 ```js
 import drawBall from './items/02-ball.js'; // Importo la función drawBall
 ```
-3. Ahora si empiezo a poner el código en la función `drawBall()`
+4. Ahora si empiezo a poner el código en la función `drawBall()`
 del archivo **`02-ball.js`**:
 ```js
   const top = y - size / 2;
@@ -273,7 +273,7 @@ del archivo **`02-ball.js`**:
 ```
 * Así se ve lo que llevamos de la segunda celda:  
 ![Anillo base](images/2024-12-31_181631.png "Anillo base")
-4. Agrego en el objeto `ring` el valor de `lineWidth`:
+5. Agrego en el objeto `ring` el valor de `lineWidth`:
 ```js
   const ring = {
     radius: size * 0.1,
@@ -285,11 +285,11 @@ del archivo **`02-ball.js`**:
     color: 'orange',
   };
 ```
-5. Ajustamos en el dibujo del `arc()` con estos valores:
+6. Ajustamos en el dibujo del `arc()` con estos valores:
 ```js
   ctx.arc(ring.x, ring.y, ring.radius - ring.lineWidth / 2, 0, Math.PI * 2);
 ```
-5. Mejoramos el código par dibuar el `ring` de esta manera:
+7. Mejoramos el código par dibuar el `ring` de esta manera:
 ```js
   draw.circle(ctx, ring.x, ring.y, ring.radius, {
     strokeStyle: ring.color,
@@ -297,8 +297,8 @@ del archivo **`02-ball.js`**:
     outline: 'inside'
   });
 ```
-6. Creamos una carpeta en la raíz de nombre **"utils"**.
-7. En la carpeta **"utils"**, creamos el archivo **`draw.js`**,
+8. Creamos una carpeta en la raíz de nombre **"utils"**.
+9. En la carpeta **"utils"**, creamos el archivo **`draw.js`**,
 con al menos la función `circle()`:
 ```js
 const draw = {};
@@ -324,14 +324,14 @@ draw.circle = function(ctx, x, y, radius, { fillStyle, strokeStyle, lineWidth, o
 
 export default draw;
 ```
-8. En el archivo **`02-ball.js`**, importamos este método
+10. En el archivo **`02-ball.js`**, importamos este método
 múltiple de nombre `draw`:
 ```js
 import draw from '../utils/draw.js';
 ```
 * Anillo dibujado con la utilidad `draw`:  
 ![Anillo dibujado con la utilidad `draw`](images/2024-12-31_184855.png "Anillo dibujado con la utilidad `draw`")
-9. Definimos un nuevo objeto en el archivo **`02-ball.js`**:
+11. Definimos un nuevo objeto en el archivo **`02-ball.js`**:
 ```js
   const ball = {
     radius: size * 0.45,
@@ -342,7 +342,7 @@ import draw from '../utils/draw.js';
     color: 'red',
   };
 ```
-10. Usamos el `draw` para completar la bola:
+12. Usamos el `draw` para completar la bola:
 ```js
   draw.circle(ctx, ball.x, ball.y(), ball.radius, {
     fillStyle: ball.color,
@@ -451,3 +451,136 @@ añadimos la constante `highlight`, antes de dibujar la `ball`:
 ![Minuto 29:18](images/2025-01-01_100722.png "Minuto 29:18")
 8. Borramos de **`02-ball.js`**, la variable innecesaria
 `const left = x - size / 2;`
+
+## 6. Dia tercero con **`03-sock.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[3]`:
+```js
+  drawItemFunctions[3] = drawSock; // Asigno la función drawBall al array
+```
+2. Creamos enla carpeta **"items"** el arhivo **`03-sock.js`**,
+con al menos esta función:
+```js
+function drawSock(ctx, x, y, size, hue) {}
+
+export default drawSock;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawSock from './items/03-sock.js'; // Importo la función drawSock
+```
+4. Agrego en **`draw.js`**, el comportamiento para `line`:
+```js
+draw.line = function (ctx, fromX, fromY, toX, toY, options) {
+  ctx.beginPath();
+  ctx.moveTo(fromX, fromY);
+  ctx.lineTo(toX, toY);
+  Object.assign(ctx, options);
+  ctx.stroke();
+
+  ctx.closePath();
+}
+```
+5.. Ahora si empiezo a poner el código en la función `drawSock()`
+del archivo **`03-sock.js`**:
+```js
+function drawSock(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del calcetín
+  const ankleY = y + size * 0.1; // Defino la altura del tobillo
+  draw.line(ctx, x, top, x, ankleY, {
+    strokeStyle: color.normal(hue), 
+  }); // Dibujo la pierna
+}
+```
+6. Verificar que se tenga ambas importaciones en **`03-sock.js`**:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+import color from '../utils/color.js'; // Importo la función color  
+```
+7. Definimos la constante `footWidth` y la asignamos al momento
+de `draw.line()`:
+```js
+function drawSock(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del calcetín
+  ...
+  const footWidth = size * 0.4; // Defino el ancho del pie
+  draw.line(ctx, x, top, x, ankleY, {
+    strokeStyle: color.normal(hue),
+    lineWidth: footWidth,
+  }); // Dibujo la pierna
+}
+```
+8. Agrego un parámetro al momento de dibujar la línea de
+nombre `lineCap`, para redondear las puntas:
+```js
+  draw.line(ctx, x, top, x, ankleY, {
+    strokeStyle: color.normal(hue),
+    lineWidth: footWidth,
+    lineCap: 'round',
+  });
+```
+9. Defino la constante `radius` y muevo la parte superior mas
+abajo:
+```js
+  const radius = footWidth / 2; // Defino el radio del tobillo
+
+  draw.line(ctx, x, top + radius , x, ankleY, {
+    strokeStyle: color.normal(hue),
+    lineWidth: footWidth,
+    lineCap: 'round',
+  });
+```
+* Así se ve la recta con las puntas redondeadas y la distancia
+del `radius`:  
+![Minuto 34:48](images/2025-01-01_144729.png "Minuto 34:48")
+10. Defino la constante `sleeveWidth` y la uso para dibujar
+la manga en pantalla:
+```js
+  const sleeveWidth = footWidth * 1.1; // Defino el ancho de la manga
+  ...
+  draw.line(ctx, x, top, x, top + radius, {
+    strokeStyle: color.lightest(hue),
+    lineWidth: sleeveWidth,
+    lineCap: 'butt',
+  }); // Dibujo la manga
+```
+* Así se ve la dos rectas:  
+![Minuto 35:43](images/2025-01-01_150428.png "Minuto 35:43")
+11. En el archivo **`03-sock.js`**, agrego el parámetro de
+nombre `angle` con un valor inicial de `0`:
+```js
+function drawSock(ctx, x, y, size, hue, angle = 0) {
+  ...
+}
+```
+12. Definimos en el método `drawSock()` la constante de nombre
+`footSize`:
+```js
+  const footSize = size * 0.3; // Defino el tamaño del pie
+```
+13. Calculamos el inicio del la recta con dos constantes de 
+nombre `tipX` y `tipY`:
+```js
+  const tipX = x + Math.cos(angle) * footSize; // Defino la punta del pie en X
+  const tipY = ankleY + Math.sin(angle) * footSize; // Defino la punta del pie en Y
+```
+14. Dibujamos otra línea con los nuevos elementos, entre el 
+`// Dibujo la pierna` y `// Dibujo la manga` :
+```js
+  draw.line(ctx, x, ankleY, tipX, tipY, {
+    strokeStyle: color.normal(hue),
+    lineWidth: footWidth,
+    lineCap: 'round',
+  }); // Dibujo el pie
+```
+* Así se ve la imagen de `sock` con todo completo:  
+![Minuto 37:20](images/2025-01-02_071928.png "Minuto 37:20") 
+15. Podemos cambiar el valor inicial de `angle`, por este valor:
+```js
+function drawSock(ctx, x, y, size, hue, angle = Math.PI / 4) {
+  ...
+}
+```
+* Así luce la `sock` o media o calcetín con un ángulo de `45°`:  
+![Minuto 37:32](images/2025-01-02_072444.png "Minuto 37:32") 
