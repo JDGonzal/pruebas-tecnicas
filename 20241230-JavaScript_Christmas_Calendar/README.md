@@ -457,9 +457,9 @@ añadimos la constante `highlight`, antes de dibujar la `ball`:
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[3]`:
 ```js
-  drawItemFunctions[3] = drawSock; // Asigno la función drawBall al array
+  drawItemFunctions[3] = drawSock; // Asigno la función drawSock al array
 ```
-2. Creamos enla carpeta **"items"** el arhivo **`03-sock.js`**,
+2. Creamos en la carpeta **"items"** el arhivo **`03-sock.js`**,
 con al menos esta función:
 ```js
 function drawSock(ctx, x, y, size, hue) {}
@@ -584,3 +584,86 @@ function drawSock(ctx, x, y, size, hue, angle = Math.PI / 4) {
 ```
 * Así luce la `sock` o media o calcetín con un ángulo de `45°`:  
 ![Minuto 37:32](images/2025-01-02_072444.png "Minuto 37:32") 
+
+## 7. Dia cuarto con **`04-cane.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[4]`:
+```js
+  drawItemFunctions[4] = drawCane; // Asigno la función drawCane al array
+```
+2. Creamos en la carpeta **"items"** el arhivo **`04-cane.js`**,
+con al menos esta función:
+```js
+function drawCane(ctx, x, y, size, hue) {}
+
+export default drawCane;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawCane from './items/04-cane.js'; // Importo la función drawCane
+```
+4. Definimos las constantes para el `top`, `width` y `thickness`,
+en **`04-cane.js`**:
+```js
+function drawCane(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del bastón
+
+  const width = size * 0.5; // Defino el ancho del bastón
+  const thickness = size * 0.1; // Defino el grosor del bastón
+}
+```
+5. Creamos una constante para manejar el arco de nombre `arc`,
+en el método `drawCane()`:
+```js
+  const arc = {
+    radius: (width - thickness) / 2, // Defino el radio del arco
+    x,
+    y() { return top + this.radius + thickness / 2; }, // Defino la altura del arco
+  }
+```
+6. Hacemos el dibujo correspondiente en el archivo 
+**`04-cane.js`**, dentro del método `drawCane()`:
+```js
+  ctx.beginPath(); // Comienzo el trazo
+  ctx.strokeStyle = color.normal(hue); // Asigno el color
+  ctx.lineWidth = thickness; // Asigno el grosor
+  ctx.arc(arc.x, arc.y(), arc.radius, Math.PI, 0); // Dibujo el arco
+  ctx.stroke(); // Hago el trazo
+```
+* Así se ve la primera parte del bastón o `cane`:  
+![Minuto 41:15](images/2025-01-03_075750.png "Minuto 41:15")
+7. Añadimos en el mérodo `drawCane()`, antes de `ctx.stroke()`
+lo siguiente:
+```js
+  ctx.lineTo(arc.x + arc.radius, bottom); // Dibujo la línea
+```
+8. Defino la constante `bottom` al principio de **`04-cane.js`**:
+```js
+  const bottom = y + size / 2; // Defino la parte inferior
+```
+* Así se ve hasta el momento el cuarto día:  
+![Minuto 41:59](images/2025-01-03_100544.png "Minuto 41:59")
+9. Vamos a dibujar los adornos del bastón debajo de
+`ctx.stroke()`, en el método `drawCane()`:
+```js
+  ctx.strokeStyle = color.dark(hue); // Asigno el color
+  ctx.setLineDash([thickness, thickness]); // Asigno el trazo
+  ctx.stroke(); // Hago el trazo
+```
+* Así luce el bastón con los adornos:  
+![Minuto 42:57](images/2025-01-03_101322.png "Minuto 42:57")
+10. Cambiamos la definición de colores para los dos
+`strokeStyle`:
+```js
+  ctx.beginPath(); // Comienzo el trazo
+  ctx.strokeStyle = color.lightest(hue); // Asigno el color
+  ...
+
+  // Dibujamos los adornos del bastón 
+  ctx.strokeStyle = color.normal(hue); // Asigno el color
+  ...
+```
+* Así vemos el bastón del dia 4, con el cambio de definición de
+colores:  
+![Minuto 43:23](images/2025-01-03_102942.png "Minuto 43:23")
