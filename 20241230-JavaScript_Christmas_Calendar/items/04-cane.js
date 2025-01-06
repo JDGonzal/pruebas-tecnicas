@@ -1,4 +1,3 @@
-import draw from '../utils/draw.js'; // Importo la función draw
 import color from '../utils/color.js'; // Importo la función color
 
 function drawCane(ctx, x, y, size, hue) {

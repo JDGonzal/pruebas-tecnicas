@@ -59,7 +59,7 @@ const setInit = () => {
   }
 }
 ```
-9. En el `<footer>`, agregamos un `link` invocando un arhivo
+9. En el `<footer>`, agregamos un `link` invocando un archivo
 de nombre **`style.css`**:
 ```html
   <link rel="stylesheet" href="style.css">
@@ -240,7 +240,7 @@ adicionamos la función para la posición `[2]`:
 ```js
   drawItemFunctions[2] = drawBall; // Asigno la función drawBall al array
 ```
-2. Creamos enla carpeta **"items"** el arhivo **`02-ball.js`**,
+2. Creamos enla carpeta **"items"** el archivo **`02-ball.js`**,
 con al menos esta función:
 ```js
 function drawBall(ctx, x, y, size) {}
@@ -459,7 +459,7 @@ adicionamos la función para la posición `[3]`:
 ```js
   drawItemFunctions[3] = drawSock; // Asigno la función drawSock al array
 ```
-2. Creamos en la carpeta **"items"** el arhivo **`03-sock.js`**,
+2. Creamos en la carpeta **"items"** el archivo **`03-sock.js`**,
 con al menos esta función:
 ```js
 function drawSock(ctx, x, y, size, hue) {}
@@ -592,7 +592,7 @@ adicionamos la función para la posición `[4]`:
 ```js
   drawItemFunctions[4] = drawCane; // Asigno la función drawCane al array
 ```
-2. Creamos en la carpeta **"items"** el arhivo **`04-cane.js`**,
+2. Creamos en la carpeta **"items"** el archivo **`04-cane.js`**,
 con al menos esta función:
 ```js
 function drawCane(ctx, x, y, size, hue) {}
@@ -667,3 +667,109 @@ lo siguiente:
 * Así vemos el bastón del dia 4, con el cambio de definición de
 colores:  
 ![Minuto 43:23](images/2025-01-03_102942.png "Minuto 43:23")
+
+## 8. Dia quinto con **`05-bow.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[5]`:
+```js
+  drawItemFunctions[5] = drawBow; // Asigno la función drawBow al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`05-bow.js`**,
+con al menos esta función:
+```js
+function drawBow(ctx, x, y, size, hue) {}
+
+export default drawBow;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawBow from './items/05-bow.js'; // Importo la función drawBow
+```
+4. Definimos las constantes para el `top`, `left`, `right`, y
+`bottom` en **`05-bow.js`**:
+```js
+function drawCane(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del moño
+  const left = x - size / 2; // Defino la parte superior del moño
+  const right = x + size / 2; // Defino la parte derecha del moño
+  const bottom = y + size / 2; // Defino la parte inferior del moño
+}
+```
+5. Importo la utilidad **`color.js`** en **`05-bow.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Empiezo dibujando esto en la función `drawBow()`:
+```js
+  ctx.beginPath(); // Comienzo el trazo
+  ctx.fillStyle = color.normal(hue); // Asigno el color
+  ctx.moveTo(x, y); // Muevo el trazo al centro
+  ctx.lineTo(left, top); // Dibujo la esquina superior izquierda
+  ctx.lineTo(left, bottom); // Dibujo la línea inferior izquierda
+  ctx.lineTo(x, y); // Dibujo la línea de regreso al centro
+  ctx.lineTo(right, bottom); // Dibujo la línea inferior derecha
+  ctx.lineTo(right, top); // Dibujo la línea superior derecha
+  ctx.fill(); // lleno la forma o imagen
+```
+* Así se ve el lazo o moño, hasta el momento:  
+![Minuto 46:08](images/2025-01-06_171609.png "Minuto 46:08")
+7. Vamos a hacer el lazo o el moño menos _puntudo_ añadiendo unas
+curvas , por ejemplo cambiando `ctx.lineTo(left, top);`, por 
+`ctx.quadraticCurveTo(left, top, left, y);` del primer 
+`// Dibujo la esquina superior izquierda`:
+```js
+  ctx.quadraticCurveTo(left, top, left, y);
+```
+* Así se ve con esta primera curva:  
+![Minuto 47:01](images/2025-01-06_172522.png "Minuto 47:01")
+8. Cambiemos el segundo `ctx.lineTo(left, bottom);`, por
+`ctx.quadraticCurveTo(left, bottom, x, y);` del 
+`// Dibujo la línea inferior izquierda`:
+```js
+  ctx.quadraticCurveTo(left, bottom, x, y);
+```
+9. Elimininamos o comentamos la línea de 
+`// Dibujo la línea de regreso al centro`
+10. Cambiamos los otros dos trazos:
+```js
+  ctx.quadraticCurveTo(right, bottom, right, y); // Dibujo la línea inferior derecha
+  ctx.quadraticCurveTo(right, top, x, y); // Dibujo la línea superior derecha
+```
+* Así se ve el lazo o moño con las curvas:  
+![Minuto 48:02](images/2025-01-06_173548.png "Minuto 48:02")
+11. Vamos a añadir el nudo o `knot` al centro y empezamos
+definiendo las propiedades en el método `drawBow()` del archivo
+**`05-bow.js`**:
+```js
+  const knot = {
+    size: size * 0.3, // Defino el tamaño del nudo
+    get top() {
+      return y - this.size / 2;
+    }, // Defino la parte superior del nudo
+    get left() {
+      return x - this.size / 2;
+    }, // Defino la parte izquierda del nudo
+    roudness: size * 0.1, // Defino la redondez del nudo
+  };
+```
+12. Completo el trazo con un rectángulo redondeado:
+```js
+  ctx.beginPath(); // Comienzo el trazo
+  ctx.fillStyle = color.dark(hue); // Asigno el color
+  ctx.roundRect(knot.left, knot.top, knot.size, knot.size, knot.roudness); // Dibujo el nudo
+  ctx.fill(); // lleno la forma o imagen
+```
+* Este el lazo o moño con el nudo:  
+![Minuto 49:28](images/2025-01-06_174526.png "Minuto 49:28")
+13. Cambiamos el tamaño del nudo, cambiando `size` y
+`roudness` en el archivo **`05-bow.js`**:
+```js
+  const knot = {
+    size: size * 0.25, // Defino el tamaño del nudo
+    ...
+    roudness: size * 0.05, // Defino la redondez del nudo
+  };
+```
+* Este es el resultado final del dia cuarto:  
+![Minuto 50:00](images/2025-01-06_175448.png "Minuto 50:00")
