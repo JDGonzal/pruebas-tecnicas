@@ -2,6 +2,7 @@ import drawStar from './items/01-star.js'; // Importo la función drawStar
 import drawBall from './items/02-ball.js'; // Importo la función drawBall
 import drawSock from './items/03-sock.js'; // Importo la función drawSock
 import drawCane from './items/04-cane.js'; // Importo la función drawCane
+import drawBow from './items/05-bow.js'; // Importo la función drawBow
 
 const cellSize = 200; // Tamaño de la celda
 const calendar = document.getElementById('calendar'); // Obtengo el div con id calendar
@@ -18,6 +19,7 @@ const setInit = () => {
   drawItemFunctions[2] = drawBall; // Asigno la función drawBall al array
   drawItemFunctions[3] = drawSock; // Asigno la función drawSock al array
   drawItemFunctions[4] = drawCane; // Asigno la función drawCane al array
+  drawItemFunctions[5] = drawBow; // Asigno la función drawBow al array
   for (let day = 1; day <= 24; day++) {
     const canvas = document.createElement('canvas'); // Creo un canvas
     canvas.width = cellSize; // Asigno el ancho
