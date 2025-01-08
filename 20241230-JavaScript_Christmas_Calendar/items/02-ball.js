@@ -1,5 +1,5 @@
-import color from '../utils/color.js';
-import draw from '../utils/draw.js';
+import color from '../utils/color.js'; // Importo la función color
+import draw from '../utils/draw.js';  // Importo la función draw
 
 function drawBall(ctx, x, y, size, hue) {
   const top = y - size / 2;
