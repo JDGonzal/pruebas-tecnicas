@@ -233,7 +233,7 @@ aleatoria, usando una constante `hue` y poniendo dicho color así:
 ```
 * Pero prefiero dejarlo en el color constante de `'yellow'`.
 
-## 4. Dia segundo con **`02-ball.js`**
+## 4. Día segundo con **`02-ball.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[2]`:
@@ -452,7 +452,7 @@ añadimos la constante `highlight`, antes de dibujar la `ball`:
 8. Borramos de **`02-ball.js`**, la variable innecesaria
 `const left = x - size / 2;`
 
-## 6. Dia tercero con **`03-sock.js`**
+## 6. Día tercero con **`03-sock.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[3]`:
@@ -585,7 +585,7 @@ function drawSock(ctx, x, y, size, hue, angle = Math.PI / 4) {
 * Así luce la `sock` o media o calcetín con un ángulo de `45°`:  
 ![Minuto 37:32](images/2025-01-02_072444.png "Minuto 37:32") 
 
-## 7. Dia cuarto con **`04-cane.js`**
+## 7. Día cuarto con **`04-cane.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[4]`:
@@ -668,7 +668,7 @@ lo siguiente:
 colores:  
 ![Minuto 43:23](images/2025-01-03_102942.png "Minuto 43:23")
 
-## 8. Dia quinto con **`05-bow.js`**
+## 8. Día quinto con **`05-bow.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[5]`:
@@ -774,7 +774,7 @@ definiendo las propiedades en el método `drawBow()` del archivo
 * Este es el resultado final del dia cuarto:  
 ![Minuto 50:00](images/2025-01-06_175448.png "Minuto 50:00")
 
-## 9. Dia sexto con **`06-bell.js`**
+## 9. Día sexto con **`06-bell.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[6]`:
@@ -935,3 +935,108 @@ de `0.25` por `0.3`.
 ```
 * Esto es como se ve la `bell` con ambas curvas:  
 ![Minuto 57:32](images/2025-01-08_133541.png "Minuto 57:32")
+
+
+## 10. Día séptimo con **`07-snowBall.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[7]`:
+```js
+  drawItemFunctions[7] = drawSnowBall; // Asigno la función drawSnowBall al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`07-snowBall.js`**,
+con al menos esta función:
+```js
+function drawSnowBall(ctx, x, y, size, hue) {}
+
+export default drawSnowBall;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawSnowBall from './items/07-snowBall.js'; // Importo la función drawSnowBall
+```
+4. Definimos las constantes para el `top`, `left`, `right`, y
+`bottom` en **`07-snowBall.js`**:
+```js
+function drawSnowBall(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior de la bola de nieve
+  const left = x - size / 2; // Defino la parte superior de la bola de nieve
+  const right = x + size / 2; // Defino la parte derecha de la bola de nieve
+  const bottom = y + size / 2; // Defino la parte inferior de la bola de nieve
+}
+```
+5. Importo la utilidad **`color.js`** en **`07-snowBall.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Definimos la constante `radius` y empezamos a hacer el dibujo:
+```js
+  const radius = size / 2; // Defino el radio
+  ctx.beginPath(); // Comienzo el trazado
+  for (let a = 0; a < Math.PI * 2; a += Math.PI / 60) {
+    const surfaceX = x + radius * Math.cos(a); // Defino la superficie x
+    const surfaceY = y + radius * Math.sin(a); // Defino la superficie y
+    ctx.lineTo(surfaceX, surfaceY); // Dibujo la línea
+  }
+  ctx.fillStyle = color.lightest(hue); // Asigno el color
+  ctx.fill(); // Relleno
+```
+* Así se la bola de nieve de forma inicial:  
+![Hora 1:00:57](images/2025-01-08_142403.png "Hora 1:00:57")
+
+7. Cambiamos la constante `radius` por `MaxRadius` y en el ciclo
+`for` del método `drawSnowBall()`, definimos a `radius` con
+algunos valores _aleatorios_:
+```js
+  const maxRadius = size / 2; // Defino el radio
+  ctx.beginPath(); // Comienzo el trazado
+  for (let a = 0; a < Math.PI * 2; a += Math.PI / 60) {
+    const radius = maxRadius * (1 - Math.random() * 0.1); // Defino el radio
+    ...
+  }
+```
+* Así se ve la `snowBall` con con algo de valores _random_:  
+![Hora 1:01:45](images/2025-01-08_143420.png "Hora 1:01:45")
+
+8. Ajustamos el valor en el random para darle mas suavidad
+de `0.1` a `0.05`.
+9. Agregamos unas sombras en la parte inferior-derecha, 
+empezamos encerrando todo en un nuevo método de nombre 
+`drawNoisyBall()`, y llamándola al principio:
+```js
+  drawNoisyBall(ctx, x, y, size, color.normal(hue)); // Llamo la función drawNoisyBall
+
+  function drawNoisyBall(ctx, x, y, size, color) {
+    ...
+    ctx.fillStyle = color; // Asigno el color
+    ctx.fill(); // Relleno
+  }
+```
+* La `snowBall` ya con el color normal y los bordes suaves:  
+![Hora 1:03:11](images/2025-01-08_155800.png "Hora 1:03:11")
+10. Duplicamos la llamada a la función `drawNoisyBall()`,
+cambiando el color:
+```js
+  drawNoisyBall(ctx, x, y, size, color.normal(hue)); // Llamo la función drawNoisyBall
+  drawNoisyBall(ctx, x, y, size, color.lightest(hue)); // Llamo la función drawNoisyBall
+```
+11. Añadimos un objeto `offset` en medio de las dos llamadas
+a la función `drawNoisyBall()`:
+```js
+  drawNoisyBall(ctx, x, y, size, color.normal(hue)); // Llamo la función drawNoisyBall
+  const offset = {
+    x: x - size * 0.1,
+    y: y - size * 0.1,
+  };
+  drawNoisyBall(ctx, offset.x, offset.y, size, color.lightest(hue)); // Llamo la función drawNoisyBall
+```
+* Así se ve la bola con el `offset`:  
+![Hora 1:04:32](images/2025-01-08_160837.png "Hora 1:04:32")
+12. Añado antes del segundo llamado a la función `drawNoisyBall()`,
+un elemento de `ctx`:
+```js
+  ctx.globalCompositeOperation = 'source-atop'; // Asigno la operación de composición
+```
+13. Borro las constantes del paso 4, que no las voy a necesitar.
+* Así se finalmente la `snowBall` o bola de nieve:  
+![Hora 1:05:07](images/2025-01-08_160837.png "Hora 1:05:07")
