@@ -773,3 +773,165 @@ definiendo las propiedades en el método `drawBow()` del archivo
 ```
 * Este es el resultado final del dia cuarto:  
 ![Minuto 50:00](images/2025-01-06_175448.png "Minuto 50:00")
+
+## 9. Dia sexto con **`06-bell.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[6]`:
+```js
+  drawItemFunctions[6] = drawBell; // Asigno la función drawBell al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`06-bell.js`**,
+con al menos esta función:
+```js
+function drawBell(ctx, x, y, size, hue) {}
+
+export default drawBell;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawBell from './items/06-bell.js'; // Importo la función drawBell
+```
+4. Definimos las constantes para el `top`, `left`, `right`, y
+`bottom` en **`06-bell.js`**:
+```js
+function drawCane(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior de la campana
+  const left = x - size / 2; // Defino la parte superior de la campana
+  const right = x + size / 2; // Defino la parte derecha de la campana
+  const bottom = y + size / 2; // Defino la parte inferior de la campana
+}
+```
+5. Importo la utilidad **`color.js`** en **`06-bell.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Copiamos el `ring` o anillo `drawBall()` dentro del archivo
+**`06-bell.js`**:
+```js
+  // Definimos el anillo de la campana
+  const ring = {
+    radius: size * 0.1,
+    x,
+    get y() {
+      return top + this.radius;
+    },
+    lineWidth: size * 0.05,
+    color: color.darkest(hue),
+  };
+
+  //dibujamos el anillo
+  draw.circle(ctx, ring.x, ring.y, ring.radius, {
+    strokeStyle: ring.color,
+    lineWidth: ring.lineWidth,
+    outline: 'inside',
+  });
+```
+7. Debemos importar en **`06-bell.js`**, la utilidad **`draw.js`**:
+```js
+import draw from '../utils/draw.js';  // Importo la función draw
+```
+8. Empezamos con el _badajo_ o `clapper` de la campana o `bell`:
+```js
+  // Definimos el badajo de la campana
+  const clapper = {
+    radius: size * 0.1,
+    x,
+    get y() {
+      return bottom - this.radius;
+    },
+    color: color.dark(hue),
+  };
+
+  // dibujamos el badajo
+  draw.circle(ctx, clapper.x, clapper.y, clapper.radius, {
+    fillStyle: clapper.color,
+  });
+```
+* Esto es lo que se ve de la `bell` con el `clapper`:  
+![Minuto 53:18](images/2025-01-06_182910.png "Minuto 53:18")
+
+9. Para la campana o `bell`, empecemos por definirla:
+```js
+  const bell = {
+    top: top + ring.radius * 2,
+    bottom:bottom - clapper.radius,
+    color: color.normal(hue),
+  };
+```
+10. Ahora en **`06-bell.js`**, dibujamos el triángulo de la `bell`:
+```js
+  ctx.beginPath(); // Comienzo el trazado
+  ctx.fillStyle = bell.color; // Asigno el color
+  ctx.moveTo(x, bell.top); // Muevo a la esquina superior izquierda
+  ctx.lineTo(left, bell.bottom); // Dibujo la línea abajo-izquierda 
+  ctx.lineTo(right, bell.bottom); // Dibujo la línea abajo-derecha
+  ctx.fill(); // Relleno
+```
+* Esto es la campana o `bell` en forma de triángulo:  
+![Minuto 54:37](images/2025-01-06_184233.png "Minuto 54:37")
+
+11. Similar como se hizo con el moño o lazo, vamos a darle algunas
+curvas a la `bell` o campana, empezando por añadir elementos a la 
+definición del objeto `bell`:
+```js
+  const bell = {
+    top: top + ring.radius * 2,
+    bottom:bottom - clapper.radius,
+    color: color.normal(hue),
+    controlOffset: size * 0.25,
+  };
+```
+12. Cambiamos algunos elementos del trazo de la `bell`:
+```js
+  ctx.beginPath(); // Comienzo el trazado
+  ctx.fillStyle = bell.color; // Asigno el color
+  ctx.moveTo(x, bell.top); // Muevo a la esquina superior izquierda
+  // ctx.lineTo(left, bell.bottom); // Dibujo la línea abajo-izquierda
+  ctx.bezierCurveTo(
+    // Dibujo la curva
+    x - bell.controlOffset, // Punto de control izquierdo
+    bell.top, // Punto de control derecho
+    x - bell.controlOffset, // Punto de control izquierdo
+    bell.bottom, // Punto de control derecho
+    left,
+    bell.bottom // Punto final
+  );
+  ctx.lineTo(right, bell.bottom); // Dibujo la línea abajo-derecha
+  ctx.fill(); // Relleno
+}
+```
+* Así luce la campana con las primeras curvas:  
+![Minuto 56:15](images/2025-01-08_132319.png "Minuto 56:15")
+13.Cambiamos la definición de `controlOffset` para cambiar el factor
+de `0.25` por `0.3`.
+14. Cambiamos la otra diagonal de la derecha en el método
+`drawBell()` del archivo **`06-ball.js`**:
+```js
+  ctx.beginPath(); // Comienzo el trazado
+  ctx.fillStyle = bell.color; // Asigno el color
+  ctx.moveTo(x, bell.top); // Muevo a la esquina superior izquierda
+  // ctx.lineTo(left, bell.bottom); // Dibujo la línea abajo-izquierda
+  ctx.bezierCurveTo(
+    // Dibujo la curva
+    x - bell.controlOffset, // Punto de control izquierdo
+    bell.top, // Punto de control derecho
+    x - bell.controlOffset, // Punto de control izquierdo
+    bell.bottom, // Punto de control derecho
+    left,
+    bell.bottom // Punto final
+  );
+  ctx.lineTo(right, bell.bottom); // Dibujo la línea abajo-derecha
+  ctx.bezierCurveTo(
+    // Dibujo la curva
+    x + bell.controlOffset, // Punto de control izquierdo
+    bell.bottom, // Punto de control derecho
+    x + bell.controlOffset, // Punto de control izquierdo
+    bell.top, // Punto de control derecho
+    x,
+    bell.top // Punto final
+  );
+  ctx.fill(); // Relleno
+```
+* Esto es como se ve la `bell` con ambas curvas:  
+![Minuto 57:32](images/2025-01-08_133541.png "Minuto 57:32")
