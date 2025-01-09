@@ -4,12 +4,13 @@ function drawSnowBall(ctx, x, y, size, hue) {
 
   drawNoisyBall(ctx, x, y, size, color.normal(hue)); // Llamo la función drawNoisyBall
   const offset = {
-    x: x - size * 0.1,
+    x: x - size * 0.05,
     y: y - size * 0.1,
   };
   // ctx.globalCompositeOperation = 'destination-out'; // Asigno la operación de composición
   ctx.globalCompositeOperation = 'source-atop'; // Asigno la operación de composición
   drawNoisyBall(ctx, offset.x, offset.y, size, color.lightest(hue)); // Llamo la función drawNoisyBall
+  ctx.globalCompositeOperation = 'source-over'; // Asigno la operación de composición
 
   function drawNoisyBall(ctx, x, y, size, color) {
     const maxRadius = size / 2; // Defino el radio

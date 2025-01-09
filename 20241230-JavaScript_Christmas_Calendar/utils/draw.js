@@ -1,20 +1,26 @@
 const draw = {};
 
-draw.circle = function (ctx, x, y, radius, { fillStyle, strokeStyle, lineWidth, outline }) {
+draw.circle = function (ctx, x, y, radius, options) {
   ctx.beginPath();
-  if (outline === 'inside') {
-    radius -= lineWidth / 2;
+  if (options.outline === 'inside') {
+    radius -= options.lineWidth / 2;
   }
   ctx.arc(x, y, radius, 0, Math.PI * 2);
-  if (fillStyle) {
-    ctx.fillStyle = fillStyle;
-    ctx.fill();
-  }
-  if (strokeStyle) {
-    ctx.strokeStyle = strokeStyle;
-    ctx.lineWidth = lineWidth;
-    ctx.stroke();
-  }
+  Object.assign(ctx, options);
+
+  options.fillStyle && ctx.fill();
+  options.strokeStyle && ctx.stroke();
+
+  ctx.closePath();
+}
+
+draw.ellipse = function (ctx, x, y, xRadius, yRadius, options) {
+  ctx.beginPath();
+  ctx.ellipse(x, y, xRadius, yRadius, 0, 0, Math.PI * 2);
+  Object.assign(ctx, options);
+
+  options.fillStyle && ctx.fill();
+  options.strokeStyle && ctx.stroke();
 
   ctx.closePath();
 }
