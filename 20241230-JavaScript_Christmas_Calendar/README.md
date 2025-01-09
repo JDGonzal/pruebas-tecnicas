@@ -1228,3 +1228,80 @@ y lo uso en la elipse segunda que va en el tope de la vela:
 por `dark`.
 * Así se ve la vela finalmente con los colores:  
 ![Hora 1:16:22](images/2025-01-09_124040.png "Hora 1:16:22")
+
+## 12. Dia noveno con **`glove.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[9]`:
+```js
+  drawItemFunctions[9] = drawGlove; // Asigno la función drawGlove al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`09-glove.js`**,
+con al menos esta función:
+```js
+function drawGlove(ctx, x, y, size, hue) {}
+
+export default drawGlove;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawGlove from './items/09-glove.js'; // Importo la función drawGlove
+```
+4. Definimos las constantes para el `top`, `left`, `right`, y
+`bottom` en **`09-glove.js`**:
+```js
+function drawGlove(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del guante
+  const left = x - size / 2; // Defino la parte superior del guante
+  const right = x + size / 2; // Defino la parte derecha del guante
+  const bottom = y + size / 2; // Defino la parte inferior del guante
+}
+```
+5. Importo la utilidad **`color.js`** en **`09-glove.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Definimos la constante `palmWidth` y `radius`:
+```js
+  const palmWidth = size / 2;
+  const radius = palmWidth / 2;  
+```
+7. Importamos la utilidad `draw` de **`draw.js`**, en el archivo 
+**`09-glove.js`**.
+8. Empiezo dibujando una línea:
+```js
+  draw.line(ctx, x, top + radius, x, bottom - radius, {
+    lineWidth: palmWidth,
+    lineCap: 'round',
+    strokeStyle: color.normal(hue),
+  }); // Dibujo los cuatro dedos
+```
+* Así aparece nuestra primera línea:  
+![Hora 1:18:55](images/2025-01-09_183621.png "Hora 1:18:55")
+9. Definimos la variable para el pulgar de nombre `thumbWidth`:
+```js
+  const thumbWidth = palmWidth / 2;
+```
+10. Dibujamos el pulgar:
+```js
+  draw.line(ctx, x, top + radius, x - radius, y, {
+    lineWidth: thumbWidth,
+    lineCap: 'round',
+    strokeStyle: color.normal(hue),
+  }); // Dibujo el pulgar
+```
+* Este es el guante con el pulgar:  
+![Hora 1:19:57](images/2025-01-09_184243.png "Hora 1:19:57")
+11. Vamos a añadir la manga del guate, el nombre correcto debería
+ser `mitten` o _mitón_ en vez de `glove`:
+```js
+  const sleeveWidth = palmWidth * 1.1;
+  ...
+  draw.line(ctx, x, top, x, top + radius, {
+    lineWidth: sleeveWidth,
+    lineCap: 'butt',
+    strokeStyle: color.lightest(hue),
+  }); // Dibujo la manga
+```
+* Este es el mitón con la manga:  
+![Hora 1:21:07](images/2025-01-09_185018.png "Hora 1:21:07")
