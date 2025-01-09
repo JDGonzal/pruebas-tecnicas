@@ -1033,10 +1033,198 @@ a la función `drawNoisyBall()`:
 * Así se ve la bola con el `offset`:  
 ![Hora 1:04:32](images/2025-01-08_160837.png "Hora 1:04:32")
 12. Añado antes del segundo llamado a la función `drawNoisyBall()`,
-un elemento de `ctx`:
+un elemento de `ctx` en el archivo **`07-snowBall.js`**:
 ```js
   ctx.globalCompositeOperation = 'source-atop'; // Asigno la operación de composición
 ```
 13. Borro las constantes del paso 4, que no las voy a necesitar.
-* Así se finalmente la `snowBall` o bola de nieve:  
+* Así se ve finalmente la `snowBall` o bola de nieve:  
 ![Hora 1:05:07](images/2025-01-08_160837.png "Hora 1:05:07")
+
+>[!WARNING]  
+>En el archivo **`07-snowBall.js`**, se corrige el objeto `offset`:
+>```js
+>  const offset = {
+>    x: x - size * 0.05,
+>    y: y - size * 0.1,
+>  };
+>```
+>Se añade debajo del segundo llamado a la función `drawNoisyBall()`,
+>otro `ctx`:
+>```js
+>  ctx.globalCompositeOperation = 'source-over'; // Asigno la operación de composición
+>```
+
+## 11. Dia octavo con **`candle.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[8]`:
+```js
+  drawItemFunctions[8] = drawCandle; // Asigno la función drawCandle al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`08-candle.js`**,
+con al menos esta función:
+```js
+function drawCandle(ctx, x, y, size, hue) {}
+
+export default drawCandle;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawCandle from './items/08-candle.js'; // Importo la función drawCandle
+```
+4. Definimos las constantes para el `top`, `left`, `right`, y
+`bottom` en **`08-candle.js`**:
+```js
+function drawCandle(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior de la vela
+  const left = x - size / 2; // Defino la parte superior de la vela
+  const right = x + size / 2; // Defino la parte derecha de la vela
+  const bottom = y + size / 2; // Defino la parte inferior de la vela
+}
+```
+5. Importo la utilidad **`color.js`** en **`08-candle.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. definimos la constate `stick` o cuerpo de la vela:
+```js
+  const stick = {
+    // Defino el palo o cuerpo de la vela
+    width: size * 0.3,
+    height: size * 0.7,
+    x: x,
+    bottom: bottom,
+    get top() {
+      return this.bottom - this.height;
+    },
+    color: color.normal(hue),
+  };
+```
+8. Importamos la utilidad `draw` de **`draw.js`**, en el archivo 
+**`08-candle.js`**.
+9. Usamos esa función `draw.line()` dentro del método 
+`drawCandle()`:
+```js
+  draw.line(ctx, stick.x, stick.top, stick.x, stick.bottom, {
+    strokeStyle: stick.color,
+    lineWidth: stick.width,
+  }); // Dibujo el palo
+```
+* Así se ve la primera parte de la vela:  
+![Hora 1:09:19](images/2025-01-09_094820.png "Hora 1:09:19")
+10. Para dibujar la llama, empezamos con una _elipse_, y se requiere
+el objeto `flame`:
+```js
+  const flame = {
+    // Defino la llama
+    width: stick.width * 0.3,
+    height: size - stick.height,
+    x: x,
+    get xRadius() {
+      return this.width / 2;
+    },
+    get yRadius() {
+      return this.height / 2;
+    },
+    get y() {
+      return stick.top - this.yRadius;
+    },
+    color: color.normal(60), // Yellow o Amarillo
+  };
+```
+>[!WARNING]  
+>Aprovecho y hago ajustes a la función `draw.circle()` del 
+>archivo **`draw.js`**:
+>```js
+>draw.circle = function (ctx, x, y, radius, options) {
+>  ctx.beginPath();
+>  if (options.outline === 'inside') {
+>    radius -= options.lineWidth / 2;
+>  }
+>  ctx.arc(x, y, radius, 0, Math.PI * 2);
+>  Object.assign(ctx, options);
+>
+>  options.fillStyle && ctx.fill();
+>  options.strokeStyle && ctx.stroke();
+>
+>  ctx.closePath();
+>}
+>```
+
+11. Creamos una nueva función en el archivo **`draw.js`**, con el
+nombre de `ellipse`:
+```js
+draw.ellipse = function (ctx, x, y, xRadius, yRadius, options) {
+  ctx.beginPath();
+  ctx.ellipse(x, y, xRadius, yRadius, 0, 0, Math.PI * 2);
+  Object.assign(ctx, options);
+  
+  options.fillStyle && ctx.fill();
+  options.strokeStyle && ctx.stroke();
+
+  ctx.closePath();
+}
+```
+12. De regreso a **`08-candle.js`**, usamos la `ellipse()`:
+```js
+  draw.ellipse(ctx, flame.x, flame.y, flame.xRadius, flame.yRadius, {
+    fillStyle: flame.color,
+  }); // Dibujo la llama
+```
+* Así luce la `candle` con el cuerpo de la vela y la llama:  
+![Hora 1:14:41](images/2025-01-09_110533.png "Hora 1:14:41")
+13. Cambiamos el objeto `stick`, para obtener un cilindro mas que
+un rectángulo:
+```js
+  const stick = {
+    // Defino el palo o cuerpo de la vela
+    width: size * 0.3,
+    height: size * 0.7,
+    x: x,
+    get bottom() {
+      return bottom - this.yRadius;
+    },
+    get top() {
+      return this.bottom - this.height + this.yRadius;
+    },
+    get xRadius() {
+      return this.width / 2;
+    },
+    get yRadius() {
+      return this.xRadius / 2;
+    },
+    color: color.normal(hue),
+  };
+```
+14. En el archivo **`08-candle.js`**, debajo de `draw.line()`,
+llamamos otras dos funciones de `draw.ellipse()`:
+```js
+  draw.ellipse(ctx, stick.x, stick.bottom, stick.xRadius, stick.yRadius, {
+    fillStyle: stick.color,
+  }); // Dibujo la base
+
+  draw.ellipse(ctx, stick.x, stick.top, stick.xRadius, stick.yRadius, {
+    fillStyle: stick.color,
+  }); // Dibujo la base
+```
+* Así se ve la vela como un _cilindro_:  
+![Hora 1:15:23](images/2025-01-09_112535.png "Hora 1:15:23")
+15. Añado un elemento al objeto `stick` de nombre `lightColor`
+y lo uso en la elipse segunda que va en el tope de la vela:
+```js
+  const stick = {
+    ...
+    lightColor: color.lightest(hue),
+  };
+  ...
+  draw.ellipse(ctx, stick.x, stick.top, stick.xRadius, stick.yRadius, {
+    fillStyle: stick.lightColor,
+  }); 
+```
+* Esta es la `candle` con la parte superior mas clara o brillante:  
+![Hora 1:15:57](images/2025-01-09_113309.png "Hora 1:15:57")
+16. Cambiamos en el objeto `stick` el color de `normal`
+por `dark`.
+* Así se ve la vela finalmente con los colores:  
+![Hora 1:16:22](images/2025-01-09_124040.png "Hora 1:16:22")
