@@ -1292,7 +1292,7 @@ import color from '../utils/color.js'; // Importo la función color
 ```
 * Este es el guante con el pulgar:  
 ![Hora 1:19:57](images/2025-01-09_184243.png "Hora 1:19:57")
-11. Vamos a añadir la manga del guate, el nombre correcto debería
+11. Vamos a añadir la manga del guante, el nombre correcto debería
 ser `mitten` o _mitón_ en vez de `glove`:
 ```js
   const sleeveWidth = palmWidth * 1.1;
@@ -1305,3 +1305,125 @@ ser `mitten` o _mitón_ en vez de `glove`:
 ```
 * Este es el mitón con la manga:  
 ![Hora 1:21:07](images/2025-01-09_185018.png "Hora 1:21:07")
+
+## 13. Dia décimo con **`candy.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[10]`:
+```js
+  drawItemFunctions[10] = drawCandy; // Asigno la función drawCandy al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`10-candy.js`**,
+con al menos esta función:
+```js
+function drawCandy(ctx, x, y, size, hue) {}
+
+export default drawCandy;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawCandy from './items/10-candy.js'; // Importo la función drawCandy
+```
+4. Definimos las constantes para el `top`, `left`, `right`, y
+`bottom` en **`10-candy.js`**:
+```js
+function drawCandy(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del dulce
+  const left = x - size / 2; // Defino la parte superior del dulce
+  const right = x + size / 2; // Defino la parte derecha del dulce
+  const bottom = y + size / 2; // Defino la parte inferior del dulce
+}
+```
+5. Importo la utilidad **`color.js`** en **`10-candy.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Creamos el objeto `ball`:
+```js
+  const ball = { // Defino la bola de caramelo
+    x,
+    y,
+    radius: size / 4,
+    color: color.normal(hue),
+  }
+```
+7. Importamos en **`10-candy.js`**, la utilidad `draw`:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+8. Dibujamos un círculo dentro del método `drawCandy()`:
+```js
+  draw.circle(ctx, ball.x, ball.y, ball.radius, {
+    fillStyle: ball.color,
+  }); // Dibujo la bola de caramelo
+```
+* Empieza la primera forma de la bola del caramelo o dulce:  
+![Hora 1:23:23](images/2025-01-11_064010.png "Hora 1:23:23")
+9. Agregamos un patrón de _stripes_ o rayas similar al bastón del
+ día cuarto, añadimos debajo del `draw.circle()`:
+```js
+  ctx.beginPath(); // Comienzo el trazo
+  ctx.moveTo(top, left); // Muevo el trazo a la esquina superior izquierda
+  ctx.lineTo(bottom, right); // Dibujo una línea hasta la esquina superior derecha
+  ctx.strokeStyle = color.lightest(hue); // Establezco el color del trazo
+  ctx.stroke(); // Dibujo el trazo
+```
+* Vemos la bola de dulce y una diagonal:  
+![Hora 1:24:22](images/2025-01-11_064932.png "Hora 1:24:22")
+10. Antes del `ctx.stroke()`, agregamos este cambio:
+```js
+  ctx.beginPath(); // Comienzo el trazo
+  ctx.moveTo(top, left); // Muevo el trazo a la esquina superior izquierda
+  ctx.lineTo(bottom, right); // Dibujo una línea hasta la esquina superior derecha
+  ctx.strokeStyle = color.lightest(hue); // Establezco el color del trazo
+  ctx.lineWidth = size; // Establezco el ancho del trazo
+  const stripeWidth = size * 0.05; // Defino el ancho de la franja
+  ctx.setLineDash([stripeWidth, stripeWidth]); // Establezco el patrón de la línea discontinua
+  ctx.stroke(); // Dibujo el trazo
+```
+* Esto es con varias rayas en diagonal:  
+![Hora 1:25:02](images/2025-01-11_065702.png "Hora 1:25:02")
+11. Vamos a limitar las rayas o _stripes_ a la bola de dulce,
+añadimos esto justo después de `draw.circle()` y antes de 
+empezar el trazo:
+```js
+  ctx.save(); // Guardo el contexto
+  ctx.clip(); // Establezco la bola de caramelo como la región de recorte
+```
+* Estas son las rayas limitadas a la bola de caramelo:  
+![Hora 1:25:23](images/2025-01-11_070845.png "Hora 1:25:23")
+12. Agregamos un par de triángulos empezando por el de arriba
+ en el archivo **`10-candy.js`**, debajo de `ctx.stroke()`, 
+ adicional definimos mas elementos en el objeto `ball`:
+```js
+  const ball = {
+    ...
+    get top() {
+      return y - this.radius;
+    },
+    get bottom() { return y + this.radius; },
+    ...,
+  };
+
+  draw.circle(ctx, ball.x, ball.y, ball.radius, {
+    fillStyle: ball.color,
+  }); 
+  ...
+  ctx.restore(); // Restauro el contexto
+
+  ctx.beginPath(); // Comienzo el trazo
+  ctx.moveTo(x, ball.top); // Muevo el trazo a la esquina superior derecha
+  ctx.arc(x, ball.top, ball.radius, (5 * Math.PI) / 4, (7 * Math.PI) / 4); // Dibujo un arco de 180 grados
+  ctx.fill(); // Relleno el arco
+```
+* Este es el _candy_ con el primer triángulo arriba:  
+![Hora 1:27:14](images/2025-01-11_073223.png "Hora 1:27:14")
+13. Duplicamos lo último y le hacemos unos cambios:
+```js
+  ctx.beginPath(); // Comienzo el trazo
+  ctx.moveTo(x, ball.bottom); // Muevo el trazo a la esquina superior derecha
+  ctx.arc(x, ball.bottom, ball.radius, Math.PI / 4, (3 * Math.PI) / 4); // Dibujo un arco de 180 grados
+  ctx.fill(); // Relleno el arco
+```
+* Este es el dulce con los dos triángulos:  
+![Hora 1:27:44](images/2025-01-11_073816.png "Hora 1:27:44")
