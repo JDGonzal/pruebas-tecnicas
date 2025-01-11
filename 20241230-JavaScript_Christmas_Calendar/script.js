@@ -8,6 +8,7 @@ import drawSnowBall from './items/07-snowBall.js'; // Importo la función drawSn
 import drawCandle from './items/08-candle.js'; // Importo la función drawCandle
 import drawGlove from './items/09-glove.js'; // Importo la función drawGlove
 import drawCandy from './items/10-candy.js'; // Importo la función drawCandy
+import drawSnowFlake from './items/11-snowFlake.js'; // Importo la función drawSnowFlake
 
 const cellSize = 200; // Tamaño de la celda
 const calendar = document.getElementById('calendar'); // Obtengo el div con id calendar
@@ -30,6 +31,8 @@ const setInit = () => {
   drawItemFunctions[8] = drawCandle; // Asigno la función drawCandle al array
   drawItemFunctions[9] = drawGlove; // Asigno la función drawGlove al array  
   drawItemFunctions[10] = drawCandy; // Asigno la función drawCandy al array
+  drawItemFunctions[11] = drawSnowFlake; // Asigno la función drawSnowFlake al array
+  
   for (let day = 1; day <= 24; day++) {
     const canvas = document.createElement('canvas'); // Creo un canvas
     canvas.width = cellSize; // Asigno el ancho

@@ -1427,3 +1427,109 @@ empezar el trazo:
 ```
 * Este es el dulce con los dos triángulos:  
 ![Hora 1:27:44](images/2025-01-11_073816.png "Hora 1:27:44")
+
+## 14. Dia undécimo con **`snowFlake.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[11]`:
+```js
+  drawItemFunctions[11] = drawSnowFlake; // Asigno la función drawSnowFlake al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`11-snowFlake.js`**,
+con al menos esta función:
+```js
+function drawSnowFlake(ctx, x, y, size, hue) {}
+
+export default drawSnowFlake;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawSnowFlake from './items/11-snowFlake.js'; // Importo la función drawSnowFlake
+```
+4. Definimos las constantes para el `top`, `left`, `right`, y
+`bottom` en **`11-snowFlake.js`**:
+```js
+function drawSnowFlake(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del copo de nieve
+  const left = x - size / 2; // Defino la parte superior del copo de nieve
+  const right = x + size / 2; // Defino la parte derecha del copo de nieve
+  const bottom = y + size / 2; // Defino la parte inferior del copo de nieve
+}
+```
+5. Importo la utilidad **`color.js`** en **`11-snowFlake.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Importamos en **`11-snowFlake.js`**, la utilidad `draw`:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+7. Empiezo a dibujar una línea:
+```js
+  ctx.lineWidth = size * 0.05; // Establezco el ancho de la línea
+  draw.line(ctx, x, y, x + size * 0.5, y, { strokeStyle: color.lightest(hue) }); // Dibujo una línea horizontal
+```
+* Esta es la primera línea:  
+![Hora 1:29:46](images/2025-01-11_110102.png "Hora 1:29:46")
+8. Vamos con otra línea en el método `drawSnowFlake()`:
+```js
+  draw.line(ctx, x + size * 0.3, y, x + size * 0.4, y + size * 0.15, {
+    strokeStyle: color.lightest(hue),
+  }); // Dibujo una línea diagonal
+```
+* La segunda línea es esta:  
+![Hora 1:30:28](images/2025-01-11_111443.png "Hora 1:30:28")
+9. Duplicamos la anterior hacia arriba:
+```js
+  draw.line(ctx, x + size * 0.3, y, x + size * 0.4, y - size * 0.15, {
+    strokeStyle: color.lightest(hue),
+  }); // Dibujo otra línea diagonal
+```
+10. Encerramos entre una función de nombre `drawBranch`, las tres
+`draw.line()`:
+```js
+  function drawBranch(ctx,x, y, size) {
+    draw.line(ctx, x, y, x + size * 0.5, y, {
+      strokeStyle: color.lightest(hue),
+    }); // Dibujo una línea horizontal
+    draw.line(ctx, x + size * 0.3, y, x + size * 0.4, y + size * 0.15, {
+      strokeStyle: color.lightest(hue),
+    }); // Dibujo una línea diagonal
+    draw.line(ctx, x + size * 0.3, y, x + size * 0.4, y - size * 0.15, {
+      strokeStyle: color.lightest(hue),
+    }); // Dibujo otra línea diagonal
+  }
+```
+11. Añadimos antes de la función `drawBranch()`
+un elemento `ctx.traslate()` en el método `drawSnowFlake()`, del
+archivo **`11-snowFlake.js`**:
+```js
+  ctx.translate(x, y); // Traslado el origen al centro
+```
+12. Empezamos debajo de este `ctx.traslate()` un ciclo `for`:
+```js
+  for (let i = 0; i < 6; i++) {
+    drawBranch(ctx, 0, 0, size); // Dibujo una rama
+    ctx.rotate(Math.PI / 3); // Roto el canvas 60 grados
+  }
+```
+* Así se ve finalmente el copo de nieve o `snowFlake`:  
+![Hora 1:](images/2025-01-11_162132.png "Hora 1:")
+13. Para evitar repetir en **`11-snowFlake.js`** al momento de 
+llamar la utilidad `draw.line()` el 
+`{strokeStyle: color.lightest(hue),}`, justo debajo de 
+`ctx.lineWidth = size * 0.05`, añadimos esto:
+```js
+  ctx.strokeStyle = color.lightest(hue); // Establezco el color de la línea
+```
+14. Luego borro los objetos entre llaves `{}` de `draw.line()`.
+15. Es buena idea antes de `ctx.translate(x, y);` guardar el
+contexto:
+```js
+  ctx.save(); // Guardo el contexto
+```
+16. Al final del ciclo `for` restauro el contexto:
+```js
+  ctx.restore(); // Restauro el contexto
+```
+17. Quitamos las variables definidas en el paso 4.
