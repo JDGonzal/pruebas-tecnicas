@@ -1533,3 +1533,125 @@ contexto:
   ctx.restore(); // Restauro el contexto
 ```
 17. Quitamos las variables definidas en el paso 4.
+
+## 15. Dia duodécimo con **`sledge.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[12]`:
+```js
+  drawItemFunctions[12] = drawSledge; // Asigno la función drawSledge al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`12-sledge.js`**,
+con al menos esta función:
+```js
+function drawSnowFlake(ctx, x, y, size, hue) {}
+
+export default drawSledge;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawSledge from './items/12-sledge.js'; // Importo la función drawSledge
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`12-sledge.js`**:
+```js
+function drawSledge(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del trineo
+  const left = x - size / 2; // Defino la parte superior del trineo
+  const right = x + size / 2; // Defino la parte derecha del trineo
+  const bottom = y + size / 2; // Defino la parte inferior del trineo
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`12-sledge.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Definimos las constantes para `height`, `base` y `arc`:
+```js
+  const height = size * 0.25; // Defino la altura
+  const base = {
+    thickness: size * 0.1, // Defino el grosor de la base
+    bottom: y + height / 2, // Defino la parte inferior de la base
+  }
+  const arc = {
+    radius: height * 0.4, // Defino el radio del arco
+    get x() { return right - this.radius }, // Defino la posición x del arco
+    get y() { return base.bottom - this.radius }, // Defino la posición y del arco
+```
+7. Empezamos con los trazos en el archivo **`12-sledge.js`**:
+```js
+  ctx.beginPath(); // Comienzo el trazado
+  ctx.strokeStyle = color.normal(hue); // Establezco el color de la línea
+  ctx.lineWidth = base.thickness; // Establezco el ancho de la línea
+  ctx.arc(arc.x, arc.y, arc.radius, -Math.PI / 2, Math.PI / 2); // Dibujo un arco
+  ctx.stroke(); // Realizo el trazado
+
+  ctx.closePath(); // Finalizo el trazado
+```
+* Así se ve el primer arco del trineo o `sledge`:  
+![Hora 1:37:46](images/2025-01-11_191419.png "Hora 1:37:46")
+8. Ajustamoe en el objeto `arc`, la posición de `x`:
+```js
+  const arc = {
+    ...
+    get x() {
+      return right - this.radius - base.thickness / 2;
+    }, // Defino la posición x del arco
+    ...
+  };
+```
+9. Empezamos la base del trineo:
+```js
+  ctx.lineTo(left, base.bottom); // Dibujo una línea
+```
+* Este ya es el trineo con la curva y la base:  
+![1:38:30](images/2025-01-12_133951.png "Hora 1:38:30")
+10. Añadimos el objeto `leg` o _pata_:
+```js
+  const leg = {
+    bottom: base.bottom, // Defino la parte inferior de la pata
+    top: base.bottom - height, // Defino la parte superior de la pata
+    thickness: base.thickness * 0.5, // Defino el grosor de la pata
+  };
+```
+11. Dentro del método `drawSledge()`, usamos el objeto `leg`, 
+cambiando la posición `x` creamos dos objetos:
+```js
+  const leftLeg = {
+    ...leg, // Copio las propiedades de la pata
+    x: left + size * 0.2,
+  }; // Defino la pata izquierda
+  const rightLeg = {
+    ...leg, // Copio las propiedades de la pata
+    x: right - size * 0.4,
+  }; // Defino la pata derecha
+```
+12. Importamos en **`12-sledge.js`**, la utilidad `draw`:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+13. Dibujamos las dos patas del trineo:
+```js
+  ctx.lineWidth = leg.thickness; // Establezco el ancho de la línea
+  ctx.strokeStyle = color.light(hue); // Establezco el color de la línea
+  draw.line(ctx, leftLeg.x, leftLeg.bottom, leftLeg.x, leftLeg.top); // Dibujo una línea
+  draw.line(ctx, rightLeg.x, rightLeg.bottom, rightLeg.x, rightLeg.top); // Dibujo una línea
+```
+* Este es el `sledge` o trineo con las dos patas o `leg`:  
+![Hora 1:40:55](images/2025-01-12_141343.png "Hora 1:40:55")
+14. Agregamos el objeto `bench` o _banco_:
+```js
+  const bench = {
+    y: leg.top, // Defino la parte superior del banco
+    left,
+    right: rightLeg.x + size * 0.2, // Defino la parte inferior del banco
+  };
+```
+15. Dibujamos las líneas con base en el objeto `bench`:
+```js
+  draw.line(ctx, bench.left, bench.y, bench.right, bench.y); // Dibujo una línea
+```
+* Así es el trineo con el banco:  
+![Hora 1:41:38](images/2025-01-12_143057.png "Hora 1:41:38")
+16. Oculto lo no requerido del paso 4.
