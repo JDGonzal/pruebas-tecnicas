@@ -1,5 +1,5 @@
+import draw from '../utils/draw.js'; // Importo la función draw
 import color from '../utils/color.js'; // Importo la función color
-import draw from '../utils/draw.js';
 
 function drawTree(ctx, x, y, size, hue) {
   const top = y - size / 2; // Defino la parte superior del árbol
