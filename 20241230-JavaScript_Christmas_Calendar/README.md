@@ -1544,7 +1544,7 @@ adicionamos la función para la posición `[12]`:
 2. Creamos en la carpeta **"items"** el archivo **`12-sledge.js`**,
 con al menos esta función:
 ```js
-function drawSnowFlake(ctx, x, y, size, hue) {}
+function drawSledge(ctx, x, y, size, hue) {}
 
 export default drawSledge;
 ```
@@ -1655,3 +1655,118 @@ import draw from '../utils/draw.js'; // Importo la función draw
 * Así es el trineo con el banco:  
 ![Hora 1:41:38](images/2025-01-12_143057.png "Hora 1:41:38")
 16. Oculto lo no requerido del paso 4.
+
+## 16. Dia décimotercero con **`tree.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[13]`:
+```js
+  drawItemFunctions[13] = drawTree; // Asigno la función drawTree al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`13-tree.js`**,
+con al menos esta función:
+```js
+function drawTree(ctx, x, y, size, hue) {}
+
+export default drawTree;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawTree from './items/13-tree.js'; // Importo la función drawTree
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`13-tree.js`**:
+```js
+function drawTree(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del árbol
+  const left = x - size / 2; // Defino la parte superior del árbol
+  const right = x + size / 2; // Defino la parte derecha del árbol
+  const bottom = y + size / 2; // Defino la parte inferior del árbol
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`13-tree.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Empezamos con el tronco del árbol, estas serían la constante:
+```js
+  const trunkWidth = size * 0.1; // Defino el ancho del tronco
+```
+7. Definimos de `ctx` el `lineWidth` y `strokeStyle`:
+```js
+  ctx.lineWidth = trunkWidth; // Establezco el ancho de la línea
+  ctx.strokeStyle = color.darkest(hue); // Establezco el color de la línea
+  draw.line(ctx, x, bottom, x, y); // Dibujo una línea
+```
+8. Opto por poner solo el `draw.line()` con los parámetros en un
+objeto y borro lo del paso 7:
+```js
+  draw.line(ctx, x, bottom, x, y, {
+    lineWidth: trunkWidth,
+    strokeStyle: color.darkest(hue),
+  }); // Dibujo una línea
+```
+* Este es el tronco del árbol:  
+![Hora 1:43:44](images/2025-01-12_193711.png "Hora 1:43:44")
+9. Defino la constante `block`:
+```js
+  const block = {
+    // Defino el bloque
+    bottom: bottom - size * 0.2, // Defino la parte inferior del bloque
+    top: bottom - size * 0.5, // Defino la parte superior del bloque
+    width: size * 0.8, // Defino el ancho del bloque
+    get left() {
+      return x - this.width / 2;
+    },
+    get right() {
+      return x + this.width / 2;
+    },
+    color: color.normal(hue),
+  };
+```
+10. Vamos a dibujar el `block`:
+```js
+  ctx.fillStyle = block.color; // Establezco el color de relleno
+  ctx.beginPath(); // Comienzo el trazado
+  ctx.moveTo(block.left, block.bottom); // Muevo el trazado
+  ctx.lineTo(block.right, block.bottom); // Dibujo una línea
+  ctx.lineTo(x, block.top); // Dibujo una línea
+  ctx.fill(); // Relleno el trazado
+```
+* Este es el primer bloque:  
+![Hora 1:45:58](images/2025-01-12_195845.png "Hora 1:45:58")
+11. Lo que acabamos de hacer el la `base`, seguimos con el del
+medio o `middle`:
+```js
+// middle
+  block.bottom = bottom - size * 0.4; // Defino la parte inferior del bloque
+  block.top = block.bottom - size * 0.3; // Defino la parte superior del bloque
+  block.width = size * 0.6; // Defino el ancho del bloque
+
+  ctx.beginPath(); // Comienzo el trazado
+  ctx.moveTo(block.left, block.bottom); // Muevo el trazado
+  ctx.lineTo(block.right, block.bottom); // Dibujo una línea
+  ctx.lineTo(x, block.top); // Dibujo una línea
+  ctx.fill(); // Relleno el trazado
+```
+* Bloque del medio se ve así:  
+![Hora 1:47:14](images/2025-01-12_201117.png "Hora 1:47:14")
+12. Vamos a completar el último bloque de arriba:
+```js
+    // top
+    block.bottom = bottom - size * 0.6; // Defino la parte inferior del bloque
+    block.top = top; // Defino la parte superior del bloque
+    block.width = size * 0.4; // Defino el ancho del bloque
+
+    ctx.beginPath(); // Comienzo el trazado
+    ctx.moveTo(block.left, block.bottom); // Muevo el trazado
+    ctx.lineTo(block.right, block.bottom); // Dibujo una línea
+    ctx.lineTo(x, block.top); // Dibujo una línea
+    ctx.fill(); // Relleno el trazado
+```
+* Este es el bonito árbol con las tres capas o `block`:  
+![Hora 1:48:02](images/2025-01-14_162827.png "Hora 1:48:02")
+13. Elimino o comento lo no requerido del paso 4.
+* Este es el árbol sin el marco o recuadro:  
+![Hora 1:48:27](images/2025-01-14_163645.png "Hora 1:48:27")
