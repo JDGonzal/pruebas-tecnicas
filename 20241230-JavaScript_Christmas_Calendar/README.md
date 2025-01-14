@@ -1693,13 +1693,17 @@ import color from '../utils/color.js'; // Importo la función color
 ```js
   const trunkWidth = size * 0.1; // Defino el ancho del tronco
 ```
-7. Definimos de `ctx` el `lineWidth` y `strokeStyle`:
+7. Importamos en **`13-tree.js`**, la utilidad `draw`:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+8. Definimos de `ctx` el `lineWidth` y `strokeStyle`:
 ```js
   ctx.lineWidth = trunkWidth; // Establezco el ancho de la línea
   ctx.strokeStyle = color.darkest(hue); // Establezco el color de la línea
   draw.line(ctx, x, bottom, x, y); // Dibujo una línea
 ```
-8. Opto por poner solo el `draw.line()` con los parámetros en un
+9. Opto por poner solo el `draw.line()` con los parámetros en un
 objeto y borro lo del paso 7:
 ```js
   draw.line(ctx, x, bottom, x, y, {
@@ -1709,7 +1713,7 @@ objeto y borro lo del paso 7:
 ```
 * Este es el tronco del árbol:  
 ![Hora 1:43:44](images/2025-01-12_193711.png "Hora 1:43:44")
-9. Defino la constante `block`:
+10. Defino la constante `block`:
 ```js
   const block = {
     // Defino el bloque
@@ -1725,7 +1729,7 @@ objeto y borro lo del paso 7:
     color: color.normal(hue),
   };
 ```
-10. Vamos a dibujar el `block`:
+11. Vamos a dibujar el `block`:
 ```js
   ctx.fillStyle = block.color; // Establezco el color de relleno
   ctx.beginPath(); // Comienzo el trazado
@@ -1736,7 +1740,7 @@ objeto y borro lo del paso 7:
 ```
 * Este es el primer bloque:  
 ![Hora 1:45:58](images/2025-01-12_195845.png "Hora 1:45:58")
-11. Lo que acabamos de hacer el la `base`, seguimos con el del
+12. Lo que acabamos de hacer el la `base`, seguimos con el del
 medio o `middle`:
 ```js
 // middle
@@ -1752,7 +1756,7 @@ medio o `middle`:
 ```
 * Bloque del medio se ve así:  
 ![Hora 1:47:14](images/2025-01-12_201117.png "Hora 1:47:14")
-12. Vamos a completar el último bloque de arriba:
+13. Vamos a completar el último bloque de arriba:
 ```js
     // top
     block.bottom = bottom - size * 0.6; // Defino la parte inferior del bloque
@@ -1767,6 +1771,105 @@ medio o `middle`:
 ```
 * Este es el bonito árbol con las tres capas o `block`:  
 ![Hora 1:48:02](images/2025-01-14_162827.png "Hora 1:48:02")
-13. Elimino o comento lo no requerido del paso 4.
+14. Elimino o comento lo no requerido del paso 4.
 * Este es el árbol sin el marco o recuadro:  
 ![Hora 1:48:27](images/2025-01-14_163645.png "Hora 1:48:27")
+
+## 17. Dia décimocuarto con **`hat.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[14]`:
+```js
+  drawItemFunctions[14] = drawHat; // Asigno la función drawHat al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`14-hat.js`**,
+con al menos esta función:
+```js
+function drawHat(ctx, x, y, size, hue) {}
+
+export default drawHat;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawHat from './items/14-hat.js'; // Importo la función drawHat
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`14-hat.js`**:
+```js
+function drawHat(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del gorro
+  const left = x - size / 2; // Defino la parte superior del gorro
+  const right = x + size / 2; // Defino la parte derecha del gorro
+  const bottom = y + size / 2; // Defino la parte inferior del gorro
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`14-hat.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Empezamos definiendo las constantes a usar con el sombrero:
+```js
+  const width = size * 0.8; // Defino el ancho
+  const xRadius = width / 2; // Defino el radio x del arco
+  const yRadius = size ; // Defino el radio y del arco
+```
+7. Empezamos el dibujo:
+```js
+  ctx.beginPath(); // Comienzo el trazado
+  ctx.fillStyle = color.normal(hue); // Establezco el color de relleno
+  ctx.ellipse(x, bottom, xRadius, yRadius, 0, Math.PI, Math.PI * 2); // Dibujo un arco
+  ctx.fill(); // Relleno el trazado
+
+  ctx.closePath(); // Cierro el trazado
+```
+* Esta es la primera parte del gorro:  
+![Hora 1:50:57](images/2025-01-14_172649.png "Hora 1:50:57")
+8. Antes de la constante `width`, definimos datos de la `ball`:
+```js
+  const ball = {
+    radius: size * 0.1,
+    x: x,
+    get y(){
+      return top + this.radius;
+    },
+    color: color.lightest(hue),
+  }
+```
+9. Reusamos los datos de la `ball`, para alterar el valor de
+`yRadius`:
+```js
+  const yRadius = size - ball.radius * 2; // Defino el radio y del arco
+```
+10. Importamos en **`14-hat.js`**, la utilidad `draw`:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+11. Completamos la bola de la punta del gorro o sombrero:
+```js
+  draw.circle(ctx, ball.x, ball.y, ball.radius, {
+    fillStyle: ball.color,
+  }); // Dibujo un círculo
+```
+* Este es el gorro con la bola:  
+![Hora 1:52:17](images/2025-01-14_174048.png "Hora 1:52:17")
+12. Definimos y dibujamos el `sleeve`:
+```js
+  const sleeve = {
+    // Defino la manga
+    width,
+    height: size * 0.2,
+    get y(){return bottom - this.height / 2},
+    get left(){return x - this.width / 2},
+    get right(){return x + this.width / 2},
+    color: color.lightest(hue),
+  };
+  draw.line(ctx, sleeve.left, sleeve.y, sleeve.right, sleeve.y, {
+    lineWidth: sleeve.height,
+    strokeStyle: sleeve.color,
+    lineCap: 'round',
+  }); // Dibujo una línea 
+```
+* Este es el gorro completo:  
+![Hora 1:54:26](images/2025-01-14_183132.png "Hora 1:54:26")
+13. Borramos los elementos no requeridos del paso 4.
