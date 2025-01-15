@@ -1873,3 +1873,171 @@ import draw from '../utils/draw.js'; // Importo la función draw
 * Este es el gorro completo:  
 ![Hora 1:54:26](images/2025-01-14_183132.png "Hora 1:54:26")
 13. Borramos los elementos no requeridos del paso 4.
+
+## 18. Dia décimoquinto con **`calendar.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[15]`:
+```js
+  drawItemFunctions[15] = drawCalendar; // Asigno la función drawCalendar al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`15-calendar.js`**,
+con al menos esta función:
+```js
+function drawCalendar(ctx, x, y, size, hue) {}
+
+export default drawCalendar;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawCalendar from './items/15-calendar.js'; // Importo la función drawCalendar
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`15-calendar.js`**:
+```js
+function drawCalendar(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del calendario
+  const left = x - size / 2; // Defino la parte superior del calendario
+  const right = x + size / 2; // Defino la parte derecha del calendario
+  const bottom = y + size / 2; // Defino la parte inferior del calendario
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`15-calendar.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Definimos las constantes a utilizar en el método 
+`drawCalendar()` y empezamos el dibujo:
+```js
+  const roudness = size * 0.1; // Defino la redondez
+  ctx.beginPath(); // Comienzo el trazado
+  ctx.fillStyle = color.lightest(hue); // Establezco el color de relleno  
+  ctx.roundRect(left, top, size, size, roudness); // Dibujo un rectángulo redondeado
+  ctx.fill(); // Relleno el trazado
+
+  ctx.closePath(); // Cierro el trazado
+```
+7. Oculto el marco inicial de punto 4.
+* Esto lo que se ve del calendario hasta el momento:  
+![Hora 1:56:59](/images/2025-01-14_185352.png "Hora 1:56:59")
+8. Agregamos el encabezado y lo dibujamos, antes del 
+`ctx.closePath()`:
+```js
+  const headerHeight = size * 0.3; // Defino la altura del encabezado
+  ctx.fillStyle = color.dark(hue); // Establezco el color de relleno
+  ctx.fillRect(left, top, size, headerHeight); // Dibujo un rectángulo
+```
+* Así luce el calendario hasta el momento:  
+![Hora 1:57:29](images/2025-01-14_185943.png "Hora 1:57:29")
+9. Para q las puntas de la parte superior del calendario se 
+vean redondeadas, agregamos el llamado a la función
+`ctx.clip()`, justo antes de la definición del `headerHeight`:
+```js
+  ctx.clip(); // Establezco la región de recorte para redondear el trazado arriba
+```
+* Calendario con las puntas redondeadas del encabezado:  
+![Hora 1:58:00](images/2025-01-14_190602.png "Hora 1:58:00")
+10. Importamos en **`15-calendar.js`**, la utilidad `draw`:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+11. Agregamos un _hueco_ en el encabezado, el color que sugieren
+es el mas claro, pero yo utilizaré el `'#BBB'`, que está en el 
+`background-color` del `canvas`( Paso 11 de 
+[Los tres archivos básicos](#1-los-tres-archivos-básicos) ):
+```js
+  const hole = {
+    x,
+    y: top + headerHeight / 2,
+    radius: headerHeight / 3,
+    // color: color.lightest(hue),
+    color: '#BBB',
+  };
+  draw.circle(ctx, hole.x, hole.y, hole.radius, {
+    fillStyle: hole.color,
+  }); // Dibujo un círculo
+```
+* Así se ve el calendario con el hueco en el encabezado:  
+![Hora 1:58:47](images/2025-01-14_193240.png "Hora 1:58:47")
+12. En el objeto `hole` cambiamos el atributo `x` por `xs` e
+implemantamos un conjunto de valores:
+```js
+  const hole = {
+    xs: [x - headerHeight, x, x + headerHeight],
+    y: top + headerHeight / 2,
+    radius: headerHeight / 3,
+    // color: color.lightest(hue),
+    color: '#BBB',
+  };
+```
+13. Antes del `draw.circle()`, añadimos un `forEach`:
+```js
+  hole.xs.forEach((x) => {
+    draw.circle(ctx, x, hole.y, hole.radius, {
+      fillStyle: hole.color,
+    }); // Dibujo un círculo
+  }); // Dibujo varios círculos
+```
+* El Calendario con los tres huecos:  
+![Hora:59:36](images/2025-01-15_104147.png "Hora 1:59:36")
+14. Antes de la constante `hole` un elemento de `ctx`, que vuelve 
+transparente el color de los huecos, es decir, dejo el color
+previo:
+```js
+  ctx.globalCompositeOperation = 'destination-out'; // Establezco la operación de composición
+  const hole = {
+    ...
+    color: color.lightest(hue),
+    // color: '#BBB',
+  };
+```
+15. En el método 
+`drawCalendar()` y antes del proceso `ctx.clip()`, guardamos
+el contexto y lo restauramos luego del `forEach()`:
+```js
+  ctx.save(); // Guardo el estado del contexto
+  ctx.clip(); // Establezco la región de recorte para redondear el trazado arriba
+  ...
+  hole.xs.forEach((x) => {
+    ...
+  }); // Dibujo varios círculos
+
+  ctx.restore(); // Restauro el estado del contexto
+```
+16. Definimos un objeto de nombre `text` debajo del `ctx.restore()`:
+```js
+  const text = {
+    size : size * 0.5,
+    x,
+    y: y + headerHeight / 2,
+  }
+```
+17. Dibujamos el texto:
+```js
+  ctx.beginPath(); // Comienzo el trazado
+  ctx.fillStyle = color.dark(hue); // Establezco el color de relleno
+  ctx.font = `${text.size}px Arial`; // Establezco el tamaño y tipo de fuente
+  ctx.textAlign = 'center'; // Establezco la alineación horizontal
+  ctx.textBaseline = 'middle'; // Establezco la alineación vertical
+  ctx.fillText('15', text.x, text.y); // Dibujo el texto
+  ctx.closePath(); // Cierro el trazado
+```
+* Este es nuestro calendario con el texto del día `15`:  
+![Hora 2:01:54](images/2025-01-15_113459.png "Hora 2:01:54")
+18. Para que el texto del día se vea mas grueso añadimos `bold`:
+```js
+  ctx.font = `bold ${text.size}px Arial`; // Establezco el tamaño y tipo de fuente
+```
+19. Cambiamos el valor de `15`, por la variable `day` y la ponemos
+como parámetro al inicio del método `drawCalendar()`:
+```js
+function drawCalendar(ctx, x, y, size, hue, day = 15) {
+  ...
+  ctx.fillText(day, text.x, text.y); // Dibujo el texto
+  ctx.closePath(); // Cierro el trazado
+}
+```
+* Ya el calendario al final:  
+![Hora 2:02:20](images/2025-01-15_114239.png "Hora 2:02:20")
+20. Borramos u ocultamos las constantes del paso 4, no requeridas.
