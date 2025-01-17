@@ -1055,7 +1055,7 @@ un elemento de `ctx` en el archivo **`07-snowBall.js`**:
 >  ctx.globalCompositeOperation = 'source-over'; // Asigno la operación de composición
 >```
 
-## 11. Dia octavo con **`candle.js`**
+## 11. Dia octavo con **`08-candle.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[8]`:
@@ -1229,7 +1229,7 @@ por `dark`.
 * Así se ve la vela finalmente con los colores:  
 ![Hora 1:16:22](images/2025-01-09_124040.png "Hora 1:16:22")
 
-## 12. Dia noveno con **`glove.js`**
+## 12. Dia noveno con **`09-glove.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[9]`:
@@ -1306,7 +1306,7 @@ ser `mitten` o _mitón_ en vez de `glove`:
 * Este es el mitón con la manga:  
 ![Hora 1:21:07](images/2025-01-09_185018.png "Hora 1:21:07")
 
-## 13. Dia décimo con **`candy.js`**
+## 13. Dia décimo con **`10-candy.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[10]`:
@@ -1428,7 +1428,7 @@ empezar el trazo:
 * Este es el dulce con los dos triángulos:  
 ![Hora 1:27:44](images/2025-01-11_073816.png "Hora 1:27:44")
 
-## 14. Dia undécimo con **`snowFlake.js`**
+## 14. Dia undécimo con **`11-snowFlake.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[11]`:
@@ -1534,7 +1534,7 @@ contexto:
 ```
 17. Quitamos las variables definidas en el paso 4.
 
-## 15. Dia duodécimo con **`sledge.js`**
+## 15. Dia duodécimo con **`12-sledge.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[12]`:
@@ -1656,7 +1656,7 @@ import draw from '../utils/draw.js'; // Importo la función draw
 ![Hora 1:41:38](images/2025-01-12_143057.png "Hora 1:41:38")
 16. Oculto lo no requerido del paso 4.
 
-## 16. Dia décimotercero con **`tree.js`**
+## 16. Dia décimotercero con **`13-tree.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[13]`:
@@ -1775,7 +1775,7 @@ medio o `middle`:
 * Este es el árbol sin el marco o recuadro:  
 ![Hora 1:48:27](images/2025-01-14_163645.png "Hora 1:48:27")
 
-## 17. Dia décimocuarto con **`hat.js`**
+## 17. Dia décimocuarto con **`14-hat.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[14]`:
@@ -1876,7 +1876,7 @@ import draw from '../utils/draw.js'; // Importo la función draw
 
 ## 18. Dia décimoquinto con **`calendar.js`**
 
-1. En la función `setInit()` del archivo **`script.js`**, 
+1. En la función `setInit()` del archivo **`15-script.js`**, 
 adicionamos la función para la posición `[15]`:
 ```js
   drawItemFunctions[15] = drawCalendar; // Asigno la función drawCalendar al array
@@ -2041,3 +2041,120 @@ function drawCalendar(ctx, x, y, size, hue, day = 15) {
 * Ya el calendario al final:  
 ![Hora 2:02:20](images/2025-01-15_114239.png "Hora 2:02:20")
 20. Borramos u ocultamos las constantes del paso 4, no requeridas.
+
+## 19. Dia décimosexto con **`16-present.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[16]`:
+```js
+  drawItemFunctions[16] = drawPresent; // Asigno la función drawPresent al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`16-present.js`**,
+con al menos esta función:
+```js
+function drawPresent(ctx, x, y, size, hue) {}
+
+export default drawPresent;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawPresent from './items/16-present.js'; // Importo la función drawPresent
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`16-present.js`**:
+```js
+function drawPresent(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del regalo
+  const left = x - size / 2; // Defino la parte superior del regalo
+  const right = x + size / 2; // Defino la parte derecha del regalo
+  const bottom = y + size / 2; // Defino la parte inferior del regalo
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`16-present.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Creamos el objeto `box`:
+```js
+  const box ={
+    width: size * 0.8,
+    height: size * 0.9,
+    x,
+    bottom,
+    get top() {
+      return this.bottom - this.height;
+    },
+    color: color.dark(hue),
+  }
+```
+7. Importamos en **`16-present.js`**, la utilidad `draw`:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+8. Empezamos a dibujar una línea:
+```js
+  draw.line(ctx, box.x , box.top, box.x , box.bottom, {
+    lineWidth: box.width,
+    strokeStyle: box.color,
+  });
+```
+* Esta es la base de la caja para el regalo:  
+![Hora 2:05:14](images/2025-01-16_115920.png "Hora 2:05:14")
+9. Añadimos decoraciones y una cinta o cuerda en el medio:
+```js
+  const ropeWidth = size * 0.1; //  Defino el ancho de la cuerda
+  draw.line(ctx, box.x, box.top, box.x, box.bottom, {
+    lineWidth: ropeWidth,
+    strokeStyle: color.normal(hue),
+  });
+```
+* Este es el regalo con la cinta vertical:  
+![Hora 2:05:47](images/2025-01-16_120804.png "Hora 2:05:58")
+10. Añadimos a la utilidad **`color.js`**, otro método de nombre
+`reverse`, para hacer un color opuesto o negativo del `hue`:
+```js
+color.reverse = (hue) => (hue + 180) % 360;
+```
+11. De regreso a **`16-present.js`**, añadimos en el objeto
+`ropeWidth` al `color.normal()` el `color.reverse()`:
+```js
+    strokeStyle: color.normal(color.reverse(hue)),
+```
+* Este es el regalo con la cinta en un color opuesto:  
+![Hora 2:06:40](images/2025-01-16_121621.png "Hora 2:06:40")
+12. Definimos la tapa de nombre `lid` y la dibujamos:
+```js
+  const lid = {
+    height: size * 0.2,
+    width: size,
+    x,
+    top: box.top,
+    get bottom() {
+      return this.top + this.height;
+    },
+    color: color.light(hue),
+  };
+  draw.line(ctx, lid.x, lid.top, lid.x, lid.bottom, {
+    lineWidth: lid.width,
+    strokeStyle: lid.color,
+  });
+```
+* Regalo con cinta vertical y la tapa arriba:  
+![Hora 2:07:57](images/2025-01-16_122304.png "Hora 2:07:57")
+13. Importamos en **`16-present.js`**, el método 
+`drawBow()`, que está en el archivo **`05-bow.js`**:
+```js
+import drawBow from './05-bow.js'; // Importo la función drawBow
+```
+14. En el archivo **`16-present.js`**, usamos este método:
+```js
+  drawBow(ctx, lid.x, lid.top, lid.width * 0.8, color.reverse(hue)); // Dibujo el lazo
+```
+* Ya el regalo con el lazo o moño encima:  
+![Hora 2:08:33](images/2025-01-17_181146.png "Hora 2:08:33")
+15. Cambio la posición del `drawBow()`, justo debajo de la 
+definicón dle objeto `lid`.
+* El solo moño encima de la tapa del regalo:  
+![Hora 2:08:49](images/2025-01-17_181554.png "Hora 2:08:49")
+16. Borramos u ocultamos los elementos no requeridos del paso 4.

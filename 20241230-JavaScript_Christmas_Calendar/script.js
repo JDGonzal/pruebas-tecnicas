@@ -13,6 +13,7 @@ import drawSledge from './items/12-sledge.js'; // Importo la función drawSledge
 import drawTree from './items/13-tree.js'; // Importo la función drawTree
 import drawHat from './items/14-hat.js'; // Importo la función drawHat
 import drawCalendar from './items/15-calendar.js'; // Importo la función drawCalendar
+import drawPresent from './items/16-present.js'; // Importo la función drawPresent
 
 const cellSize = 200; // Tamaño de la celda
 const calendar = document.getElementById('calendar'); // Obtengo el div con id calendar
@@ -40,6 +41,7 @@ const setInit = () => {
   drawItemFunctions[13] = drawTree; // Asigno la función drawTree al array
   drawItemFunctions[14] = drawHat; // Asigno la función drawHat al array
   drawItemFunctions[15] = drawCalendar; // Asigno la función drawCalendar al array
+  drawItemFunctions[16] = drawPresent; // Asigno la función drawPresent al array
   
   for (let day = 1; day <= 24; day++) {
     const canvas = document.createElement('canvas'); // Creo un canvas
