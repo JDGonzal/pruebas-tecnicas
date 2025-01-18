@@ -15,6 +15,7 @@ import drawHat from './items/14-hat.js'; // Importo la función drawHat
 import drawCalendar from './items/15-calendar.js'; // Importo la función drawCalendar
 import drawPresent from './items/16-present.js'; // Importo la función drawPresent
 import drawCookie from './items/17-cookie.js'; // Importo la función drawCookie
+import drawGlobe from './items/18-globe.js'; // Importo la función drawGlobe
 
 const cellSize = 200; // Tamaño de la celda
 const calendar = document.getElementById('calendar'); // Obtengo el div con id calendar
@@ -44,6 +45,7 @@ const setInit = () => {
   drawItemFunctions[15] = drawCalendar; // Asigno la función drawCalendar al array
   drawItemFunctions[16] = drawPresent; // Asigno la función drawPresent al array
   drawItemFunctions[17] = drawCookie; // Asigno la función drawCookie al array
+  drawItemFunctions[18] = drawGlobe; // Asigno la función drawGlobe al array
   
   for (let day = 1; day <= 24; day++) {
     const canvas = document.createElement('canvas'); // Creo un canvas
