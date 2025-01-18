@@ -1055,7 +1055,7 @@ un elemento de `ctx` en el archivo **`07-snowBall.js`**:
 >  ctx.globalCompositeOperation = 'source-over'; // Asigno la operación de composición
 >```
 
-## 11. Dia octavo con **`08-candle.js`**
+## 11. Día octavo con **`08-candle.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[8]`:
@@ -1229,7 +1229,7 @@ por `dark`.
 * Así se ve la vela finalmente con los colores:  
 ![Hora 1:16:22](images/2025-01-09_124040.png "Hora 1:16:22")
 
-## 12. Dia noveno con **`09-glove.js`**
+## 12. Día noveno con **`09-glove.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[9]`:
@@ -1306,7 +1306,7 @@ ser `mitten` o _mitón_ en vez de `glove`:
 * Este es el mitón con la manga:  
 ![Hora 1:21:07](images/2025-01-09_185018.png "Hora 1:21:07")
 
-## 13. Dia décimo con **`10-candy.js`**
+## 13. Día décimo con **`10-candy.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[10]`:
@@ -1428,7 +1428,7 @@ empezar el trazo:
 * Este es el dulce con los dos triángulos:  
 ![Hora 1:27:44](images/2025-01-11_073816.png "Hora 1:27:44")
 
-## 14. Dia undécimo con **`11-snowFlake.js`**
+## 14. Día undécimo con **`11-snowFlake.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[11]`:
@@ -1534,7 +1534,7 @@ contexto:
 ```
 17. Quitamos las variables definidas en el paso 4.
 
-## 15. Dia duodécimo con **`12-sledge.js`**
+## 15. Día duodécimo con **`12-sledge.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[12]`:
@@ -1656,7 +1656,7 @@ import draw from '../utils/draw.js'; // Importo la función draw
 ![Hora 1:41:38](images/2025-01-12_143057.png "Hora 1:41:38")
 16. Oculto lo no requerido del paso 4.
 
-## 16. Dia decimotercero con **`13-tree.js`**
+## 16. Día decimotercero con **`13-tree.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[13]`:
@@ -1775,7 +1775,7 @@ medio o `middle`:
 * Este es el árbol sin el marco o recuadro:  
 ![Hora 1:48:27](images/2025-01-14_163645.png "Hora 1:48:27")
 
-## 17. Dia decimocuarto con **`14-hat.js`**
+## 17. Día decimocuarto con **`14-hat.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[14]`:
@@ -1874,7 +1874,7 @@ import draw from '../utils/draw.js'; // Importo la función draw
 ![Hora 1:54:26](images/2025-01-14_183132.png "Hora 1:54:26")
 13. Borramos los elementos no requeridos del paso 4.
 
-## 18. Dia decimoquinto con **`15-calendar.js`**
+## 18. Día decimoquinto con **`15-calendar.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[15]`:
@@ -2042,7 +2042,7 @@ function drawCalendar(ctx, x, y, size, hue, day = 15) {
 ![Hora 2:02:20](images/2025-01-15_114239.png "Hora 2:02:20")
 20. Borramos u ocultamos las constantes del paso 4, no requeridas.
 
-## 19. Dia decimosexto con **`16-present.js`**
+## 19. Día decimosexto con **`16-present.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[16]`:
@@ -2159,7 +2159,7 @@ definicón dle objeto `lid`.
 ![Hora 2:08:49](images/2025-01-17_181554.png "Hora 2:08:49")
 16. Borramos u ocultamos los elementos no requeridos del paso 4.
 
-## 20. Dia decimoséptimo con **`17-cookie.js`**
+## 20. Día decimoséptimo con **`17-cookie.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[17]`:
@@ -2257,3 +2257,128 @@ nuestro _copo de nieve_, ya esta en estado muy claro.
 del paso 4.
 * Esta es la galleta definitiva:  
 ![Hora 2:15:43](images/2025-01-18_153706.png "Hora:2:15:43")
+
+## 21. Día decimoctavo con **`18-globe.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[18]`:
+```js
+  drawItemFunctions[18] = drawGlobe; // Asigno la función drawGlobe al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`18-globe.js`**,
+con al menos esta función:
+```js
+function drawGlobe(ctx, x, y, size, hue) {}
+
+export default drawGlobe;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawGlobe from './items/18-globe.js'; // Importo la función drawGlobe
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`18-globe.js`**:
+```js
+function drawGlobe(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del galleta
+  const left = x - size / 2; // Defino la parte superior del galleta
+  const right = x + size / 2; // Defino la parte derecha del galleta
+  const bottom = y + size / 2; // Defino la parte inferior del galleta
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`18-globe.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Definimos el objeto `ball`:
+```js
+  const ball = {
+    radius: size * 0.45, // Defino el radio
+    x,
+    get y() {
+      return top + this.radius;
+    },
+    color: 'rgba( 255, 255, 255, 0.3', // Defino el color a `white`
+  }
+```
+7. Importamos en **`18-globe.js`**, la utilidad `draw`:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+8. Dibujamos un círculo:
+```js
+  draw.circle(ctx, ball.x, ball.y, ball.radius, {
+    fillStyle: ball.color,
+  });
+```
+* Este es nuestra bola inicial:  
+![Hora 2:18:06](images/2025-01-18_162642.png "Hora 2:18:06")
+9. Creamos el objeto `base`:
+```js
+  const base = {
+    height: size * 0.2,
+    width: size * 0.6,
+    get y() {
+      return bottom - base.height / 2;
+    },
+    get left () {
+      return x - base.width / 2;
+    },
+    get right () {
+      return x + base.width / 2;
+    },
+    color: color.dark(hue), // Defino el color
+  };
+```
+10. Dibujamos una línea:
+```js
+  draw.line(ctx, base.left, base.y, base.right, base.y, {
+    strokeStyle: base.color,
+    lineWidth: base.height,
+    lineCap: 'round',
+  });
+```
+* Este el el Globo de nieve hasta el momento:  
+![Hora 2:20:03](images/2025-01-18_163518.png "Hora 2:20:03")
+11. Reducimos el tamaño de `height` dentro del la `base` a
+`0.15`.
+11. Defino el objeto `tree`, justo debajo de `ball` y antes
+de `draw.circle()`:
+```js
+  const tree = {
+    size: ball.radius * 1.2,
+    x,
+    y: ball.y,
+    hue: color.reverse(hue), // Defino el color
+  };
+```
+12. Importo el método `drawTree()` dentro del **`18-globe.js`**:
+```js
+import drawTree from './13-tree.js'; // Importo la función drawTree
+```
+13. Invoco este método debajo de la definición del objeto `tree`:
+```js
+  drawTree(ctx, tree.x, tree.y, tree.size, tree.hue); // Llamo la función drawTree
+```
+* Este el globo de nieve con el árbol adentro:  
+![Hora 2:21:18](images/2025-01-18_164627.png "Hora 2:21:18")
+14. Antes del objeto `tree` y debajo del `ball` defino la
+nieve o `// snow`:
+```js
+  // snow
+  ctx.fillStyle = 'white'; // Defino el color a `white`
+  ctx.beginPath(); // Comienzo el trazado
+  ctx.arc(ball.x, ball.y, ball.radius, 0.3, Math.PI - 0.3); // Dibujo un círculo  
+  ctx.fill(); // Relleno el trazado
+```
+* Esta es el globo, con el árbol y algo de nieve abajo:  
+![Hora 2:22:20](images/2025-01-18_165259.png "Hora 2:22:20")
+15. Cambio uno de los parámetros del `ctx.arc()` de `0.3` a
+`0.5`, para q se vea algo inclinada la nieve:
+```js
+  ctx.arc(ball.x, ball.y, ball.radius, 0.3, Math.PI - 0.5); // Dibujo un círculo  
+```
+16. Borro u oculto lo no requerido del paso 4.
+* Este es el Globo final con la nieve inclinada:  
+![Hora 2:22:51](images/2025-01-18_165800.png "Hora 2:22:51")
