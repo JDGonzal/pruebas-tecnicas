@@ -1656,7 +1656,7 @@ import draw from '../utils/draw.js'; // Importo la función draw
 ![Hora 1:41:38](images/2025-01-12_143057.png "Hora 1:41:38")
 16. Oculto lo no requerido del paso 4.
 
-## 16. Dia décimotercero con **`13-tree.js`**
+## 16. Dia decimotercero con **`13-tree.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[13]`:
@@ -1775,7 +1775,7 @@ medio o `middle`:
 * Este es el árbol sin el marco o recuadro:  
 ![Hora 1:48:27](images/2025-01-14_163645.png "Hora 1:48:27")
 
-## 17. Dia décimocuarto con **`14-hat.js`**
+## 17. Dia decimocuarto con **`14-hat.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[14]`:
@@ -1874,9 +1874,9 @@ import draw from '../utils/draw.js'; // Importo la función draw
 ![Hora 1:54:26](images/2025-01-14_183132.png "Hora 1:54:26")
 13. Borramos los elementos no requeridos del paso 4.
 
-## 18. Dia décimoquinto con **`calendar.js`**
+## 18. Dia decimoquinto con **`15-calendar.js`**
 
-1. En la función `setInit()` del archivo **`15-script.js`**, 
+1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[15]`:
 ```js
   drawItemFunctions[15] = drawCalendar; // Asigno la función drawCalendar al array
@@ -2042,7 +2042,7 @@ function drawCalendar(ctx, x, y, size, hue, day = 15) {
 ![Hora 2:02:20](images/2025-01-15_114239.png "Hora 2:02:20")
 20. Borramos u ocultamos las constantes del paso 4, no requeridas.
 
-## 19. Dia décimosexto con **`16-present.js`**
+## 19. Dia decimosexto con **`16-present.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[16]`:
@@ -2158,3 +2158,102 @@ definicón dle objeto `lid`.
 * El solo moño encima de la tapa del regalo:  
 ![Hora 2:08:49](images/2025-01-17_181554.png "Hora 2:08:49")
 16. Borramos u ocultamos los elementos no requeridos del paso 4.
+
+## 20. Dia decimoséptimo con **`17-cookie.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[17]`:
+```js
+  drawItemFunctions[17] = drawCookie; // Asigno la función drawCookie al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`17-cookie.js`**,
+con al menos esta función:
+```js
+function drawCookie(ctx, x, y, size, hue) {}
+
+export default drawCookie;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawCookie from './items/17-cookie.js'; // Importo la función drawCookie
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`17-cookie.js`**:
+```js
+function drawCookie(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del galleta
+  const left = x - size / 2; // Defino la parte superior del galleta
+  const right = x + size / 2; // Defino la parte derecha del galleta
+  const bottom = y + size / 2; // Defino la parte inferior del galleta
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`17-cookie.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Defino la constante `radius`:
+```js
+  const radius = size / 4; // Defino el radio
+```
+7. Importamos en **`17-cookie.js`**, la utilidad `draw`:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+8. Dibujo un círculo con `draw.circle()`:
+```js
+  draw.circle(ctx, x, y , radius, {
+    lineWidth: radius,
+    strokeStyle: color.dark(hue),
+  });
+```
+* La primer parte de la galleta, luce como una dona:  
+![Hora 2:11:06](images/2025-01-17_184333.png "Hora 2:11:06")
+9. Cambio al momento de `draw.circle()`, en vez de 
+`lineWidth: radius,`, pongo `lineWidth: radius * 2,`.
+10. Defino dos constantes mas:
+```js
+  const length = 2 * Math.PI * radius; // Defino la longitud
+  const dashLength = length / 6; // Defino la longitud del guión
+```
+11. Configuro y dibujo las linea lineas punteadas:
+```js
+  ctx.setLineDash([0, dashLength]); // Establezco la longitud del guión
+```
+* No se ve la galleta en pantalla
+12. Agrego otro parámetro al `draw.circle()`:
+```js
+  draw.circle(ctx, x, y, radius, {
+    ...
+    lineCap: 'round',
+  });
+```
+* Este sería un mejor modelo de la galleta:  
+![Hora 2:12:58](images/2025-01-18_151815.png "Hora 2:12:58")
+13. Vamos a decorarla y para empezar importamos el método
+`drawSnowFlake()` dentro de **`17-cookie.js`**:
+```js
+import drawSnowflake from './11-snowflake.js'; // Importo la función drawSnowflake
+```
+14. Llamamos otra función `ctx.setLineDash()` debajo de 
+`draw.circle()`, y luego invocamos el `drawSnowFlake()`:
+```js
+  drawSnowflake(ctx, x, y, size * 0.8, hue); // Dibujo un copo de nieve
+```
+* Esta es la galleta con el adorno en el medio:  
+![Hora 2:13:35](images/2025-01-18_152550.png "Hora 2:13:35")
+15. El instructor sugiere usar entes del `drawSnowFlake()`, al
+`ctx`, ponerle un filtro, pero no lo requerimos dado que 
+nuestro _copo de nieve_, ya esta en estado muy claro.
+```js
+  // ctx.filter = 'blur(1px)'; // Aplico un filtro de desenfoque
+  // ctx.filter = 'brightness(1)'; // Aplico un filtro de brillo
+```
+16. Otro filtro para que se vea blanco del todo:
+```js
+  ctx.filter = 'grayscale(1)'; // Aplico un filtro de escala de grises
+```
+17. Llegó la hora de borrar u ocultar los elementos no requeridos 
+del paso 4.
+* Esta es la galleta definitiva:  
+![Hora 2:15:43](images/2025-01-18_153706.png "Hora:2:15:43")
