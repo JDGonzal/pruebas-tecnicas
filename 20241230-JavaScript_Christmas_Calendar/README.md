@@ -2467,3 +2467,127 @@ import drawBow from './05-bow.js'; // Importo la función drawBow
 14. Quitamos u ocultamos los elementos no requeridos del paso 4.
 * Este es el resultado final de las campanas y el moño o lazo:  
 ![Hora 2:28:04](images/2025-01-19_163131.png "Hora 2:28:04")
+
+## 23. Día vigésimo con **`20-snowMan.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[20]`:
+```js
+  drawItemFunctions[20] = drawSnowMan; // Asigno la función drawSnowMan al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`20-snowMan.js`**,
+con al menos esta función:
+```js
+function drawSnowMan(ctx, x, y, size, hue) {}
+
+export default drawSnowMan;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawSnowMan from './items/20-snowMan.js'; // Importo la función drawSnowMan
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`20-snowMan.js`**:
+```js
+function drawSnowMan(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del Hombre de Nieve
+  const left = x - size / 2; // Defino la parte superior del Hombre de Nieve
+  const right = x + size / 2; // Defino la parte derecha del Hombre de Nieve
+  const bottom = y + size / 2; // Defino la parte inferior del Hombre de Nieve
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`20-snowMan.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Como vamos a usar el método `snowBall()`, empezamos haciendo
+la importación dentro de **`20-snowMan.js`**:
+```js
+import snowBall from './07-snowBall.js'; // Importo la función snowBall
+```
+7. Creamos el objeto para la bola de abajo y llamamos la función
+de `snowBall()`:
+```js
+  const bottomBall = {
+    size: size * 0.6,
+    x,
+    y: y + size * 0.2,
+  };
+  drawSnowBall(ctx, bottomBall.x, bottomBall.y, bottomBall.size, hue); // Dibujo la bola inferior
+```
+* Esta es la bola inferior del muñeco:  
+![Hora 2:30:10](images/2025-01-19_165141.png "Hora 2:30:10")
+8. Copiamos la bola inferior y hacemos unos cambios:
+```js
+  const topBall = {
+    size: size * 0.4,
+    x,
+    y: y - size * 0.2,
+  };
+  drawSnowBall(ctx, topBall.x, topBall.y, topBall.size, hue); // Dibujo la bola superior
+```
+* Así se ve hasta el momento el muñeco de nieve:  
+![Hora 2:30:40](images/2025-01-19_165648.png "Hora 2:30:40")
+9. Importamos en **`20-snowMAn.js`**, la utilidad `draw`:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+10. Vamos a dibujar los ojos, con la estrategia del `xOffset`,
+empezando con el izquierdo:
+```js
+  const eye = {
+    radius: size * 0.03,
+    xOffset: size * 0.06,
+    y: topBall.y,
+  };
+
+  draw.circle(ctx, x - eye.xOffset, eye.y, eye.radius, {
+    fillStyle: color.darkest(hue),
+  }); // Dibujo el ojo izquierdo
+```
+11. Ahora el ojo derecho:
+```js
+  draw.circle(ctx, x + eye.xOffset, eye.y, eye.radius, {
+    fillStyle: color.darkest(hue),
+  }); // Dibujo el ojo derecho
+```
+* Así luche el muñeco de nieve con ambos ojos:  
+![Hora 2:32:04](images/2025-01-19_170615.png "Hora 2:32:07")
+12. Defino el objeto `hat`, 
+```js
+  const hat = {
+    width: size * 0.3,
+    height: size * 0.2,
+    x,
+    bottom: topBall.y - size * 0.05,
+    top,
+    hue: color.reverse(hue),
+  };
+```
+13. Dibujo una línea:
+```js
+  draw.line(ctx, hat.x, hat.bottom, hat.x, hat.top, {
+    lineWidth: hat.width,
+    strokeStyle: color.dark(hat.hue),
+  });
+```
+14. Añadimos al objeto `hat` la altura del _borde_ o `brim`:
+```js
+  const hat = {
+    ...
+    brimHeight: size * 0.1,
+    brimWidth: size * 0.4,
+    hue: color.reverse(hue),
+  };
+```
+15. Dibujamos otra línea:
+```js
+  draw.line(ctx, hat.x , hat.bottom, hat.x , hat.bottom - hat.brimHeight, {
+    lineWidth: hat.brimWidth,
+    strokeStyle: color.normal(hat.hue),
+  });
+```
+16. Quitamos u ocultamos los elementos no requeridos del paso 4.
+* Este es el muñeco de nieve al final:  
+![Hora 2:34:56](images/2025-01-19_172353.png "Hora 2:34:56")
