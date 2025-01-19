@@ -2280,10 +2280,10 @@ import drawGlobe from './items/18-globe.js'; // Importo la función drawGlobe
 `bottom` y trazo un rectángulo en **`18-globe.js`**:
 ```js
 function drawGlobe(ctx, x, y, size, hue) {
-  const top = y - size / 2; // Defino la parte superior del galleta
-  const left = x - size / 2; // Defino la parte superior del galleta
-  const right = x + size / 2; // Defino la parte derecha del galleta
-  const bottom = y + size / 2; // Defino la parte inferior del galleta
+  const top = y - size / 2; // Defino la parte superior del globo
+  const left = x - size / 2; // Defino la parte superior del globo
+  const right = x + size / 2; // Defino la parte derecha del globo
+  const bottom = y + size / 2; // Defino la parte inferior del globo
   ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
 }
 ```
@@ -2382,3 +2382,88 @@ nieve o `// snow`:
 16. Borro u oculto lo no requerido del paso 4.
 * Este es el Globo final con la nieve inclinada:  
 ![Hora 2:22:51](images/2025-01-18_165800.png "Hora 2:22:51")
+
+## 22. Día decimonoveno con **`19-bells.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[19]`:
+```js
+  drawItemFunctions[19] = drawBells; // Asigno la función drawBells al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`19-bells.js`**,
+con al menos esta función:
+```js
+function drawBells(ctx, x, y, size, hue) {}
+
+export default drawBells;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawBells from './items/19-bells.js'; // Importo la función drawBells
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`19-bells.js`**:
+```js
+function drawBells(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior de las campanas
+  const left = x - size / 2; // Defino la parte superior de las campanas
+  const right = x + size / 2; // Defino la parte derecha de las campanas
+  const bottom = y + size / 2; // Defino la parte inferior de las campanas
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`19-bells.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Vamos a usar el **`06-bell.js`**, por tanto debemos impotar 
+el método `drawBell()` dentro del nuevo **`19-bell.js`**:
+```js
+import drawBell from './06-bell.js'; // Importo la función drawBell
+```
+7. Creamos el objeto `bell`, con lo siguiente:
+```js
+  const bell = {
+    size: size * 0.5 ,
+    y,
+    xOffset: size * 0.2,
+    rotation: Math.PI / 6,
+  }
+```
+8. Usamos del contexto, el `translate()` y `rotate()`, para luego
+dibujar la campana:
+```js
+  ctx.translate(x, bell.y); // Traslado el contexto
+  ctx.rotate(bell.rotation); // Roto el contexto
+  drawBell(ctx, -bell.xOffset, 0, bell.size, hue); // Dibujo la campana
+```
+* Va la primera campana del grupo de campanas:  
+![Hora 2:25:18](images/2025-01-19_161005.png "Hora 2:25:18")
+9. Cambio en el objeto `bell` el valor de `y` por
+`y: y + size * 0.15`.
+10. Agregamos otra campana, copiando desde `ctx.rotate()` y
+cambiando algunos datos:
+```js
+  ctx.rotate(-2 * bell.rotation); // Roto el contexto
+  drawBell(ctx, +bell.xOffset, 0, bell.size, hue); // Dibujo la campana
+```
+* Segunda campana:  
+![Hora 2:26:26](images/2025-01-19_161940.png "Hora 2:26:26")
+11. Como le vamos a poner un moño o un lazo, lo importamos tambien
+dentro de **`19-bell.js`** el método `drawBow()`:
+```js
+import drawBow from './05-bow.js'; // Importo la función drawBow
+```
+12. Encerramos el proceso de las campanas entre un 
+`ctx.save()` y un `ctx.restore()`.
+13. Creamos el objeto `bow`:
+```js
+  const bow = {
+    size: size * 0.7,
+    y: y - size * 0.15,
+  };
+  drawBow(ctx, x, bow.y, bow.size, color.reverse(hue)); // Dibujo el lazo
+```
+14. Quitamos u ocultamos los elementos no requeridos del paso 4.
+* Este es el resultado final de las campanas y el moño o lazo:  
+![Hora 2:28:04](images/2025-01-19_163131.png "Hora 2:28:04")
