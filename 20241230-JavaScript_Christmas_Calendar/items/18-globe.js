@@ -3,10 +3,10 @@ import color from '../utils/color.js'; // Importo la función color
 import drawTree from './13-tree.js'; // Importo la función drawTree
 
 function drawGlobe(ctx, x, y, size, hue) {
-  const top = y - size / 2; // Defino la parte superior del galleta
-  // const left = x - size / 2; // Defino la parte superior del galleta
-  // const right = x + size / 2; // Defino la parte derecha del galleta
-  const bottom = y + size / 2; // Defino la parte inferior del galleta
+  const top = y - size / 2; // Defino la parte superior del globo
+  // const left = x - size / 2; // Defino la parte superior del globo
+  // const right = x + size / 2; // Defino la parte derecha del globo
+  const bottom = y + size / 2; // Defino la parte inferior del globo
   // ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
 
   const ball = {
