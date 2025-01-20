@@ -2600,7 +2600,7 @@ empezando con el izquierdo:
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[21]`:
 ```js
-  drawItemFunctions[21] = drawWreath; // Asigno la función drawCdrawWreathrdrawWreathown al array
+  drawItemFunctions[21] = drawWreath; // Asigno la función drawWreath al array
 ```
 2. Creamos en la carpeta **"items"** el archivo **`21-wreath.js`**,
 con al menos esta función:
@@ -2687,3 +2687,71 @@ import drawBow from './05-bow.js';  // Importo la función drawBow
 * Así se ve la corona navideña o guirnalda:  
 ![Hora 2:38:40](images/2025-01-20_080908.png "Hora 2:38:40")
 15. Oculto o borro los elementos no rqueridos del paso 4.
+
+## 25. Día vigésimosegundo con **`22-skate.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[22]`:
+```js
+  drawItemFunctions[22] = drawSkate; // Asigno la función drawSkate al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`22-skate.js`**,
+con al menos esta función:
+```js
+function drawSkate(ctx, x, y, size, hue) {}
+
+export default drawSkate;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawSkate from './items/22-skate.js'; // Importo la función drawSkate
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`22-skate.js`**:
+```js
+function drawSkate(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del patín
+  const left = x - size / 2; // Defino la parte superior del patín
+  const right = x + size / 2; // Defino la parte derecha del patín
+  const bottom = y + size / 2; // Defino la parte inferior del patín
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`22-skate.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Defino el objeto para el filo o `sledge` o como trineo:
+```js
+  const sledge = {
+    x,
+    bottom: y + size * 0.35,
+    size: size * 0.9,
+  };
+```
+7. Importamos el método `drawSledge()` dentro de **`22-skate.js`**:
+```js
+import drawSledge from './12-sledge.js'; // Importo la función drawSledge
+```
+8. Usamos el método que importamos:
+```js
+  drawSledge(ctx, sledge.x, sledge.bottom, sledge.size, hue);
+```
+* Este es la primera parte del patín, así se ve:  
+![Hora 2:41:18](images/2025-01-20_084126.png "Hora 2:41:18")
+9. Ya que vamos a usar el método `drawSock()`, de una vez lo importamos:
+```js
+import drawSock from './03-sock.js'; // Importo la función drawSock
+```
+10. Definimos el objeto `sock` y lo dibujamos de una vez:
+```js
+  const sock = {
+    x : x - size * 0.25,
+    y: y + size * 0.05,
+    size: size * 1.1,
+  };
+  drawSock(ctx, sock.x, sock.y, sock.size, color.reverse(hue), 0);
+```
+11. Quitamos u ocultamos los elementos del paso 4 no requeridos.
+* Así queda nuestro patín al final:
+![]( "")
