@@ -1,6 +1,6 @@
 import draw from '../utils/draw.js'; // Importo la función draw
 import color from '../utils/color.js'; // Importo la función color
-import drawSnowFlake from './11-snowflake.js'; // Importo la función drawSnowflake
+import drawSnowFlake from './11-snowFlake.js'; // Importo la función drawSnowflake
 
 function drawCookie(ctx, x, y, size, hue) {
   // const top = y - size / 2; // Defino la parte superior del galleta
@@ -27,7 +27,7 @@ function drawCookie(ctx, x, y, size, hue) {
   // ctx.filter = 'blur(1px)'; // Aplico un filtro de desenfoque
   // ctx.filter = 'brightness(1)'; // Aplico un filtro de brillo
   // ctx.filter = 'contrast(1)'; // Aplico un filtro de contraste
-  ctx.filter = 'grayscale(1)'; // Aplico un filtro de escala de grises
+  ctx.filter = 'grayscale(1) brightness(10)'; // Aplico un filtro de escala de grises y el brillo
   drawSnowFlake(ctx, x, y, size * 0.8, hue); // Dibujo un copo de nieve
 }
 
