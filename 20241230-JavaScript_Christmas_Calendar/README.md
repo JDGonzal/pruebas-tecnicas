@@ -2753,5 +2753,121 @@ import drawSock from './03-sock.js'; // Importo la función drawSock
   drawSock(ctx, sock.x, sock.y, sock.size, color.reverse(hue), 0);
 ```
 11. Quitamos u ocultamos los elementos del paso 4 no requeridos.
-* Así queda nuestro patín al final:
-![]( "")
+* Así queda nuestro patín al final:  
+![Hora 2:49:18](images/2025-01-20_162119.png "Hora 2:49:18")
+
+## 26. Día vigésimotercero con **`23-reindeer.js`**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[23]`:
+```js
+  drawItemFunctions[23] = drawReindeer; // Asigno la función drawReindeer al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`23-reindeer.js`**,
+con al menos esta función:
+```js
+function drawReindeer(ctx, x, y, size, hue) {}
+
+export default drawReindeer;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawReindeer from './items/23-reindeer.js'; // Importo la función drawReindeer
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`23-reindeer.js`**:
+```js
+function drawReindeer(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del reno
+  const left = x - size / 2; // Defino la parte superior del reno
+  const right = x + size / 2; // Defino la parte derecha del reno
+  const bottom = y + size / 2; // Defino la parte inferior del reno
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`23-reindeer.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Vamos a hacer unos cambios en el archivo **`11-snowFlake.js`**,
+agregando el parámetro `pattern` y sumando su contenido:
+```js
+function drawSnowFlake(ctx, x, y, size, hue, pattern = [1, 1, 1, 1, 1, 1]) {
+  const sum = pattern.reduce((one, two) => one + two, 0);
+  ...
+  ctx.strokeStyle = sum == 6 ? color.lightest(hue) : color.normal(hue); // Establezco el color de la línea
+  ...
+  for (let i = 0; i < 6; i++) {
+    pattern[i] && drawBranch(ctx, 0, 0, size); // Dibujo una rama
+    ...
+  }
+  ...
+}
+```
+7. Importo el método `drawSnowFlake()` dentro de 
+**`23-reindeer.js`**:
+```js
+import drawSnowFlake from './11-snowFlake.js'; // Importo la función drawSnowFlake
+```
+8. Uso el método de la siguiente manera:
+```js
+  drawSnowFlake(ctx, x, y, size, hue, [0, 0, 0, 0, 1, 1]); // Dibujo un copo de nieve a modo de cuernos
+```
+
+>[!WARNING]  
+>### Corrijo de **`17-cookie.js`** la importación del método `drawSnowFlake()` y agrego un filtro adicional.
+
+* Estos son los cuernos de nuestro reno:  
+![Hora 2:45:22](images/2025-01-20_174022.png "Hora 2:45:22")
+9. Ajusto los cuernos un poco arriba, cambiando el `y` por
+`y - size * 0.05`.
+10. Importo la función `draw` en **`23-reindeer.js`**:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+11. Defino y dibujo un círculo para la cabeza del reno:
+```js
+  const headRadius = size * 0.2; // Defino el radio de la cabeza
+  draw.circle(ctx, x, y, headRadius, {
+    fillStyle: color.dark(hue),
+  }); // Dibujo la cabeza
+```
+12. Para los ojos , hacemos algo parecido a lo de 
+**`20-snowMan.js`**:
+```js
+  const eye = {
+    radius: size * 0.05,
+    xOffset: size * 0.1,
+    y,
+  };
+  draw.circle(ctx, x - eye.xOffset, eye.y, eye.radius, {
+    fillStyle: color.darkest(hue),
+  }); // Dibujo el ojo izquierdo
+  draw.circle(ctx, x + eye.xOffset, eye.y, eye.radius, {
+    fillStyle: color.darkest(hue),
+  }); // Dibujo el ojo derecho
+```
+13. Creamos el objeto `snout` u _hocico_ y lo dibujamos:
+```js
+  const snout = {
+    x,
+    y: y + size * 0.25,
+    xRadius: size * 0.3,
+    yRadius: size * 0.25,
+  };
+  draw.ellipse(ctx, snout.x, snout.y, snout.xRadius, snout.yRadius, {
+    fillStyle: color.light(hue),
+  }); // Dibujo el hocico
+```
+* Este es el reno, con cuernos, cabeza, ojos y hocico:  
+![Hora 2:48:23](images/2025-01-20_180304.png "Hora 2:48:23")
+14. Ponemos la nariz:
+```js
+  // Dibujo la nariz
+  draw.circle(ctx, x, y + size * 0.2, size * 0.1, {
+    fillStyle: 'red',
+  });
+```
+15. Quito u oculto lo no requerido del paso 4.
+* Este es resultado final de nuestro hermoso reno:  
+![Hora 2:49:01](images/2025-01-20_180922.png "Hora 2:49:01")
