@@ -2591,3 +2591,99 @@ empezando con el izquierdo:
 16. Quitamos u ocultamos los elementos no requeridos del paso 4.
 * Este es el muñeco de nieve al final:  
 ![Hora 2:34:56](images/2025-01-19_172353.png "Hora 2:34:56")
+
+## 24. Día vigésimoprimero con **`21-wreath.js`**
+
+>[!TIP]  
+>### El instructor se refiere al objeto como `crown`, siendo mejor el término de `wreath`
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[21]`:
+```js
+  drawItemFunctions[21] = drawWreath; // Asigno la función drawCdrawWreathrdrawWreathown al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`21-wreath.js`**,
+con al menos esta función:
+```js
+function drawWreath(ctx, x, y, size, hue) {}
+
+export default drawWreath;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawWreath from './items/21-wreath.js'; // Importo la función drawWreath
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`21-wreath.js`**:
+```js
+function drawWreath(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior de la corona navideña
+  const left = x - size / 2; // Defino la parte superior de la corona navideña
+  const right = x + size / 2; // Defino la parte derecha de la corona navideña
+  const bottom = y + size / 2; // Defino la parte inferior de la corona navideña
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`21-wreath.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Definimos las constantes `thickness` y `radius`:
+```js
+  const thickness = size * 0.2; // Defino el grosor de la corona
+  const radius = size * 0.5; // Defino el radio de la corona
+```
+7. Importamos en **`21-wreath.js`**, la utilidad `draw`:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+8. Dibujo un círculo:
+```js
+  draw.circle(ctx, x, y, radius, {
+    strokeStyle: color.light(hue),
+    lineWidth: thickness,
+    outline: 'inside',
+  }); // Dibujo un círculo
+```
+* Así se ve la corona navideña, a modo de dona:  
+![Hora 2:36:44](images/2025-01-20_070634.png "Hora 2:36:44")
+9. Para algunas lineas adicionamos esto:
+```js
+  const length = Math.PI * 2 * radius; // Defino la longitud de la guirnalda
+  const dashLength = length / 30; // Defino la longitud de las líneas de la guirnalda
+  ctx.setLineDash([dashLength, dashLength]); // Establezco el patrón de la línea 
+```
+10. Repito el código de `draw.circle()`, con algunos cambios
+y restauro el patrón de línea:
+```js
+  draw.circle(ctx, x, y, radius, {
+    strokeStyle: color.dark(hue),
+    lineWidth: thickness,
+    outline: 'inside',
+  }); // Dibujo un círculo
+  ctx.setLineDash([]); // Restauro el patrón de la línea
+```
+* Y esto es el resultado de la guirnalda con las líneas hasta 
+ahora:  
+![Hora 2:37:41](images/2025-01-20_071836.png "Hora 2:37:41")
+11. Cambio para la constante `dashLength` el valor de dividir
+por `30` a `40`.
+12. Definimos el objeto `bow` para el moño o lazo:
+```js
+  const bow = {
+    x: x,
+    y: top + thickness,
+    size: radius,
+  }
+```
+13. Importamos el método `drawBow()` dentro de **`21-wreath.js`**:
+```js
+import drawBow from './05-bow.js';  // Importo la función drawBow
+```
+14. Empiezo a utilizar dicho método:
+```js
+  drawBow(ctx, bow.x, bow.y, bow.size, color.reverse(hue)); // Dibujo un lazo
+```
+* Así se ve la corona navideña o guirnalda:  
+![Hora 2:38:40](images/2025-01-20_080908.png "Hora 2:38:40")
+15. Oculto o borro los elementos no rqueridos del paso 4.
