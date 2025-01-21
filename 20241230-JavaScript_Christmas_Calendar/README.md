@@ -2592,7 +2592,7 @@ empezando con el izquierdo:
 * Este es el muñeco de nieve al final:  
 ![Hora 2:34:56](images/2025-01-19_172353.png "Hora 2:34:56")
 
-## 24. Día vigésimoprimero con **`21-wreath.js`**
+## 24. Día vigesimoprimero con **`21-wreath.js`**
 
 >[!TIP]  
 >### El instructor se refiere al objeto como `crown`, siendo mejor el término de `wreath`
@@ -2688,7 +2688,7 @@ import drawBow from './05-bow.js';  // Importo la función drawBow
 ![Hora 2:38:40](images/2025-01-20_080908.png "Hora 2:38:40")
 15. Oculto o borro los elementos no rqueridos del paso 4.
 
-## 25. Día vigésimosegundo con **`22-skate.js`**
+## 25. Día vigesimosegundo con **`22-skate.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[22]`:
@@ -2756,7 +2756,7 @@ import drawSock from './03-sock.js'; // Importo la función drawSock
 * Así queda nuestro patín al final:  
 ![Hora 2:49:18](images/2025-01-20_162119.png "Hora 2:49:18")
 
-## 26. Día vigésimotercero con **`23-reindeer.js`**
+## 26. Día vigesimotercero con **`23-reindeer.js`**
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[23]`:
@@ -2872,7 +2872,7 @@ import draw from '../utils/draw.js'; // Importo la función draw
 * Este es resultado final de nuestro hermoso reno:  
 ![Hora 2:49:01](images/2025-01-20_180922.png "Hora 2:49:01")
 
-## 27. Día vigésimocuarto con **`24-gingerBread.js`**
+## 27. Día vigesimocuarto con **`24-gingerBread.js`**
 
 >[!NOTE]  
 >### Este código está en este sitio [gingerBread.js](https://github.com/gniziemazity/christmas_calendar/blob/main/items/gingerBread.js), **By Francisco Dorsman**
@@ -3089,7 +3089,7 @@ en el método `draw.circle()`:
 * Así luce al final nuestro hermoso muñeco de gengibre:  
 ![Muñeco o Galleta de Gengibre](images/2025-01-21_090324.png "Muñeco o Galleta de Gengibre")
 
-## 28. Día vigésimoquinto con **`25-lights.js`**
+## 28. Día vigesimoquinto con **`25-lights.js`**
 
 >[!NOTE]  
 >### Este código está en este sitio [lights.js](https://github.com/gniziemazity/christmas_calendar/blob/main/items/lights.js), **By Francisco Dorsman**
@@ -3257,11 +3257,10 @@ funciones:
 * Estos son los bombillos listos:  
 ![Bombillos](images/2025-01-21_110350.png "Bombillos")
 
-## 29. Día vigésimosexto con **`26-santa.js`**
+## 29. Día vigesimosexto con **`26-santa.js`**
 
 >[!NOTE]  
 >### Este código está en este sitio [santa.js](https://github.com/gniziemazity/christmas_calendar/blob/main/items/santa.js), **By Francisco Dorsman**
-
 
 1. En la función `setInit()` del archivo **`script.js`**, 
 adicionamos la función para la posición `[26]`:
@@ -3426,3 +3425,128 @@ draw.circle(ctx, face.x, face.y, face.radius, {
 necesitan.
 * Este es el Santa Claus o Papa Noel, ya terminado:  
 ![Santa Completo](images/2025-01-21_163559.png "Santa Completo") 
+
+## 29. Día vigesimoséptimo con **`27-christmasTree.js`**
+
+>[!NOTE]  
+>### Este código está en este sitio [christmasTree.js](https://github.com/gniziemazity/christmas_calendar/blob/main/items/christmasTree.js), **By [Radu Mariescu-Istodor](https://github.com/gniziemazity)**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[27]`:
+```js
+  drawItemFunctions[27] = drawChristmasTree; // Asigno la función drawChristmasTree al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`26-christmasTree.js`**,
+con al menos esta función:
+```js
+function drawChristmasTree(ctx, x, y, size, hue) {}
+
+export default drawChristmasTree;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawChristmasTree from './items/27-christmasTree.js'; // Importo la función drawChristmasTree
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`27-christmasTree.js`**:
+```js
+function drawChristmasTree(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior de árbol navideño
+  const left = x - size / 2; // Defino la parte superior de árbol navideño
+  const right = x + size / 2; // Defino la parte derecha de árbol navideño
+  const bottom = y + size / 2; // Defino la parte inferior de árbol navideño
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`27-christmasTree.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Importo la función `draw` en **`27-christmasTree.js`**:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+7. Importo los métodos `drawTree()`, `drawStar()` y 
+`drawBall()` dentro de **`27-christmasTree.js`**:
+```js
+import drawTree from './13-tree.js';  // Importo la función drawTree
+import drawStar from './01-star.js'; // Importo la función drawStar
+import drawBall from './02-ball.js'; // Importo la función drawBall
+```
+8. Defino el objeto `tree` y lo uso en el método `drawTree()`:
+```js
+  // Dibujo el árbol navideño
+  const tree = {
+    size: size * 0.9,
+    x,
+    get y() {
+      return bottom - this.size / 2;
+    },
+    get top() {
+      return bottom - this.size;
+    },
+    hue: 90, // green
+  };
+  drawTree(ctx, tree.x, tree.y, tree.size, tree.hue);
+```
+9. Defino el objeto `start` y lo uso en el método `drawStar()`:
+```js
+  // Dibujo la estrella
+  const star = {
+    size: size * 0.2,
+    x,
+    y: tree.top,
+    hue: 30, // orange
+  };
+  drawStar(ctx, star.x, star.y, star.size, star.hue);
+  drawStar(ctx, star.x, star.y, star.size / 2, 50);
+```
+* Este es el árbol navideño con la estrella en la punta:  
+![Árbol y Estrella](images/2025-01-21_170127.png "Árbol y Estrella")
+10. Creamos las funciones para usar en la carga del arreglo
+`balls[]`:
+```js
+  function distance(p1, p2) {
+    return Math.hypot(p1.x - p2.x, p1.y - p2.y);
+  }
+
+  function lerp(a, b, t) {
+    return a + (b - a) * t;
+  }
+```
+11. Definimos el arreglo `balls[]` y lo cargamos:
+```js
+  // Las Bolas
+  const balls = [];
+  const ballSize = size * 0.08;
+  const tryCount = 1000;
+  for (let i = 1; i <= tryCount; i++) {
+    const newBall = {
+      x: lerp(left, right, Math.random()),
+      y: lerp(top, bottom, Math.random()),
+    };
+
+    if (balls.some((b) => distance(b, newBall) < ballSize)) {
+      continue;
+    }
+
+    const ballTop = newBall.y - ballSize / 2;
+    const imgData = ctx.getImageData(newBall.x, ballTop, 1, 1);
+    if (imgData.data[1] != 255) {
+      // not green
+      continue;
+    }
+    // Cargamos cada bola al arreglo
+    balls.push(newBall);
+  }
+```
+12. Por último dibujamos las bolas en el árbol navideño:
+```js
+  balls.forEach((b) => {
+    const randomNonGreenHue = lerp(180, 360, Math.random());
+    drawBall(ctx, b.x, b.y, ballSize, randomNonGreenHue);
+  });
+```
+13. Quitamos u ocultamos lo no requerido de paso 4.
+* Este es hermoso Árbol Navideño completo:  
+![Árbol Navideño](images/2025-01-21_171457.png "Árbol Navideño")
