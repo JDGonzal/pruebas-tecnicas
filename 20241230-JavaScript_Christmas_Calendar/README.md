@@ -3089,7 +3089,7 @@ en el método `draw.circle()`:
 * Así luce al final nuestro hermoso muñeco de gengibre:  
 ![Muñeco o Galleta de Gengibre](images/2025-01-21_090324.png "Muñeco o Galleta de Gengibre")
 
-28. Día vigésimoquinto con **`25-lights.js`**
+## 28. Día vigésimoquinto con **`25-lights.js`**
 
 >[!NOTE]  
 >### Este código está en este sitio [lights.js](https://github.com/gniziemazity/christmas_calendar/blob/main/items/lights.js), **By Francisco Dorsman**
@@ -3256,3 +3256,173 @@ funciones:
 13. Eliminamos u ocultamos los elementos no requeridos del paso 4.
 * Estos son los bombillos listos:  
 ![Bombillos](images/2025-01-21_110350.png "Bombillos")
+
+## 29. Día vigésimosexto con **`26-santa.js`**
+
+>[!NOTE]  
+>### Este código está en este sitio [santa.js](https://github.com/gniziemazity/christmas_calendar/blob/main/items/santa.js), **By Francisco Dorsman**
+
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[26]`:
+```js
+  drawItemFunctions[26] = drawSanta; // Asigno la función drawSanta al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`26-santa.js`**,
+con al menos esta función:
+```js
+function drawSanta(ctx, x, y, size, hue) {}
+
+export default drawSanta;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawSanta from './items/26-santa.js'; // Importo la función drawSanta
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`26-santa.js`**:
+```js
+function drawSanta(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior de Santa
+  const left = x - size / 2; // Defino la parte superior de Santa
+  const right = x + size / 2; // Defino la parte derecha de Santa
+  const bottom = y + size / 2; // Defino la parte inferior de Santa
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`26-santa.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Importo la función `draw` en **`26-santa.js`**:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+7. Definimos el objeto `beard` para la _barba_ y la dibujamos:
+```js
+  // Barba
+  const beard = {
+    x,
+    y: y + size / 8,
+    xRadius: size * 0.2,
+    yRadius: size * 0.35,
+    color: 'white',
+  };
+  draw.ellipse(ctx, beard.x, beard.y, beard.xRadius, beard.yRadius, {
+    fillStyle: beard.color,
+  }); // Dibujamos la barba
+```
+8. Ponemos la _cara_ en el objeto `face`:
+```js
+// Cara
+const face = {
+  x,
+  y: beard.y - size * 0.05,
+  radius: size * 0.2,
+  color: 'pink',
+};
+draw.circle(ctx, face.x, face.y, face.radius, {
+  fillStyle: face.color,
+}); // Dibujamos la cara
+```
+* Esto es la base del `santa` o Papa Noel:  
+![Cara y Barba](images/2025-01-21_161704.png "Cara y Barba")
+9. Defino el objeto para el _bigote_ de nombre `mustache`:
+```js
+  // Bigote
+  const mustache = {
+    y: face.y + size * 0.05,
+    offset: size * 0.075,
+    xRadius: size * 0.1,
+    yRadius: size * 0.04,
+    angle: Math.PI / 8,
+    color: beard.color,
+  }; // Definimos los bigotes
+```
+10. Salvo el conteto, dibujo los bigotes y restauro el contexto:
+```js
+  // Dibujamos los bigotes
+  ctx.save();
+  ctx.translate(x, mustache.y);
+  ctx.rotate(-mustache.angle);
+  draw.ellipse(ctx, -mustache.offset, 0, mustache.xRadius, mustache.yRadius, {
+    fillStyle: mustache.color,
+  });
+  ctx.rotate(2 * mustache.angle);
+  draw.ellipse(ctx, +mustache.offset, 0, mustache.xRadius, mustache.yRadius, {
+    fillStyle: mustache.color,
+  });
+  ctx.restore();
+```
+11. Defino el objeto `eye` y los dibujo dos veces para los _ojos_:
+```js
+  // Ojos
+  const eye = {
+    offset: size * 0.075,
+    y: face.y - size * 0.025,
+    radius: size * 0.025,
+    color: color.darkest(hue),
+  };
+  draw.circle(ctx, x - eye.offset, eye.y, eye.radius, {
+    fillStyle: eye.color,
+  });
+  draw.circle(ctx, x + eye.offset, eye.y, eye.radius, {
+    fillStyle: eye.color,
+  });
+```
+* Así va con los ojos y los bigotes:  
+![Ojos y Bigotes](images/2025-01-21_162550.png "Ojos y Bigotes")
+12. Defino el objeto `hat` y dibujo este _gorro_:
+```js
+  // Gorro
+  const hat = {
+    x: face.x + face.radius,
+    y: face.y - size / 6,
+    radius: face.radius * 2,
+    color: 'red',
+  };
+  // dibujamos el gorro
+  ctx.beginPath();
+  ctx.fillStyle = hat.color;
+  ctx.moveTo(hat.x, hat.y);
+  ctx.arc(hat.x, hat.y, hat.radius, Math.PI, Math.PI * 1.5);
+  ctx.fill();
+  ctx.closePath();
+  // Bola o pompón del gorro
+  draw.circle(ctx, hat.x, top + size / 10, size / 10, {
+    fillStyle: 'white',
+  });
+```
+13. Completamos con el objeto `rim` o _borde del gorro_:
+```js
+  // Borde del gorro
+  const rim = {
+    x,
+    y: hat.y,
+    radius: face.radius,
+    height: size * 0.1,
+    color: 'white',
+  };
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.strokeStyle = rim.color;
+  ctx.lineWidth = rim.height;
+  ctx.lineCap = 'round';
+  ctx.moveTo(rim.x - rim.radius, rim.y);
+  ctx.bezierCurveTo(
+    rim.x - rim.radius,
+    rim.y - rim.height / 2,
+    rim.x + rim.radius,
+    rim.y - rim.height / 2,
+    rim.x + rim.radius,
+    rim.y
+  );
+  ctx.stroke();
+  ctx.closePath();
+  ctx.restore();
+```
+14. Quitamos u ocultamos los elementos del paso 4 que no se
+necesitan.
+* Este es el Santa Claus o Papa Noel, ya terminado:  
+![Santa Completo](images/2025-01-21_163559.png "Santa Completo") 
