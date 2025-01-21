@@ -2872,7 +2872,7 @@ import draw from '../utils/draw.js'; // Importo la función draw
 * Este es resultado final de nuestro hermoso reno:  
 ![Hora 2:49:01](images/2025-01-20_180922.png "Hora 2:49:01")
 
-## 27. Día vigésimocuarto 1 de 3 con **`24-gingerBread.js`**
+## 27. Día vigésimocuarto con **`24-gingerBread.js`**
 
 >[!NOTE]  
 >### Este código está en este sitio [gingerBread.js](https://github.com/gniziemazity/christmas_calendar/blob/main/items/gingerBread.js), **By Francisco Dorsman**
@@ -3088,3 +3088,171 @@ en el método `draw.circle()`:
 17. Quito u oculto lo elementos no necesarios del paso 4.
 * Así luce al final nuestro hermoso muñeco de gengibre:  
 ![Muñeco o Galleta de Gengibre](images/2025-01-21_090324.png "Muñeco o Galleta de Gengibre")
+
+28. Día vigésimoquinto con **`25-lights.js`**
+
+>[!NOTE]  
+>### Este código está en este sitio [lights.js](https://github.com/gniziemazity/christmas_calendar/blob/main/items/lights.js), **By Francisco Dorsman**
+
+>[!WARNING]  
+> Como vamos a hacer el sitio `25` del array, hacemos un cambio en 
+>el archivo **`script.js`**, en los límites del `for`, en vez
+> de usar el valor fijo de `24`, usamos esto: 
+>```js
+>  for (let day = 1; day < drawItemFunctions.length; day++) {
+>    const canvas = document.createElement('canvas'); // Creo un canvas
+>    canvas.width = cellSize; // Asigno el ancho
+>    canvas.height = cellSize; // Asigno el alto
+>    calendar.appendChild(canvas); // Agrego el canvas al div
+>
+>    fillCell(canvas, day); // Llamo la función fillCell
+>  }
+>```
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[25]`:
+```js
+  drawItemFunctions[25] = drawLights; // Asigno la función drawLights al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`25-lights.js`**,
+con al menos esta función:
+```js
+function drawLights(ctx, x, y, size, hue) {}
+
+export default drawLights;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawLights from './items/25-lights.js'; // Importo la función drawLights
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`25-lights.js`**:
+```js
+function drawLights(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior de las luces
+  const left = x - size / 2; // Defino la parte superior de las luces
+  const right = x + size / 2; // Defino la parte derecha de las luces
+  const bottom = y + size / 2; // Defino la parte inferior de las luces
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`25-lights.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Importo la función `draw` en **`25-lights.js`**:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+7. Defino una constante para el número de luces:
+```js
+  const numberOfLights = 3; // Defino la cantidad de luces
+```
+8. Defino el objeto `bulb` para el _bombillo_:
+```js
+  // defino el bombillo
+  const bulb = {
+    position: 0,
+    width: size / numberOfLights,
+    y_radius: ((size / numberOfLights) * 0.9) / 2,
+    get x_radius() {
+      return this.y_radius / 3;
+    },
+    get x() {
+      return left + this.width / 2 + this.position * this.width;
+    },
+    get y() {
+      return top + this.y_radius + (size / numberOfLights) * 0.1;
+    },
+    get left() {
+      return left + this.width * this.position;
+    },
+    get right() {
+      return this.left + this.width;
+    },
+    color: color.normal(hue),
+    glow: color.lightest(hue),
+  };
+```
+9. Defino el _soporte_ en el objeto `holder`:
+```js
+  // Defino el soporte
+  const holder = {
+    size: bulb.x_radius,
+    bottom: bulb.x_radius * 1.5,
+    get x() {
+      return bulb.x;
+    },
+    y: bulb.y - bulb.y_radius,
+    get left() {
+      return this.x - this.size / 2;
+    },
+    top,
+    color: color.darkest(hue),
+  };
+```
+10. Defino en el objeto `cord` el _cordón_:
+```js
+  // Defino el cordón
+  const cord = {
+    get x() {
+      return thread.x;
+    },
+    y: top + thread.bottom,
+    color: color.darkest(hue),
+  };
+```
+11. Creo tres funciones, para dibujar los tres objetos definidos
+anteriormente:
+```js
+  function drawHolder() {
+    ctx.fillStyle = holder.color;
+    ctx.fillRect(holder.left, holder.top, holder.size, holder.bottom);
+  }
+
+  function drawCords() {
+    ctx.strokeStyle = thread.color;
+    ctx.beginPath();
+    ctx.moveTo(bulb.left, cord.y);
+    ctx.bezierCurveTo(
+      thread.x - bulb.width / 2,
+      cord.y,
+      thread.x,
+      cord.y,
+      thread.x,
+      top
+    );
+    ctx.bezierCurveTo(
+      thread.x,
+      cord.y,
+      thread.x + bulb.width / 2,
+      cord.y,
+      bulb.right,
+      cord.y
+    );
+    ctx.stroke();
+  }
+
+  function drawBulb() {
+    draw.ellipse(ctx, bulb.x, bulb.y, bulb.x_radius, bulb.y_radius, {
+      fillStyle: bulb.color,
+      shadowColor: bulb.glow,
+      shadowBlur: bulb.x_radius * 0.7,
+      shadowOffsetX: 0,
+      shadowOffsetY: 0,
+    });
+```
+12. Ahora si, en un ciclo `for`, llamamos estas tres nuevas 
+funciones:
+```js
+  for (let index = 0; index < numberOfLights; index++) {
+    bulb.position = index;
+    bulb.color = color.normal(hue + (360 / numberOfLights) * index);
+    drawHolder();
+    drawCords();
+    drawBulb();
+  }
+```
+13. Eliminamos u ocultamos los elementos no requeridos del paso 4.
+* Estos son los bombillos listos:  
+![Bombillos](images/2025-01-21_110350.png "Bombillos")
