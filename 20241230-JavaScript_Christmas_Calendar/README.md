@@ -2871,3 +2871,220 @@ import draw from '../utils/draw.js'; // Importo la función draw
 15. Quito u oculto lo no requerido del paso 4.
 * Este es resultado final de nuestro hermoso reno:  
 ![Hora 2:49:01](images/2025-01-20_180922.png "Hora 2:49:01")
+
+## 27. Día vigésimocuarto 1 de 3 con **`24-gingerBread.js`**
+
+>[!NOTE]  
+>### Este código está en este sitio [gingerBread.js](https://github.com/gniziemazity/christmas_calendar/blob/main/items/gingerBread.js), **By Francisco Dorsman**
+
+1. En la función `setInit()` del archivo **`script.js`**, 
+adicionamos la función para la posición `[24]`:
+```js
+  drawItemFunctions[24] = drawGingerBread; // Asigno la función drawGingerBread al array
+```
+2. Creamos en la carpeta **"items"** el archivo **`24-gingerBread.js`**,
+con al menos esta función:
+```js
+function drawGingerBread(ctx, x, y, size, hue) {}
+
+export default drawGingerBread;
+```
+3. Importamos en **`script.js`**, esta nueva función:
+```js
+import drawGingerBread from './items/24-gingerBread.js'; // Importo la función drawGingerBread
+```
+4. Definimos las constantes para el `top`, `left`, `right`,
+`bottom` y trazo un rectángulo en **`24-gingerBread.js`**:
+```js
+function drawGingerBread(ctx, x, y, size, hue) {
+  const top = y - size / 2; // Defino la parte superior del hombre de gengibre
+  const left = x - size / 2; // Defino la parte superior del hombre de gengibre
+  const right = x + size / 2; // Defino la parte derecha del hombre de gengibre
+  const bottom = y + size / 2; // Defino la parte inferior del hombre de gengibre
+  ctx.strokeRect(left, top, size, size); // Dibujo un rectángulo
+}
+```
+5. Importo la utilidad **`color.js`** en **`24-gingerBread.js`**:
+```js
+import color from '../utils/color.js'; // Importo la función color
+```
+6. Importo la función `draw` en **`24-gingerBread.js`**:
+```js
+import draw from '../utils/draw.js'; // Importo la función draw
+```
+7. Defino el objeto `head` o _cabeza_ y lo dibujo:
+```js
+  // Dibujo la cabeza
+  const head = {
+    radius: size * 0.22,
+    x,
+    get y() {
+      return top + this.radius;
+    },
+    color: color.dark(hue),
+  };
+  draw.circle(ctx, head.x, head.y, head.radius, {
+    fillStyle: head.color,
+  }); 
+```
+8. Defino el objeto `body` o el _cuerpo_:
+```js
+  const body = {
+    x,
+    y: top + head.radius * 1.75,
+  };
+```
+9. Defino el objeto `leg` y dibujo ambas _piernas_:
+```js
+  // Dibujo las piernas
+  const leg = {
+    x,
+    y: body.y,
+    color: color.dark(hue),
+    width: size * 0.23,
+    angle: Math.PI / 6,
+    get footY() {
+      return bottom - this.width / 2;
+    },
+    get offsetX() {
+      return Math.cos(this.angle) * this.width;
+    },
+  };
+  // Dibujo la pierna izquierda
+  draw.line(ctx, leg.x, leg.y, leg.x + leg.offsetX, leg.footY, {
+    strokeStyle: leg.color,
+    lineWidth: leg.width,
+    lineCap: 'round',
+  });
+  // Dibujo la pierna derecha
+  draw.line(ctx, leg.x, leg.y, leg.x - leg.offsetX, leg.footY, {
+    strokeStyle: leg.color,
+    lineWidth: leg.width,
+    lineCap: 'round',
+  });
+```
+* Así luce nuestro muñeco o galleta de gengibre:  
+![Piernas y cabeza](/images/2025-01-20_190300.png "Cabeza y Piernas")
+10. Defino el objeto `arm` y dibujo ambos brazos:
+```js
+  // Dibujo los brazos
+  const arm = {
+    x,
+    y: body.y + 0.3 * head.radius,
+    width: size * 0.2,
+    angle: 0,
+    length: 1.5,
+    get offsetX() {
+      return Math.cos(arm.angle) * arm.width * arm.length;
+    },
+    get offsetY() {
+      return Math.sin(arm.angle) * arm.width * arm.length;
+    },
+    color: color.dark(hue),
+  };
+  // Dibujo el brazo derecho
+  draw.line(
+    ctx,
+    arm.x - arm.width / 2,
+    arm.y,
+    arm.x - arm.offsetX,
+    arm.y + arm.offsetY,
+    {
+      strokeStyle: arm.color,
+      lineWidth: arm.width,
+      lineCap: 'round',
+    }
+  );
+  // Dibujo el brazo izquierdo
+  draw.line(
+    ctx,
+    arm.x + arm.width / 2,
+    arm.y,
+    arm.x + arm.offsetX,
+    arm.y + arm.offsetY,
+    {
+      strokeStyle: arm.color,
+      lineWidth: arm.width,
+      lineCap: 'round',
+    }
+  );
+```
+* Nuestro muñeco de gengibre está casi completo:  
+![Cabeza, brazos y piernas](images/2025-01-21_082759.png "Cabeza, brazos y piernas")
+11. Defino el objeto `decoration`, que lo vamos usar en otros
+elementos:
+```js
+  const decoration = {
+    size: size * 0.025,
+    color: color.light(hue),
+  };
+```
+12. Agregando los ojos en el objeto `eye`:
+```js
+  // Dibujo los ojos
+  const eye = {
+    x,
+    y: top + head.radius / 1.5,
+    offsetX: head.radius / 2.5,
+    radius: decoration.size,
+    color: decoration.color,
+  };
+  draw.circle(ctx, eye.x - eye.offsetX, eye.y, eye.radius, {
+    fillStyle: eye.color,
+  });
+  draw.circle(ctx, eye.x + eye.offsetX, eye.y, eye.radius, {
+    fillStyle: eye.color,
+  });
+```
+13. Le ponemos la boca usando el objeto `mouth` y la dibujamos:
+```js
+  // Dibujo la boca
+  const mouth = {
+    radius: head.radius / 2.5,
+    x,
+    y: top + head.radius,
+    thickness: decoration.size,
+    color: decoration.color,
+  };
+  ctx.beginPath(); // Dibujo la boca
+  ctx.strokeStyle = mouth.color;
+  ctx.lineWidth = mouth.thickness;
+  ctx.arc(mouth.x, mouth.y, mouth.radius, Math.PI / 8, (7 * Math.PI) / 8);
+  ctx.stroke();
+  ctx.closePath();
+```
+* Este es el muñeco con la expresión sonriente:  
+![Cuerpo, ojos y sonrisa](images/2025-01-21_084327.png "Cuerpo, ojos y sonrisa")
+14. Importamos el método `drawBow()`, para agregar un lindo moño 
+o lazo:
+```js
+import drawBow from './05-bow.js'; // Importo la función drawBow
+```
+15. Dibujamos un pequeño lazo con los elementos de `bow`:
+```js
+  // Dibujo el lazo
+  const bow = {
+    x: body.x,
+    y: body.y,
+    size: size * 0.2,
+    color: color.reverse(hue),
+  };
+  drawBow(ctx, bow.x, bow.y, bow.size, bow.color);
+```
+16. Ponemos los _botones_ usando el objeto `decoration` 
+en el método `draw.circle()`:
+```js
+  // Dibujo los botones
+  draw.circle(ctx, x, y - decoration.size, decoration.size, {
+    fillStyle: decoration.color,
+  });
+  draw.circle(ctx, x, y + decoration.size * 2, decoration.size, {
+    fillStyle: decoration.color,
+  });
+  draw.circle(ctx, x, y + decoration.size * 5, decoration.size, {
+    fillStyle: decoration.color,
+  });
+```
+17. Quito u oculto lo elementos no necesarios del paso 4.
+* Así luce al final nuestro hermoso muñeco de gengibre:  
+![Muñeco o Galleta de Gengibre](images/2025-01-21_090324.png "Muñeco o Galleta de Gengibre")
