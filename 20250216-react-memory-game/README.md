@@ -523,3 +523,68 @@ una carpeta nueva de nombre **"data"**:
 ```
 11. En esta prueba como estoy en un proyecto mas grande, borro o ignoro
 el arhivo de esta carpeta o proyecto de nombre **`.gitignore`**
+
+## 0:11:53 - Fetch data from API
+
+>[!IMPORTANT]  
+>### Desafío:
+>1) Convierte `startGame()` en una función asincrónica.
+>2) Utiliza la sintaxis try...catch y realiza una solicitud de búsqueda a la `API` de emojis, utilizando esta URL: "https://emojihub.yurace.pro/api/all/category/animals-and-nature". Almacena la respuesta en una constante "`response`".
+>3) Comprueba si la respuesta es correcta.
+>   * Si es así, almacena los datos obtenidos en una constante "`data`". Registra los datos en la consola. Llama a `setIsGameOn(true)`.
+>   * Si no, genera un error con un mensaje de error personalizado y, dentro del bloque `catch`, registra el mensaje de error en la consola
+> 
+>💡 Sugerencia: ¡Recuerda la palabra clave `await`!  
+>⚠️ Advertencia: Los emojis renderizados seguirán siendo los de la matriz codificada.
+1. En el archivo **`App.tsx`**, para la función `startGame()` agregamos
+el comando `async`:
+```js
+  async function startGame(e: React.FormEvent) {
+    e.preventDefault();
+    setIsGameOn(true);
+  }
+```
+2. En la misma función `startGame()`, antes del `setIsGameOn(true)`
+creamos un bloque `try/catch` y agregamos el llamado al `API`:
+```js
+  async function startGame(e: React.FormEvent) {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        'https://emojihub.yurace.pro/api/all/category/animals-and-nature'
+      );
+    } catch (error) {}
+    setIsGameOn(true);
+  }
+    setIsGameOn(true);
+  }
+```
+3. Luego de obtener la constante `response`, hacemos una condicional, para
+el manejo de erroers y el que vamos a procesar o proceder:
+```js
+    try {
+      ...
+      if (!response.ok) {
+        throw new Error('Could not fetch data from API');
+      }
+    } catch (error) {}
+```
+4. Luego del condicional cargamos la constante `data`:
+```js
+    try {
+      ...
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {}
+```
+5. Movemos el llamado a la función `setIsGameOn(true)`, dentro del 
+`try/catch`, debajo de `console.log(data)`.
+6. Completamos lo que haría el `catch`:
+```js
+    try {
+      ...
+      setIsGameOn(true);
+    } catch (error) {
+        console.error(error);
+    }
+```
