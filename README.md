@@ -11,3 +11,5 @@ Pruebas y ejercicios siguiendo varios canales de Youtube
 - [2023-12-01 Prueba Técnica de React para Juniors y Trainee](./20231201-react_cats/README.md)
 - [2024-12-19 Polyrhythms JavaScript Project Tutorial](./20241219_Polyrhythms/README.md)
 - [2024-12-30 JavaScript Christmas Calendar Tutorial 🎄](./20241230-JavaScript_Christmas_Calendar/README.md)
+- [2025-02-16 Build a Memory Game in React Tutorial](./20250216-react-memory-game/README.md)
+
