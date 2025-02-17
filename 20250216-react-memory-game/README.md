@@ -588,3 +588,60 @@ el manejo de erroers y el que vamos a procesar o proceder:
         console.error(error);
     }
 ```
+
+## 0:17:18 - Store API data in state
+
+>[!IMPORTANT]  
+>### Desafío:
+>1) Crea una nueva variable de estado, "`emojisData`", con una función de establecimiento correspondiente e inicialízala como una matriz vacía.
+>2) Dentro del bloque `try` de la función `startGame()`, crea una nueva variable, "`dataSample`", y configúrala igual a los primeros 5 elementos de "`data`".
+>3) Almacena "`dataSample`" como "`emojisData`" en el estado.
+>4) Registra "`emojisData`" en la consola.
+>
+>💡 Sugerencia: En el paso 2, usa el método `.slice()` de `JavaScript` para obtener la muestra de datos.  
+>⚠️ Advertencia: Aún estamos renderizando nuestros emojis codificados.
+
+1. En el archivo **`App.tsx`**, debajo del primer `useState`, creamos
+otra constante tambien para almacenar otro `useState`:
+```js
+  const [emojisData, setEmojisData] = useState([]);
+```
+2. Cambiamos dentro del `try/catch` el `console.log`, para asignar la
+`data` dentro del `dataSample`, usando el `.slice()`:
+```js
+    try {
+      ...
+      const data = await response.json();
+      const dataSample = data.slice(0, 5);
+      ...
+    } catch (error) {
+      ...
+    }
+```
+3. Almacenamos el `dataSample` dentro del estado con `setEmojisData`:
+```js
+    try {
+      ...;
+      setEmojisData(dataSample);
+      ...
+    } catch (error) {
+      ...
+    }
+```
+4. Hacemos un `console.log` de `emojisData`, antes del a función 
+`startGame()` del archivo **`App.tsx`**:
+```js
+export default function App() {
+  const [isGameOn, setIsGameOn] = useState(false);
+  const [emojisData, setEmojisData] = useState([]);
+
+  //Mostramos el valor de `emojisData` en la consola
+  console.log(emojisData);
+  
+  async function startGame(e: React.FormEvent) {
+    ...
+  }
+  ...
+```
+* Esto lo muestra en consola con los valores cargados, 
+justo después de presionar el botón `[Start Game]`. 

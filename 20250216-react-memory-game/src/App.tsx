@@ -4,7 +4,11 @@ import MemoryCard from './components/MemoryCard';
 
 export default function App() {
   const [isGameOn, setIsGameOn] = useState(false);
+  const [emojisData, setEmojisData] = useState([]);
 
+  //Mostramos el valor de `emojisData` en la consola
+  console.log(emojisData);
+  
   async function startGame(e: React.FormEvent) {
     e.preventDefault();
     try {
@@ -15,10 +19,12 @@ export default function App() {
         throw new Error('Could not fetch data from API');
       }
       const data = await response.json();
-      console.log(data);
+      const dataSample = data.slice(0, 5);
+
+      setEmojisData(dataSample);
       setIsGameOn(true);
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
   }
 
