@@ -645,3 +645,27 @@ export default function App() {
 ```
 * Esto lo muestra en consola con los valores cargados, 
 justo después de presionar el botón `[Start Game]`. 
+
+## 0:21:19 - Aside: HTML entities
+
+>[!NOTE]  
+>Códigos especiales son utilizados en `HTML` para representar caracteres
+>reservados o caracteres que no son facilmente digitados en el teclado.  
+>**`&#128053;`** === 🐵
+>
+>**¿Cómo decodificar entidades HTML?**  
+>|Entidades codificadas: | Entidades dinámicas:
+>|-|-|
+>Una entidad HTML codificada en el `HTML` se decodificará automáticamente.<br/><br/> _No se necesitan más acciones._|Una Entidad HTML almacenada en una variable, no se decodificará automáticamente cuando la variable se representa en el HTML.<br/><br/> _¡Tenemos que decodificarlo!_|
+>
+>En este ejemplo de código, en el primero muestro el valor directo y 
+>aparece la imagen del `monkey`, en el segundo lo asigno a una variable
+> pero este no se capaz de mostrar el resultado:  
+>![Entidades HTML](images/2025-02-17_184434.png "Entidades HTML")
+>
+>### Se requiere instalar una librería de nombre: `html-entities`
+>```bash
+>pnpm install html-entities -E
+>```
+>Luego del cambio en el código este sería el resultado:  
+>![decodeEntity](images/2025-02-17_185749.png "decodeEntity")
