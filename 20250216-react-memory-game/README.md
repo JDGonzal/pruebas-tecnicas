@@ -669,3 +669,72 @@ justo después de presionar el botón `[Start Game]`.
 >```
 >Luego del cambio en el código este sería el resultado:  
 >![decodeEntity](images/2025-02-17_185749.png "decodeEntity")
+
+## 0:26:08 - Render memory cards with API data
+
+>[!IMPORTANT]  
+>### Desafío:
+>1) Pasa "emojisData" como el valor de una propiedad "data" al componente >MemoryCard.
+>2) Usa "data" que estás recibiendo como propiedad para representar los emojis obtenidos de la API. Recuerda que "data" es una matriz de objetos emoji. Registra los datos en la consola para ver qué propiedad de este objeto deberías representar como contenido del botón.  
+>
+>💡 Sugerencia: ¡Sabes cómo decodificar entidades HTML!
+1. Empiezo eliminando del archivo **`App.tsx`**, el `console.log`
+a `emojisData`.
+2. En el archivo **`App.tsx`** agregamos un parámetro al llamado del
+componente `MemoryCard` con el valor de `data`:
+```js
+export default function App() {
+  ...
+  return (
+    <main>
+      ...
+      {isGameOn && <MemoryCard handleClick={turnCard} data={emojisData} />}
+    </main>
+  );
+}
+```
+3. En el componente **`MemorytCard.tsx`** se añade el nuevo parámetro
+de nombre `data` de tipo objeto ("`{}`") y lo mostramos en un 
+`console.log`:
+```js
+export default function MemoryCard({
+  handleClick,
+  data,
+}: {
+  handleClick: () => void;
+  data: [] | any[];
+}) {
+  console.log(data);
+
+  ...
+}
+```
+4. En **`MemoryCard.tsx`** importamos la biblioteca `'html-entities'`.
+5. Cambio el `emojiArray` por el nuevo valor recibido de `data`.
+6. Muestro el elemento `htmlCode`, que está dentro del arreglo `data`,
+en el componente **`MemorytCard.tsx`** y de una vez aplicamos el 
+`decodeEntity`:
+```js
+import { decodeEntity } from 'html-entities';
+
+export default function MemoryCard({handleClick, data}: {
+  handleClick: () => void;data: [] | any[]}) {
+  console.log(data);
+  ...
+  const emojiEl = data.map((emoji, index) => (
+    <li key={index} className='card-item'>
+      <button className='btn btn--emoji' onClick={handleClick}>
+        {decodeEntity(emoji.htmlCode[0])}
+      </button>
+    </li>
+  ));
+  ...
+}
+```
+7. Podemos borrar dentro de **`MemoryCard.tsx`**, lo siguiente:
+* `console.log`
+* `emojiArray`
+8. Luego de presionar el botón `[Start Game]` esto es lo que saldrá
+en el broser:  
+![decodeEntity(emoji.htmlCode[0])](images/2025-02-18_115832.png "decodeEntity(emoji.htmlCode[0])")
+

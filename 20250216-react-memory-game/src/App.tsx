@@ -5,9 +5,6 @@ import MemoryCard from './components/MemoryCard';
 export default function App() {
   const [isGameOn, setIsGameOn] = useState(false);
   const [emojisData, setEmojisData] = useState([]);
-
-  //Mostramos el valor de `emojisData` en la consola
-  console.log(emojisData);
   
   async function startGame(e: React.FormEvent) {
     e.preventDefault();
@@ -36,7 +33,7 @@ export default function App() {
     <main>
       <h1>Memory</h1>
       {!isGameOn && <Form handleSubmit={startGame} />}
-      {isGameOn && <MemoryCard handleClick={turnCard} />}
+      {isGameOn && <MemoryCard handleClick={turnCard} data={emojisData} />}
     </main>
   );
 }

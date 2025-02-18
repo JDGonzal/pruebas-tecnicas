@@ -1,27 +1,17 @@
 import React from 'react';
+import { decodeEntity } from 'html-entities';
 
 export default function MemoryCard({
   handleClick,
+  data,
 }: {
   handleClick: () => void;
+  data: [] | any[];
 }) {
-  const emojiArray = [
-    '🐶',
-    '🐷',
-    '🐙',
-    '🐛',
-    '🐵',
-    '🐶',
-    '🐷',
-    '🐙',
-    '🐛',
-    '🐵',
-  ];
-
-  const emojiEl = emojiArray.map((emoji, index) => (
+  const emojiEl = data.map((emoji, index) => (
     <li key={index} className='card-item'>
       <button className='btn btn--emoji' onClick={handleClick}>
-        {emoji}
+        {decodeEntity(emoji.htmlCode[0])}
       </button>
     </li>
   ));
