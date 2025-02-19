@@ -977,3 +977,29 @@ los nuevo parámetros y los mostramos en la consola:
     console.log(`The emoji '${name}' at index '${index}' was clicked`);
   }
 ```
+
+## 1:05:22 - Select a memory card pt. 2
+
+>[!IMPORTANT] 
+>### Desafío:
+>1) Crear una nueva variable en el estado "`selectedCards`" con una función de establecimiento correspondiente. Inicializarla como una matriz vacía.
+>2) En la función `turnCard()`, establecer el valor de "`selectedCards`" para que sea una matriz que contenga un elemento: un objeto con dos pares clave-valor, donde los valores son los parámetros de la función.
+>3) Registrar "`selectedCards`" en la consola.
+
+1. En el archivo **`App.tsx`**, agregamos un `useState` de nombre
+`selectedCards`, como un arreglo vacío:
+```js
+  const [selectedCards, setSelectedCards] = useState([] as any[]);
+```
+2. En la función `turnCard()`, eliminamos o comentamos el `console.log`.
+3. Llamo el recién definido `useState` con el `setSelectedCards():`,
+dentro de la función `turnCard()`:
+```js
+  function turnCard(name: string, index: number) {
+    // console.log(`The emoji '${name}' at index '${index}' was clicked`);
+    setSelectedCards([{ name, index }]);
+  }
+```
+4. Justo depués de la definición del último `useState`, hacemos un
+`console.log` de `selectedCards`.
+* Solo me muestra la última carta seleccionada.
