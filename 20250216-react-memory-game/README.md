@@ -926,3 +926,54 @@ cuando obtengo las constantes:
 es por que faltan mas pasos con las funciones que estoy llamando.
 2. A la función `getDataSlice()` le antecedo el comando `async`.
 3. Lo mismo para la función `getEmojisArray()`.
+
+## 0:58:59 - Select a memory card pt. 1
+
+>[!NOTE] 
+>#### Mini desafío:
+>¿Qué información de una tarjeta de memoria podemos usar para:
+>1) Identificar en qué tarjeta se hizo clic?
+>2) Identificar pares de emojis que coincidan
+>* La respuesta al número `1` es el `index` o índice.
+>* La respuesta al número `2` es el `name of emoji` o nombre del _emoji_.
+
+>[!IMPORTANT]
+>### Desafío:
+>1) En el archivo **`MemoryCard.tsx`**, pasa `emoji.name` e `index` como argumentos a la función `handleClick()` que se llama al hacer clic en el botón.
+>2) En el archivo **`App.tsx`**, para la función `turnCard()`, recibe `name` e `index` como parámetros y regístralos en la consola.
+
+1. Empeamos en el componente `MemoryCard`, añadiendo como nuevos parámetros
+a la función `handleClick()`, el `emoji.name` y el `index`, pero tener
+en cuenta que al trabaja con `typeScript` debemos definir los valores
+antes de usuarlos, asi queda todo el componente con los cambios:
+```js
+export default function MemoryCard({
+  handleClick,
+  data,
+}: {
+  // Definición de la función con los dos parámetros nuevos 
+  handleClick: (name: string, index: number) => void; 
+  data: [] | any[];
+}) {
+  const emojiEl = data.map((emoji, index) => (
+    <li key={index} className='card-item'>
+      <button
+        className='btn btn--emoji'
+        // Llamado de la función dentro de otra función con los parámetros
+        onClick={() => handleClick(emoji.name, index)}
+      >
+        {decodeEntity(emoji.htmlCode[0])}
+      </button>
+    </li>
+  ));
+
+  return <ul className='card-container'>{emojiEl}</ul>;
+}
+```
+2. En el arcchivo **`App.tsx`**, en la función `turnCard()`, recibimos
+los nuevo parámetros y los mostramos en la consola:
+```js
+  function turnCard(name: string, index: number) {
+    console.log(`The emoji '${name}' at index '${index}' was clicked`);
+  }
+```
