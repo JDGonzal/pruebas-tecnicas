@@ -907,3 +907,22 @@ por dos veces es decir, duplicando la `data`:
 enviado de `dataSlice`, por el nuevo obtenido de `emojisArray`.
 * Este es el resultado obtenido hasta el momento:  
 ![Cinco tarjetas duplicadas y mezcladas](images/2025-02-19_143030.png "Cinco tarjetas duplicadas y mezcladas")
+
+
+# 3. Core Game Functionality
+
+## 0:55:10 - Side note: Address future discrepancies
+
+1. Para el archivo **`App.tsx`**, faltó adicionar los `await` 
+cuando obtengo las constantes:
+* `dataSlice`
+* `emojisArray` 
+```js
+      const dataSlice = await getDataSlice(data); 
+      const emojisArray = await getEmojisArray(dataSlice); 
+```
+* Aunque me sale el mensaje de advertencia : 
+`has no effect on the type of this expression`, 
+es por que faltan mas pasos con las funciones que estoy llamando.
+2. A la función `getDataSlice()` le antecedo el comando `async`.
+3. Lo mismo para la función `getEmojisArray()`.

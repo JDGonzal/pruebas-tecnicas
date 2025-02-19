@@ -17,8 +17,8 @@ export default function App() {
       }
       const data = await response.json();
       // const dataSample = data.slice(0, 5);
-      const dataSlice = getDataSlice(data);
-      const emojisArray = getEmojisArray(dataSlice);
+      const dataSlice = await getDataSlice(data);  
+      const emojisArray = await getEmojisArray(dataSlice); 
 
       setEmojisData(emojisArray);
       setIsGameOn(true);
@@ -27,7 +27,7 @@ export default function App() {
     }
   }
 
-  function getDataSlice(data: any[]) {
+  async function getDataSlice(data: any[]) {
     const randomIndices = getRandomIndices(data);
     const dataSlice = randomIndices.map((index) => data[index]);
     return dataSlice;
@@ -48,7 +48,7 @@ export default function App() {
     return ramdonInidicesArray;
   }
 
-  function getEmojisArray(data: any[]) {
+  async function getEmojisArray(data: any[]) {
     const pairedEmojisArray = [...data, ...data];
 
     // Algoritmo `Fisher-Yates`
