@@ -61,8 +61,8 @@ export default function App() {
     return pairedEmojisArray;
   }
 
-  function turnCard() {
-    console.log('Memory card clicked');
+  function turnCard(name: string, index: number) {
+    console.log(`The emoji '${name}' at index '${index}' was clicked`);
   }
 
   return (
