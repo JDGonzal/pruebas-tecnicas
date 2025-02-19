@@ -738,3 +738,172 @@ export default function MemoryCard({handleClick, data}: {
 en el broser:  
 ![decodeEntity(emoji.htmlCode[0])](images/2025-02-18_115832.png "decodeEntity(emoji.htmlCode[0])")
 
+## 0:30:45 - Issue with emojisData
+
+>[!NOTE]  
+>#### To do:
+>* Paso 1: Obtener emojis aleatorios de la API
+>* Paso 2: Duplicar emojis únicos
+>* Paso 3: Mezclar los datos de emojis
+
+### 0:33:29 - Get random emojis pt. 1
+
+>[!NOTE]  
+>#### Mini desafío:
+>* ¿Cómo podemos obtener emojis en índices aleatorios en la matriz de datos en lugar de obtener siempre los primeros 5?
+>* ¿Cómo podemos obtener números aleatorios dentro de un rango que nos permita usarlos como índices en la matriz "datos"?
+
+>[!IMPORTANT]  
+>#### Desafío:
+>1) Crea una nueva función, "`getRandomIndices()`", justo debajo de la función "`startGame()`". Debería recibir "`data`" como parámetro.
+>2) En esta nueva función, declara una nueva variable, "`randomIndicesArray`", e inicialízala como una matriz vacía.
+>3) Después de declarar "`randomIndicesArray`", usa un bucle for para generar 5 números aleatorios dentro de un rango equivalente a la longitud de la matriz "`data`" y envía estos números a "`randomIndicesArray`". Devuelve "`randomIndicesArray`" en la parte inferior de la función.
+>4) En el bloque try de la función "`startGame()`", registra el valor de retorno de "`getRandomIndices()`" a la consola, pasándole "`data`" como argumento.
+>
+>💡 Sugerencia: Queremos exactamente 5 números aleatorios únicos. ¿Qué puedes hacer dentro del bucle for para asegurarte de que los obtengamos?
+
+1. En el archivo **`App.tsx`**, Creamos una nueva función de nombre
+`getRandomIndices()`:
+```js
+  function getRandomIndices(data: any[]) {}
+```
+2. Creamos un arreglo dentro de la función `getRandomIndices()` de
+nombre `randomIndicesArray`, como un arreglo vacío
+3. Dentro de la función y debajo de la definición del nuevo arreglo
+creamos un ciclo `for`:
+```js
+  function getRandomIndices(data: any[]) {
+    const ramdonInidicesArray = [] as number[];
+
+    for (let i = 0; i < 5; i++) {
+      const randomNum = Math.floor(Math.random() * data.length);
+    }
+  }
+```
+4. Justo después de definir la constante `randomNum`, y
+dentro del ciclo `for` ponemos un condicional:
+```js
+      if (!ramdonInidicesArray.includes(randomNum)) {
+        ramdonInidicesArray.push(randomNum);
+      } else {
+        i--;
+      }
+```
+5. Luego del ciclo `for` en la función `getRandomIndices()`, hacemos
+el `return` del arreglo `ramdonInidicesArray`.
+6. En la función `startGame()`, justo depués de cargar la constante
+`dataSample`, invoco la nueva función `getRandomIndices()` dentro
+de un `console.log`, para ver la respuesta.  
+7. Podemos borrar este último `console.log`.
+
+### 0:43:32 - Get random emojis pt. 2
+
+>[!IMPORTANT]  
+>#### Desafío:
+>1) Debajo de la función "`startGame()`", crea una nueva función llamada "`getDataSlice()`". La función debe recibir "`data`" como parámetro.
+>2) Dentro de esta función, realiza una llamada a "`getRandomIndicies()`" y almacena el valor de retorno en una variable llamada "`randomIndices`".
+>3) Mapea sobre "`randomIndices`" y usa los números aleatorios almacenados en esta matriz para crear una nueva matriz de emojis aleatorios seleccionados de "`data`". Almacena esta nueva matriz en una variable llamada "`dataSlice`" y devuélvela al final de la función.
+>4) Dentro del bloque try de la función "`startGame()`", realiza una llamada a "`getDataSlice()`", pasando "`data`" como argumento. Guarda el valor de retorno en una variable llamada "`dataSlice`".
+>5) Elimina la variable "`dataSample`" y reemplaza "`dataSample`" con la nueva variable "`dataSlice`" en la función "`setEmojisData()`".
+>6) Ejecuta el código e inicia un nuevo juego para comprobar que tu código funciona.
+1. En el archivo **`App.tsx`**, Creamos una nueva función de nombre
+`getDataSlice()`:
+```js
+  function getDataSlice(data: any[]) {}
+```
+2. En la nueva función `getDataSlice()`, llamamos la función
+`getRandomIndices()` y la lamacenamos en `randomIndices`:
+```js
+  function getDataSlice(data: any[]) {
+    const randomIndices = getRandomIndices(data);
+  }
+```
+3. Usando el `map` en el arreglo `randomIndices`, cargamos una constante
+de nombre `dataSlice` y la exponemos en un `return`:
+```js
+  function getDataSlice(data: any[]) {
+    const randomIndices = getRandomIndices(data);
+    const dataSlice = randomIndices.map((index) => data[index]);
+    return dataSlice;
+  }
+```
+4. En la función `startGame()` y dentro del bloque `try/catch`, cargamos
+una constante de nombre `dataSlice` con el valor de la función
+`getDataSlice()`:
+```js
+      const dataSlice = getDataSlice(data);
+```
+5. Borramos o comentamos la creación y asignación de la constante
+`dataSample` y el momento de llamar la función `setEmojisData()`,
+lo hacemos con la nueva `dataSlice`.
+6. Esto me saca un mensaje a corregir y es cuando defino el
+`useState` para `emojisData`:
+```js
+export default function App() {
+  ...
+  const [emojisData, setEmojisData] = useState([] as any[]);
+
+  async function startGame(e: React.FormEvent) {
+    ...
+    try {
+      ...
+      const data = await response.json();
+      // const dataSample = data.slice(0, 5);
+      const dataSlice = getDataSlice(data);
+
+      setEmojisData(dataSlice);
+      ...
+    } catch (error) {
+      ...
+    }
+  }
+  ...
+  return (
+    ...
+  );
+}
+```
+
+### 0:49:32 - Duplicate and shuffle emojis
+
+1. Debajo de la función `getRandomIndices()`, creams una nueva de nombre
+`getEmojisArray()`:
+```js
+  function getEmojisArray(data: any[]) {}
+```
+2. Esta nueva función la llamaremos después de obtener la constante
+`dataSlice`, justo con esa constante como parámetro y la cargamos en
+la constante de nombre `emojisArray`:
+```js
+      const emojisArray = getEmojisArray(dataSlice);
+```
+
+>[!NOTE]
+>#### Desafío:
+>1) Crea una nueva variable, "`pairedEmojisArray`". Esta variable debe ser una matriz que incluya cada objeto emoji de la matriz "`data`" dos veces.
+>2) Usa el algoritmo `Fisher-Yates` para mezclar "`pairedEmojisArray`" y devolverlo al final de la función.
+>3) Ejecuta el código y comienza un nuevo juego.
+>
+>💡 Consejos: En el paso 1, usa el operador de propagación de matrices para crear una nueva matriz. En el paso 2, ¡busca en _Google_ el algoritmo `Fisher-Yates`!
+
+3. Dentro de la nueva función `getEmojisArray()`, creamos la constante
+`pairedEmojisArray` y le asignamos el valor de `data` a modo de _spread_,
+por dos veces es decir, duplicando la `data`: 
+```js
+    const pairedEmojisArray = [...data, ...data] ;
+```
+4. Hacemos el algoritmo de nombre `Fisher-Yates`, usando un cilo `for`:
+```j
+    // Algoritmo `Fisher-Yates`
+    for (let i = pairedEmojisArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = pairedEmojisArray[i];
+      pairedEmojisArray[i] = pairedEmojisArray[j];
+      pairedEmojisArray[j] = temp;
+    }
+```
+5. Devolvemos el valor obtenido dentro de la función `getEmojisArray()`.
+6. En el llamado a la función `setEmojisData()`, cambiamos el parámetro 
+enviado de `dataSlice`, por el nuevo obtenido de `emojisArray`.
+* Este es el resultado obtenido hasta el momento:  
+![Cinco tarjetas duplicadas y mezcladas](images/2025-02-19_143030.png "Cinco tarjetas duplicadas y mezcladas")
