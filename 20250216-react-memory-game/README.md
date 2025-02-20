@@ -1003,3 +1003,54 @@ dentro de la función `turnCard()`:
 4. Justo depués de la definición del último `useState`, hacemos un
 `console.log` de `selectedCards`.
 * Solo me muestra la última carta seleccionada.
+
+## 1:10:37 - Select a memory card pt. 3
+
+>[!NOTE]
+>#### Mini desafío:
+>Basándonos en las reglas y mecánicas de un juego de memoria, defina las condiciones que necesitamos incorporar a nuestra función "turnCard". Asegúrese de tener en cuenta los siguientes aspectos:
+>1) ¿Cuántas veces puede aparecer una carta en la matriz "selectedCards"?
+>2) ¿Cuál es la cantidad máxima de cartas en la matriz "selectedCards" en un momento dado?
+>
+>**Respuestas:**
+>1. Una vez o `1`.
+>2. Máximo dos (`2`).
+
+>[!IMPORTANT]
+>### Desafío:
+>1) Comprueba si la carta en la que has hecho clic ya está en la matriz "`selectedCards`". Guarda el resultado de esta comprobación en una variable llamada "`selectedCardEntry`".
+>2) Actualiza el código que añade una carta en la que has hecho clic a "`selectedCards`". Asegúrate de que se cumplan las siguientes condiciones:
+>     - Cada carta solo se puede añadir una vez en la misma ronda.
+>     - La longitud de la matriz "`selectedCards`" nunca debe superar los 2 caracteres.
+>3) Registra "`selectedCards`" en la consola.
+>
+>💡 Sugerencia: utiliza el método `.find()` de JavaScript para resolver el paso 1.
+1. En el archivo **`App.tsx`**, comentamos el llamado a la función 
+`setSelectedCards()`, dentro de la función `turnCard()`.
+2. Añadimos en la función `turnCard()`, el uso de la constante
+`selectedCards`, con un `find()`:
+```js
+    const selectedCardEntry = selectedCards.find(
+      (card) => card.index === index
+    );
+```
+3. En la misma función `turnCard()`, añadimos una condicional con lo
+siguiente:
+```js
+    if (!selectedCardEntry && selectedCards.length < 2) {
+      setSelectedCards([...selectedCards, { name, index }]);
+    } else if (!selectedCardEntry && selectedCards.length === 2) {
+      setSelectedCards([{ name, index }]);
+    }
+```
+4. El mostrar en consola, ya existe (`console.log(selectedCards);`)
+y está debajo de la definición de la constante `selectedCards` como 
+un `useState`.
+
+>[!TIP]  
+>* Al ejecutar y tratar de dar clic dos veces en la misma carta, solo
+>se adiciona una vez en este arreglo.  
+>* Al dar clic en dos cartas diferentes, se almacenan las dos cartas
+>en el arreglo.
+>* Al dar clic una tercera vez en otra carta, se borra el arreglo y vuelve
+>al paso inicial de un solo elemento en el arreglo.

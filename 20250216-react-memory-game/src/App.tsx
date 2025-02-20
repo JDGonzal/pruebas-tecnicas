@@ -20,8 +20,8 @@ export default function App() {
       }
       const data = await response.json();
       // const dataSample = data.slice(0, 5);
-      const dataSlice = await getDataSlice(data);  
-      const emojisArray = await getEmojisArray(dataSlice); 
+      const dataSlice = await getDataSlice(data);
+      const emojisArray = await getEmojisArray(dataSlice);
 
       setEmojisData(emojisArray);
       setIsGameOn(true);
@@ -66,7 +66,15 @@ export default function App() {
 
   function turnCard(name: string, index: number) {
     // console.log(`The emoji '${name}' at index '${index}' was clicked`);
-    setSelectedCards([{ name, index }]);
+    // setSelectedCards([{ name, index }]);
+    const selectedCardEntry = selectedCards.find(
+      (card) => card.index === index
+    );
+    if (!selectedCardEntry && selectedCards.length < 2) {
+      setSelectedCards([...selectedCards, { name, index }]);
+    } else if (!selectedCardEntry && selectedCards.length === 2) {
+      setSelectedCards([{ name, index }]);
+    }
   }
 
   return (
