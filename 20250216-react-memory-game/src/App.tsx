@@ -9,8 +9,7 @@ export default function App() {
   const [matchedCards, setMatchedCards] = useState([] as any[]);
   const [isGameOver, setIsGameOver] = useState(false);
 
-  console.log('isGameOver:', isGameOver);
-  console.log('matchedCards:', matchedCards);
+  console.log('selectedCards:', selectedCards);
 
   useEffect(() => {
     // Validamos si hay dos cartas y si estas coinciden en `name`
