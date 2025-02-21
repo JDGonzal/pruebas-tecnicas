@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from './components/Form';
 import MemoryCard from './components/MemoryCard';
 
@@ -6,8 +6,20 @@ export default function App() {
   const [isGameOn, setIsGameOn] = useState(false);
   const [emojisData, setEmojisData] = useState([] as any[]);
   const [selectedCards, setSelectedCards] = useState([] as any[]);
+  const [matchedCards, setMatchedCards] = useState([] as any[]);
 
-  console.log(selectedCards);
+  console.log('matchedCards:', matchedCards);
+
+  useEffect(() => {
+    // CValidamos si hay dos cartas y si estas coinciden en `name`
+    if (
+      selectedCards.length === 2 &&
+      selectedCards[0].name === selectedCards[1].name
+    ) {
+      // Asigno las cartas seleccionadas a las cartas coincidentes
+      setMatchedCards([...matchedCards, ...selectedCards]);
+    }
+  }, [selectedCards]);
 
   async function startGame(e: React.FormEvent) {
     e.preventDefault();
