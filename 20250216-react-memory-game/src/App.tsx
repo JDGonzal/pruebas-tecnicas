@@ -7,11 +7,13 @@ export default function App() {
   const [emojisData, setEmojisData] = useState([] as any[]);
   const [selectedCards, setSelectedCards] = useState([] as any[]);
   const [matchedCards, setMatchedCards] = useState([] as any[]);
+  const [isGameOver, setIsGameOver] = useState(false);
 
+  console.log('isGameOver:', isGameOver);
   console.log('matchedCards:', matchedCards);
 
   useEffect(() => {
-    // CValidamos si hay dos cartas y si estas coinciden en `name`
+    // Validamos si hay dos cartas y si estas coinciden en `name`
     if (
       selectedCards.length === 2 &&
       selectedCards[0].name === selectedCards[1].name
@@ -20,6 +22,13 @@ export default function App() {
       setMatchedCards([...matchedCards, ...selectedCards]);
     }
   }, [selectedCards]);
+
+  useEffect(() => {
+    // Si el largo de lo que coincide es igual a la longitud de los emojis
+    if (emojisData.length && matchedCards.length === emojisData.length) {
+      setIsGameOver(true);
+    }
+  }, [matchedCards]);
 
   async function startGame(e: React.FormEvent) {
     e.preventDefault();

@@ -1107,3 +1107,40 @@ del _hook_ `useEffect`.
 >* Si selecciono otras dos imágenes que si coinciden, se añade al
 arreglo `matchedCards`, otros dos objetos mas.
 
+## 1:28:50 - Are all memory cards matched?
+
+>[!IMPORTANT]
+>### Desafío:
+>1) Crea una nueva variable de estado, "`isGameOver`", con una función de establecimiento correspondiente. Inicializa la variable como falsa.
+>2) Crea un nuevo `useEffect` que establezca "`isGameOver`" como verdadero cuando se hayan emparejado todas las tarjetas de memoria y el juego haya terminado. Asegúrate de tener en cuenta lo siguiente:
+>     - ¿Qué valor deberíamos usar en la matriz de dependencias?
+>     - ¿Qué condición podemos usar para determinar si el juego ha terminado?
+
+1. En el archivo **`App.tsx`**, debajo del último `useState` añado
+un _hook_ de tipo `useState`, con el nombre de `isGameOver`, de tipo
+boleano:
+```js
+  const [isGameOver, setIsGameOver] = useState(false);
+```
+2. Creo otro _hook_ de tipo `useEffect` para validar el largo o longitud
+total entre las cartas en juego y las que han coincidido:
+```js
+  useEffect(() => {
+    // Si el largo de lo que coincide es igual a la longitud de los emojis
+    if (emojisData.length && matchedCards.length === emojisData.length) {
+      setIsGameOver(true);
+    }
+  }, [matchedCards]);
+```
+3. Cambiamos esto `console.log('matchedCards:', matchedCards);`,
+por esto `console.log('isGameOver:', isGameOver);`.
+
+>[!WARNING]  
+>Hay un error y se consigue siguiendo estos pasos:
+>1. Selecciona la primer pareja, ejemplo: `cat`y `cat`.
+>2. Selecciona otra pareja, ejemplo: `palm` y `palm`.
+>3. Repite seleccionando la primera: `cat` y `cat`.
+>* Y Arreglo `matchedCards`, ya registra tres(3) parejas es decir
+>seis(6) elementos.
+>
+>🤔 Veremos si se corrige mas adelante.
