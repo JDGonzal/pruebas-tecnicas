@@ -1054,3 +1054,56 @@ un `useState`.
 >en el arreglo.
 >* Al dar clic una tercera vez en otra carta, se borra el arreglo y vuelve
 >al paso inicial de un solo elemento en el arreglo.
+
+## 1:20:16 - Detect matching cards
+
+>[!NOTE]
+>#### Mini desafío:
+>* ¿Qué herramienta de nuestra caja de herramientas de React podemos usar para verificar si hay coincidencias cada vez que haya dos tarjetas seleccionadas?
+>* Respuesta: `useEffect` _hook_
+
+1. En el archivo **`App.tsx`**, debajo del último `useState` añado
+un _hook_ de tipo `useEffect`:
+```js
+  useEffect(() => {
+    console.log(selectedCards);
+  },[selectedCards]);
+```
+2. Recuerda borrar esta línea `console.log(selectedCards);`.
+
+[!IMPORTANT]
+>### Desafío:
+>1) Crea una nueva variable de estado, "`matchedCards`", con una función de establecimiento correspondiente. Inicialízala como una matriz vacía.
+>2) Si "`selectedCards`" contiene dos tarjetas coincidentes, usa el gancho useEffect para agregar estos objetos de tarjeta a "`matchedCards`". Asegúrate de no anular el estado anterior de "`matchedCards`".
+>
+>💡 Sugerencia: usa el operador de propagación de matrices para resolver el paso 2.
+4. Creamos otro _hook_ de tipo `useState`, con el nombre de 
+`matchedCards`, con el valor de un arreglo vacío:
+```js
+  const [matchedCards, setMatchedCards] = useState([] as any[]);
+```
+5. En el _hook_ de `useEffect`, ponemos esta condicional, y quitamos
+este texto `console.log(selectedCards);`:
+```js
+  useEffect(() => {
+    // CValidamos si hay dos cartas y si estas coinciden en `name`
+    if (
+      selectedCards.length === 2 &&
+      selectedCards[0].name === selectedCards[1].name
+    ) {
+      // Asigno las cartas seleccionadas a las cartas coincidentes
+      setMatchedCards([...matchedCards, ...selectedCards]);
+    }
+  }, [selectedCards]);
+```
+6. Agrego un `console.log` mostrando `matchedCards`, justo arriba 
+del _hook_ `useEffect`.
+
+>[!TIP]
+>* Si selecciono dos imagenes que no coinciden, no cambia el arreglo
+`matchedCards`.
+>* Si selecciono dos imagenes que si coinciden, se carga el arreglo
+`matchedCards`.
+>* Si selecciono otras dos imágenes que si coinciden, se añade al
+arreglo `matchedCards`, otros dos objetos mas.
+
