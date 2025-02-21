@@ -1144,3 +1144,76 @@ por esto `console.log('isGameOver:', isGameOver);`.
 >seis(6) elementos.
 >
 >🤔 Veremos si se corrige mas adelante.
+
+## 1:34:11 - Create EmojiButton component
+
+>[!IMPORTANT]
+>### Desafío:
+>1) En la carpeta de componentes, crea un nuevo componente, "`EmojiButton`". El componente debe devolver un elemento de botón HTML equivalente al botón del componente "`MemoryCard`".
+>2) Refactoriza el componente "`MemoryCard`" para que muestre el nuevo "`EmojiButton`" en lugar del elemento de botón HTML actual. Pasa tres propiedades al "`EmojiButton`": "`content`" (el emoji en sí), "`style`" (los nombres de clase) y "`handleclick`" (la referencia de función).
+>3) Cambia el nombre de la variable "`emojiEl`" a "`cardEl`" para dejar en claro que creamos la tarjeta aquí en el componente "`MemoryCard`" mientras que el emoji en sí se muestra en el componente "`EmojiButton`".
+>4) En el componente "`App`", registra "`selectedCards`" en la consola. Ejecuta el código y haz clic en algunas tarjetas para verificar que tu código refactorizado esté funcionando.
+
+1. Creamos un nuevo archivo en la carpeta **"components"** de nombre
+**`EmojiButton.tsx`**.
+2. Escribimos el _snippet_ `rfce` (_`React Function Export Component`_)
+y el me construye esta base:
+```js
+import React from 'react';
+
+function EmojiButton() {
+  return <div>EmojiButton</div>;
+}
+
+export default EmojiButton;
+```
+3. Le ajustamos el `return` de la función `EmojiButton()`, con lo 
+siguiente:
+```js
+  return <button className={''} onClick={() => {}}></button>;
+```
+4. Vamos al archivo **`MemoryCard.tsx`** y allí vamos a importar el 
+nuevo componente:
+```js
+import EmojiButton from './EmojiButton';
+```
+5. Cambiamos en el componente `MemoryCards` el elemento `<button` por
+`<EmojiButton`, lo cerramos y subimos `{decodeEntity(emoji.htmlCode[0])}`
+en la variable `content` a modo de un _Props_ hijo:
+```js
+export default function MemoryCard({
+  ...
+  const emojiEl = data.map((emoji, index) => (
+    <li key={index} className='card-item'>
+      <EmojiButton
+        content={decodeEntity(emoji.htmlCode[0])}
+        style='btn btn--emoji'
+        // Llamado de la función dentro de otra función con los parámetros
+        handleClick={() => handleClick(emoji.name, index)}
+      />
+    </li>
+  ));
+```
+6. Así debe quedar el componente nuevo `EmojiButton`:
+```js
+function EmojiButton({
+  content,
+  style,
+  handleClick,
+}: {
+  content: string;
+  style: string;
+  handleClick?: () => void;
+}) {
+  return (
+    <button className={style} onClick={handleClick}>
+      {content}
+    </button>
+  );
+}
+```
+7. En el archivo **`MemoryCard.tsx`**, cambiamos el nombre de
+`emojiEl` por `cardEl`.
+
+8. En el archivo **`App.tsx`**, quitamos los `console.log` y solo
+dejamos este: `console.log('selectedCards:', selectedCards);`
