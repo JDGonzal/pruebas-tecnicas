@@ -1222,9 +1222,12 @@ dejamos este: `console.log('selectedCards:', selectedCards);`.
 
 >[!IMPORTANT]
 >### Desafío:
->* **`App.tsx`**
+>**`App.tsx`**
+>
 >1) Pase "`selectedCards`" y "`matchedCards`" como accesorios a "`MemoryCard`".
->* **`MemoryCard.tsx`**
+>
+>**`MemoryCard.tsx`**
+>
 >2) Refactorice el código dentro de la función de devolución de llamada del método `.map() `para devolver explícitamente el elemento `li`.
 >3) Dentro de la misma función de devolución de llamada, utiliza la propiedad "`selectedCards`" para verificar si la tarjeta está seleccionada. Almacena el resultado de esta verificación en una nueva variable llamada "`selectedCardEntry`".
 >4) De manera similar, utiliza la propiedad "`matchedCards`" para verificar si una tarjeta coincide y almacena el resultado de la verificación en una nueva variable llamada "`matchedCardEntry`".
@@ -1299,3 +1302,76 @@ export default function MemoryCard({
   return <ul className='card-container'>{cardEl}</ul>;
 }
 ```
+
+## 1:48:38 - Conditional memory card content
+
+>[!IMPORTANT]
+>### Desafío:
+>**`MemoryCard.tsx`**
+>1) Pasa "`selectedCardEntry`" y "`matchedCardEntry`" como propiedades a "`EmojiButton`".
+>
+>**`EmojiButton.tsx`**
+>
+>2) Crea una nueva variable, "`btnContent`", y usa "`selectedCardEntry`" y "`matchedCardEntry`" que recibas como propiedades para asignarle un valor condicionalmente. Si una tarjeta coincide o se selecciona, "`btnContent`" debe ser el valor de la propiedad "`content`"; de lo contrario, debe ser un signo de interrogación.
+>3) Representa "`btnContent`" como el contenido del botón.
+>
+>💡 Sugerencia: usa un operador ternario para resolver el paso 2.
+
+1. En eo archivo **`MemoryCard.tsx`**, añado dos parámetros a enviar en el 
+siguiente componente de nombre `EmojiButton`, adicional borramos
+los `console.log` que ya no los necesitamos, junto con el condicional:
+```js
+  const cardEl = data.map((emoji, index) => {
+    ...
+    return (
+      <li key={index} className='card-item'>
+        <EmojiButton
+          content={decodeEntity(emoji.htmlCode[0])}
+          style='btn btn--emoji'
+          selectedCardsEntry={selectedCardsEntry}
+          matchedCardsEntry={matchedCardsEntry}
+          // Llamado de la función dentro de otra función con los parámetros
+          handleClick={() => handleClick(emoji.name, index)}
+        />
+      </li>
+    );
+  });
+```
+2. Ahora bien debemos añadir en **`EmojiButton.tsx`**, los dos nuevos
+parámetros:
+```js
+function EmojiButton({
+  content,
+  style,
+  selectedCardsEntry,
+  matchedCardsEntry,
+  handleClick,
+}: {
+  content: string;
+  style: string;
+  selectedCardsEntry: [] | any[];
+  matchedCardsEntry: [] | any[];
+  handleClick?: () => void;
+}) {
+  return (
+    <button className={style} onClick={handleClick}>
+      {content}
+    </button>
+  );
+}
+```
+3. Los dos nuevos elementos los usamos para un condicional ternario,
+asignado a una nueva constante de nombre: `btnContent`:
+```js
+  const btnContent = selectedCardsEntry || matchedCardsEntry ? content : '?';
+```
+4. Este nuevo valor es el que vamos a mostrar en pantalla:
+```js
+  return (
+    <button className={style} onClick={handleClick}>
+      {btnContent}
+    </button>
+  );
+```
+* Este es la visualización en el browser del juego hasta el momento:  
+![Start Game: -> Click en cada carta](images/2025-02-22_165530.gif "Start Game: -> Click en cada carta")

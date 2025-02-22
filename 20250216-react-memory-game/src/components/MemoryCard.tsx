@@ -19,18 +19,15 @@ export default function MemoryCard({
     const selectedCardsEntry = selectedCards.find(
       (card) => card.index === index
     );
-    // Clono con otro nombre 
+    // Clono con otro nombre
     const matchedCardsEntry = matchedCards.find((card) => card.index === index);
-    // Solo los muestro cuando tengo datos en ambos
-    if (selectedCardsEntry && matchedCardsEntry) {
-      console.log('selectedCardsEntry:', selectedCardsEntry);
-      console.log('matchedCardsEntry:', matchedCardsEntry);
-    }
     return (
       <li key={index} className='card-item'>
         <EmojiButton
           content={decodeEntity(emoji.htmlCode[0])}
           style='btn btn--emoji'
+          selectedCardsEntry={selectedCardsEntry}
+          matchedCardsEntry={matchedCardsEntry}
           // Llamado de la función dentro de otra función con los parámetros
           handleClick={() => handleClick(emoji.name, index)}
         />
