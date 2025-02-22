@@ -1375,3 +1375,99 @@ asignado a una nueva constante de nombre: `btnContent`:
 ```
 * Este es la visualización en el browser del juego hasta el momento:  
 ![Start Game: -> Click en cada carta](images/2025-02-22_165530.gif "Start Game: -> Click en cada carta")
+
+
+## 1:54:44 - Conditional memory card styling
+
+1. En el archivo **`EmojiButton.tsx`**, borramos el parámetro de nombre
+`style` y le ponemos directamente el valor que hay en el componente
+`MemoryCard` de `'btn btn--emoji'`.
+2. En el archivo **`MemoryCard.tsx`** eliminamos del llamado al componente
+`EmojiButton`, la opción de `style=`, toda esa línea.
+
+>[!IMPORTANT]
+>### Desafío:
+>**`MemoryCard.tsx`**
+>1) Cree una nueva variable, "`cardStyle`", y asígnele un valor condicional según si una carta está seleccionada, coincide o no. Utilice los siguientes valores:
+>     * Carta seleccionada: "`card-item--selected`".
+>     * Carta coincidente: "`card-item--matched`".
+>     * Ninguna: "".
+>2) Agregue "`cardStyle`" al conjunto de clases existente en el elemento `<li>`.
+>
+>**`EmojiButton.tsx`**
+>
+>3) Crea una nueva variable, "`btnStyle`", y asígnale condicionalmente uno de los siguientes valores:
+>     * Carta seleccionada: "`btn--emoji__back--selected`".
+>     * Carta coincidente: "`btn--emoji__back--matched`".
+>     * Ninguna: "`btn--emoji__front`".
+>4) Agrega "`btnStyle`" a las clases existentes establecidas en el botón.
+>
+>💡 Sugerencia para los pasos 1 y 3:
+>Piensa detenidamente en el orden en el que verificas si una carta está seleccionada, coincide o ninguna de las dos.
+>
+>Cuando hayas terminado, debería haber efectos de desplazamiento/enfoque (sombra de cuadro y color de fondo) en las cartas boca abajo, animación cuando se dan vuelta las cartas y fondo en gris en las cartas coincidentes.
+
+3. En el archivo **`MemoryCard.tsx`**, definimos la variable `cardStyle`, 
+con un valor inicial y con una serie de condicionales cargamos los 
+valores adicionales:
+```js
+    let cardStyle = 'card-item--';
+    if (selectedCardsEntry) {
+      cardStyle += 'selected';
+    } else if (matchedCardsEntry) {
+      cardStyle += 'matched';
+    } else {
+      cardStyle += 'default';
+    }
+```
+2. En el elemento `<li>` añadimos al `className` este nuevo valor:
+```js
+    return (
+      <li key={index} className={`card-item ${cardStyle}`}>
+        <EmojiButton
+          ...
+        />
+      </li>
+    );
+```
+3. En el archivo **`EmojiButton.tsx`**, creamos la variable `btnStyle`,
+la inicializamos con un valor string, y con los condicionales añadimos
+el resto de valores:
+```js
+  let btnStyle = 'btn--emoji__';
+  if (selectedCardsEntry) {
+    btnStyle += 'back--selected';
+  } else if (matchedCardsEntry) {
+    btnStyle += 'back--matched';
+  } else {
+    btnStyle += 'front';
+  }
+```
+4. Añadimos al `className` del `<button>` esta nueva variable:
+```js
+  return (
+    <button className={`btn btn--emoji ${btnStyle}`} onClick={handleClick}>
+      {btnContent}
+    </button>
+  );
+```
+>[TIP]  
+> El Instructor sugiere un operador ternario en el archivo **`MemoryCard.tsx`**, en vez del simple condicional:
+>```js
+>    const cardStyle = selectedCardsEntry
+>      ? 'card-item--selected'
+>      : matchedCardsEntry
+>      ? 'card-item--matched'
+>      : '';
+>```
+> Algo similar se aplicaría en el archivo **`EmojiButton.tsx`**:
+>```js
+>  const btnStyle = selectedCardsEntry
+>    ? 'btn--emoji__back--selected'
+>    : matchedCardsEntry
+>    ? 'btn--emoji__back--matched'
+>    : 'btn--emoji__front';
+>```
+>
+>_Cuando hayas terminado, debería haber efectos de desplazamiento/enfoque (sombra de cuadro y color de fondo) en las cartas que se encuentran boca abajo, animación cuando se giran las cartas y fondo grisáceo en las cartas coincidentes._  
+>![Efectos visuales al seleccionar las cartas](images/2025-02-22_182845.gif "Efectos visuales al seleccionar las cartas")
