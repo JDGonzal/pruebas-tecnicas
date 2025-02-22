@@ -21,11 +21,26 @@ export default function MemoryCard({
     );
     // Clono con otro nombre
     const matchedCardsEntry = matchedCards.find((card) => card.index === index);
+
+    // Condicionales que hice inicialmente
+    // let cardStyle = 'card-item--';
+    // if (selectedCardsEntry) {
+    //   cardStyle += 'selected';
+    // } else if (matchedCardsEntry) {
+    //   cardStyle += 'matched';
+    // } else {
+    //   cardStyle += 'default';
+    // }
+    // Operador Ternario sugeridas por el instructor
+    const cardStyle = selectedCardsEntry
+      ? 'card-item--selected'
+      : matchedCardsEntry
+      ? 'card-item--matched'
+      : '';
     return (
-      <li key={index} className='card-item'>
+      <li key={index} className={`card-item ${cardStyle}`}>
         <EmojiButton
           content={decodeEntity(emoji.htmlCode[0])}
-          style='btn btn--emoji'
           selectedCardsEntry={selectedCardsEntry}
           matchedCardsEntry={matchedCardsEntry}
           // Llamado de la función dentro de otra función con los parámetros
