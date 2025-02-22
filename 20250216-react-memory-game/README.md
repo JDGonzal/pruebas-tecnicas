@@ -1216,4 +1216,86 @@ function EmojiButton({
 `emojiEl` por `cardEl`.
 
 8. En el archivo **`App.tsx`**, quitamos los `console.log` y solo
-dejamos este: `console.log('selectedCards:', selectedCards);`
+dejamos este: `console.log('selectedCards:', selectedCards);`.
+
+## 1:42:58 - Identify selected & matched cards in MemoryCard
+
+>[!IMPORTANT]
+>### Desafío:
+>* **`App.tsx`**
+>1) Pase "`selectedCards`" y "`matchedCards`" como accesorios a "`MemoryCard`".
+>* **`MemoryCard.tsx`**
+>2) Refactorice el código dentro de la función de devolución de llamada del método `.map() `para devolver explícitamente el elemento `li`.
+>3) Dentro de la misma función de devolución de llamada, utiliza la propiedad "`selectedCards`" para verificar si la tarjeta está seleccionada. Almacena el resultado de esta verificación en una nueva variable llamada "`selectedCardEntry`".
+>4) De manera similar, utiliza la propiedad "`matchedCards`" para verificar si una tarjeta coincide y almacena el resultado de la verificación en una nueva variable llamada "`matchedCardEntry`".
+>
+>💡 Sugerencia: ¿No estás seguro de cómo resolver los pasos 3 y 4? Entonces, observa detenidamente la función `turnCard()` en el componente `App`.
+
+1. En el archivo **`App.tsx`**, en el `return` adicionamos dos nuevos 
+parámetros de nombres `selectedCards` y `matchedCards`:
+```js
+  return (
+    <main>
+      <h1>Memory</h1>
+      {!isGameOn && <Form handleSubmit={startGame} />}
+      {isGameOn && (
+        <MemoryCard
+          handleClick={turnCard}
+          data={emojisData}
+          selectedCards={selectedCards}
+          matchedCards={matchedCards}
+        />
+      )}
+    </main>
+  );
+```
+2. Por ende en el archivo **`MemoryCards.tsx`**, debemos añadir estos
+dos nuevos parámetros:
+```js
+export default function MemoryCard({
+  handleClick,
+  data,
+  selectedCards,
+  matchedCards,
+}: {
+  // Definición de la función con los dos parámetros nuevos
+  handleClick: (name: string, index: number) => void;
+  data: [] | any[];
+  selectedCards: [] | any[];
+  matchedCards: [] | any[];
+}) {
+  ...
+}
+```
+3. En el componente `MemoryCards`, hacemos este cambio en el momento
+que defino la constante `cardEl`:
+```js
+export default function MemoryCard({
+  ...
+}) {
+  const cardEl = data.map((emoji, index) => {
+    // Es una copia de la función `turnCard()` del componente `App`
+    const selectedCardEntry = selectedCards.find(
+      (card) => card.index === index
+    );
+    // Clono con otro nombre 
+    const matchedCardsEntry = matchedCards.find((card) => card.index === index);
+    // Solo los muestro cuando tengo datos en ambos
+    if (selectedCardsEntry && matchedCardsEntry) {
+      console.log('selectedCardsEntry:', selectedCardsEntry);
+      console.log('matchedCardsEntry:', matchedCardsEntry);
+    }
+    return (
+      <li key={index} className='card-item'>
+        <EmojiButton
+          content={decodeEntity(emoji.htmlCode[0])}
+          style='btn btn--emoji'
+          // Llamado de la función dentro de otra función con los parámetros
+          handleClick={() => handleClick(emoji.name, index)}
+        />
+      </li>
+    );
+  });
+  return <ul className='card-container'>{cardEl}</ul>;
+}
+```
