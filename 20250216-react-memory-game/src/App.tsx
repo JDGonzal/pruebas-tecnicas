@@ -85,14 +85,14 @@ export default function App() {
   }
 
   function turnCard(name: string, index: number) {
+    console.log('Clicked');
+      
     // console.log(`The emoji '${name}' at index '${index}' was clicked`);
     // setSelectedCards([{ name, index }]);
-    const selectedCardEntry = selectedCards.find(
-      (card) => card.index === index
-    );
-    if (!selectedCardEntry && selectedCards.length < 2) {
+    // const selectedCardEntry = selectedCards.find((card) => card.index === index );
+    if (/*!selectedCardEntry &&*/ selectedCards.length < 2) {
       setSelectedCards([...selectedCards, { name, index }]);
-    } else if (!selectedCardEntry && selectedCards.length === 2) {
+    } else if (/*!selectedCardEntry &&*/ selectedCards.length === 2) {
       setSelectedCards([{ name, index }]);
     }
   }

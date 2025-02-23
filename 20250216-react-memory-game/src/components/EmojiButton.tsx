@@ -29,8 +29,14 @@ function EmojiButton({
     ? 'btn--emoji__back--matched'
     : 'btn--emoji__front';
 
+  const isMatched = matchedCardsEntry ? true : false;
+
   return (
-    <button className={`btn btn--emoji ${btnStyle}`} onClick={handleClick}>
+    <button
+      className={`btn btn--emoji ${btnStyle}`}
+      onClick={selectedCardsEntry ? () => {} : handleClick}
+      disabled={isMatched}
+    >
       {btnContent}
     </button>
   );
