@@ -1404,8 +1404,6 @@ asignado a una nueva constante de nombre: `btnContent`:
 >
 >💡 Sugerencia para los pasos 1 y 3:
 >Piensa detenidamente en el orden en el que verificas si una carta está seleccionada, coincide o ninguna de las dos.
->
->Cuando hayas terminado, debería haber efectos de desplazamiento/enfoque (sombra de cuadro y color de fondo) en las cartas boca abajo, animación cuando se dan vuelta las cartas y fondo en gris en las cartas coincidentes.
 
 3. En el archivo **`MemoryCard.tsx`**, definimos la variable `cardStyle`, 
 con un valor inicial y con una serie de condicionales cargamos los 
@@ -1471,3 +1469,63 @@ el resto de valores:
 >
 >_Cuando hayas terminado, debería haber efectos de desplazamiento/enfoque (sombra de cuadro y color de fondo) en las cartas que se encuentran boca abajo, animación cuando se giran las cartas y fondo grisáceo en las cartas coincidentes._  
 >![Efectos visuales al seleccionar las cartas](images/2025-02-22_182845.gif "Efectos visuales al seleccionar las cartas")
+
+
+# 4. Enhancements of Accessibility
+
+## 2:04:33 - Disabled attribute & conditional event handler
+
+>[!IMPORTANT]
+>### Desafío:
+>**`EmojiButton.tsx`**
+>* Agregar un atributo deshabilitado al botón y darle un valor que sea verdadero cuando coincida una carta, de lo contrario será falso.
+
+1. En el archivo **`EmojiButton.tsx`**, para añadimos la constante
+`isMatched` y la usamos para dterminar si el elemento `<button>`
+está `disabled`:
+```js
+function EmojiButton({
+  ...
+}) {
+  ...
+  const isMatched = matchedCardsEntry ? true : false;
+
+  return (
+    <button
+      ...
+      disabled={isMatched}
+    >
+      ...
+    </button>
+  );
+}
+```
+2. Del archivo **`App.tsx`**, borramos o comentamos de la función
+`turnCard()`, lo siguiente:
+* `const selectedCardEntry =`
+* Y en el condicional donde se usa `selectedCardEntry`
+
+>[!IMPORTANT]
+>### Desafío:
+>**`EmojiButton.tsx`**
+>* Refactorizar el controlador de eventos onClick. Utilizar un operador ternario para establecer el valor en nulo si se selecciona una tarjeta, de lo contrario, "handleClick".
+3. En el archivo **`EmojiButton.tsx`**, este sería el ternario para
+```js
+function EmojiButton({
+  ...
+}) {
+  ...
+  return (
+    <button
+      ...
+      onClick={selectedCardsEntry ? () => {} : handleClick}
+      ...
+    >
+      ...
+    </button>
+  );
+}
+```
+
+>[!NOTE]  
+>El objetivo es que solo se pueda dar clic en una carta, no dos veces sobre la misma, evitando el llamado innecesario de una función varias veces.
