@@ -1,5 +1,4 @@
 import React from 'react';
-import { decodeEntity } from 'html-entities';
 import EmojiButton from './EmojiButton';
 
 export default function MemoryCard({
@@ -40,9 +39,10 @@ export default function MemoryCard({
     return (
       <li key={index} className={`card-item ${cardStyle}`}>
         <EmojiButton
-          content={decodeEntity(emoji.htmlCode[0])}
           selectedCardsEntry={selectedCardsEntry}
           matchedCardsEntry={matchedCardsEntry}
+          emoji={emoji}
+          index={index}
           // Llamado de la función dentro de otra función con los parámetros
           handleClick={() => handleClick(emoji.name, index)}
         />
