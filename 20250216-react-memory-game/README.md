@@ -1529,3 +1529,118 @@ function EmojiButton({
 
 >[!NOTE]  
 >El objetivo es que solo se pueda dar clic en una carta, no dos veces sobre la misma, evitando el llamado innecesario de una función varias veces.
+
+## 2:12:01 - Aside: aria-label & aria-live
+
+![Cuándo y cómo utilizar `aria-labels`](images/2025-02-23_173754.png "Cuándo y cómo utilizar `aria-labels`")
+
+## 2:32:32 - Add aria-label to EmojiButton
+
+1. En el archivo **`MemoryCard.tsx`**, pasaremos otro parámetro de nombre 
+`emoji` al componente `EmojiButton`:
+```js
+    return (
+      <li key={index} className={`card-item ${cardStyle}`}>
+        <EmojiButton
+          content={decodeEntity(emoji.htmlCode[0])}
+          selectedCardsEntry={selectedCardsEntry}
+          matchedCardsEntry={matchedCardsEntry}
+          emoji={emoji}
+          // Llamado de la función dentro de otra función con los parámetros
+          handleClick={() => handleClick(emoji.name, index)}
+        />
+      </li>
+    );
+```
+2. Ya en **`EmojiButton.tsk`**, recibimos el nuevo parámetro:
+```js
+function EmojiButton({
+  content,
+  selectedCardsEntry,
+  matchedCardsEntry,
+  emoji,
+  handleClick,
+}: {
+  content: string;
+  selectedCardsEntry: [] | any[];
+  matchedCardsEntry: [] | any[];
+  emoji?: {} | any;
+  handleClick?: () => void;
+})
+```
+3. Importamos en **`EmojiButton.tsk`**, la librería de `html-entities`:
+```js
+import { decodeEntity } from 'html-entities';
+```
+4. En el componente `EmojiButton`,  cambiamos en el operador ternario
+el valor de `content`, por el valor de `emoji`, pero con el `decodeEntity`.
+5. Borramos la constante `content`, tanto en **`EmojiButton.tsx`**, 
+como en **`MemoryCard.tsx`**.
+6. En **`MemoryCard.tsx`**, borramos la importación de `html-entities`.
+
+>[!NOTE]
+>#### Mini desafío:
+>* ¿Qué información sobre cada tarjeta de memoria necesita el usuario para poder jugar a nuestro juego?
+
+>[IMPORTANT]
+>### Desafío:
+>**`MemoryCard.tsx`**
+>1) Pasa el "`index`" como una propiedad a `EmojiButton`.
+>
+>**`EmojiButton.tsx`**
+>
+>2) Crea una nueva variable, "`btnAria`", y asígnale un valor condicional dependiendo de si la tarjeta coincide, está seleccionada o no coincide. Usa los siguientes valores:
+>     * Coincidente: el nombre del emoji + "`Coincide`".
+>     * Seleccionado: el nombre del emoji + "`Aún no coincide`".
+>     * Ninguno: "`Tarjeta al revés`".
+>3) Establece una etiqueta aria en el botón. El valor que le des debe informar sobre la posición de la tarjeta y también contener "`btnAria`".
+> - Un ejemplo: "`Posición 1: cara de mono. Aún no coincide`".
+>4) Establece un atributo `aria-live` en el botón y dale el valor "`polite`".
+>
+>💡Sugerencia: usa el elemento "`index`" para determinar la posición de la carta, pero recuerda que los humanos comenzamos a contar desde 1, no desde 0.
+1. En el archivo **`MemoryCard.tsx`**, enviamos al llamado del componente
+`EmojiButton`, el parámetro de nombre `index`.
+```js
+    return (
+      <li key={index} className={`card-item ${cardStyle}`}>
+        <EmojiButton
+          selectedCardsEntry={selectedCardsEntry}
+          matchedCardsEntry={matchedCardsEntry}
+          emoji={emoji}
+          index={index}
+          // Llamado de la función dentro de otra función con los parámetros
+          handleClick={() => handleClick(emoji.name, index)}
+        />
+      </li>
+    );
+```
+2. Por ende en **`EmojiButton.tsx`**, recivimos este nuevo parámetro:
+```js
+function EmojiButton({
+  selectedCardsEntry,
+  matchedCardsEntry,
+  emoji,
+  index,
+  handleClick,
+}: {
+  selectedCardsEntry: [] | any[];
+  matchedCardsEntry: [] | any[];
+  emoji?: {} | any;
+  index: number;
+  handleClick?: () => void;
+})
+```
+3. En **`EmojiButton.tsx`**, creamos la constante `btnAria` con un 
+operador ternario dependiendo si es `matched`, `selected`, o nada:
+```js
+  const btnAria = selectedCardsEntry
+    ? `Posición ${index + 1}: ${emoji.name}. Coincide`
+    : matchedCardsEntry
+    ? `Posición ${index + 1}: ${emoji.name}. Aún no coincide`
+    : 'Tarjeta al revés';
+```
+4. Ahora bien al `<button>` le ñadimos el `aria-label` con el valor
+de `btnAria` y configuramos el valor de `aria-live` a `polite`:
+```js
+
+```
