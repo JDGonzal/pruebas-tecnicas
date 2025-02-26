@@ -7,9 +7,9 @@ export default function App() {
   const [emojisData, setEmojisData] = useState([] as any[]);
   const [selectedCards, setSelectedCards] = useState([] as any[]);
   const [matchedCards, setMatchedCards] = useState([] as any[]);
-  const [isGameOver, setIsGameOver] = useState(false);
+  const [areAllCardsMatched, setAreAllCardsMatched] = useState(false);
 
-  console.log('isGameOver:', isGameOver);
+  console.log('areAllCardsMatched:', areAllCardsMatched);
 
   useEffect(() => {
     // Validamos si hay dos cartas y si estas coinciden en `name`
@@ -25,7 +25,7 @@ export default function App() {
   useEffect(() => {
     // Si el largo de lo que coincide es igual a la longitud de los emojis
     if (emojisData.length && matchedCards.length === emojisData.length) {
-      setIsGameOver(true);
+      setAreAllCardsMatched(true);
     }
   }, [matchedCards]);
 

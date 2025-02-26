@@ -1534,7 +1534,7 @@ function EmojiButton({
 
 ![Cuándo y cómo utilizar `aria-labels`](images/2025-02-23_173754.png "Cuándo y cómo utilizar `aria-labels`")
 
-## 2:32:32 - Add aria-label to EmojiButton
+## 2:21:50 - Add aria-label to EmojiButton
 
 1. En el archivo **`MemoryCard.tsx`**, pasaremos otro parámetro de nombre 
 `emoji` al componente `EmojiButton`:
@@ -1582,7 +1582,7 @@ como en **`MemoryCard.tsx`**.
 >#### Mini desafío:
 >* ¿Qué información sobre cada tarjeta de memoria necesita el usuario para poder jugar a nuestro juego?
 
->[IMPORTANT]
+>[!IMPORTANT]
 >### Desafío:
 >**`MemoryCard.tsx`**
 >1) Pasa el "`index`" como una propiedad a `EmojiButton`.
@@ -1614,7 +1614,7 @@ como en **`MemoryCard.tsx`**.
       </li>
     );
 ```
-2. Por ende en **`EmojiButton.tsx`**, recivimos este nuevo parámetro:
+2. Por ende en **`EmojiButton.tsx`**, recibimos este nuevo parámetro:
 ```js
 function EmojiButton({
   selectedCardsEntry,
@@ -1634,13 +1634,33 @@ function EmojiButton({
 operador ternario dependiendo si es `matched`, `selected`, o nada:
 ```js
   const btnAria = selectedCardsEntry
-    ? `Posición ${index + 1}: ${emoji.name}. Coincide`
+    ? `${decodeEntity(emoji.name)}. Coincide`
     : matchedCardsEntry
-    ? `Posición ${index + 1}: ${emoji.name}. Aún no coincide`
+    ? `${decodeEntity(emoji.name)}. Aún no coincide`
     : 'Tarjeta al revés';
 ```
-4. Ahora bien al `<button>` le ñadimos el `aria-label` con el valor
+4. Ahora bien al `<button>` le añadimos el `aria-label` con el valor
 de `btnAria` y configuramos el valor de `aria-live` a `polite`:
 ```js
-
+  return (
+    <button
+      className={`btn btn--emoji ${btnStyle}`}
+      onClick={selectedCardsEntry ? () => {} : handleClick}
+      disabled={isMatched}
+      aria-label={`Posición ${index + 1}: ${btnAria}`}
+      aria-live='polite'
+    >
+      {btnContent}
+    </button>
+  );
 ```
+
+>[!TIP]  
+>Esto no cambia el comportamiento del juego, ni tampoco deja un mensaje 
+>visible en pantalla, en pocas palabras no le hallo utilidad.
+
+## 2:31:00 - Side note: Renamed state variable
+
+1. En el archivo **`App.tsx`**, renombrar este estado `isGameOver`
+por `areAllCardsMatched`.
+
