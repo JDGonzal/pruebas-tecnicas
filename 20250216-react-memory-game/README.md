@@ -1774,3 +1774,36 @@ componente `App`, entre el `... <Form .../>` y el `... <MemoryCard .../>`:
   );
   );
 ```
+
+
+## 2:41:29 - Aside: aria-atomic
+
+>[!NOTE]  
+>![Accessibility tool: aria-atomic](images/2025-02-27_063005.png "Accessibility tool: aria-atomic")
+>![Herramienta de accesibilidad: aria-atomic](images/2025-02-27_063132.png "Herramienta de accesibilidad: aria-atomic")
+>
+>![Why we do need aria-atomic](images/2025-02-27_095622.png "Why we do need aria-atomic")
+>![Por qué necesitamos aria-atomic"](images/2025-02-27_095730.png "Por qué necesitamos aria-atomic")
+>
+>![How to use aria-atomic](images/2025-02-27_100224.png "How to use aria-atomic")
+>![Cómo utilizar aria-atomic](images/2025-02-27_100341.png "Cómo utilizar aria-atomic")
+>
+>![Resumen: arial-live](images/2025-02-27_100746.png "Resumen: arial-live")
+>
+>![El atributo aria-atomic](images/2025-02-27_101149.png "El atributo aria-atomic")
+
+>[!TIP]
+>### ARIA significa **Accessible Rich Internet Applications**, es una especificación técnica cuyo objetivo es aumentar la accesibilidad de los contenidos dinámicos y de los componentes de interfaces dinámicas desarrollados con HTML, JavaScript, Ajax y tecnologías asociadas.
+>
+>### ARIA describe como agregar la semántica y metadatos al contenido HTML con el fin de hacer que los controles de interfaz y los contenidos dinámicos sean más accesibles, especialmente para personas con alguna discapacidad.
+>El atributo aria-atomic se utiliza en software para indicar si un lector de pantalla debe presentar una región como un todo o solo las partes que han cambiado. 
+>#### ¿Qué hace aria-atomic?
+>Permite que las tecnologías de asistencia determinen eventos en áreas concretas 
+>Especifica si se debe anunciar toda la región o solo las partes que han cambiado 
+>#### ¿Cuáles son los valores de aria-atomic?
+>* aria-atomic="false" Es el valor por defecto. En este caso, solo se anuncia el nodo que ha cambiado 
+>* aria-atomic="true" En este caso, se anuncia toda la región, incluso si solo cambia una parte de la región 
+>#### ¿Qué es ARIA?
+>ARIA son las siglas de "Accessible Rich Internet Applications". Es un conjunto de información que permite proporcionar ayuda adicional a personas con discapacidades. 
+>#### ¿Cómo se usa ARIA?
+>Los atributos ARIA se pueden utilizar para modificar la semántica de las etiquetas HTML. Esto permite que los usuarios de productos de apoyo puedan comprender mejor los elementos de la página. 
