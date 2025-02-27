@@ -1807,3 +1807,28 @@ componente `App`, entre el `... <Form .../>` y el `... <MemoryCard .../>`:
 >ARIA son las siglas de "Accessible Rich Internet Applications". Es un conjunto de información que permite proporcionar ayuda adicional a personas con discapacidades. 
 >#### ¿Cómo se usa ARIA?
 >Los atributos ARIA se pueden utilizar para modificar la semántica de las etiquetas HTML. Esto permite que los usuarios de productos de apoyo puedan comprender mejor los elementos de la página. 
+
+
+## 2:47:52 - Make `AssistiveTechInfo` component accessible
+
+>[!NOTE]  
+>#### Mini desafío:
+>¿Qué partes del contenido de este componente se leerán en voz alta cuando haya cambios dinámicos en el contenido y cuáles no?
+>
+>R/ Nada. Ningún elemento será leído en voz alta cuando haga un cambio dinámico.
+
+>[!IMPORTANT]
+>### Desafío:
+>**`AssistiveTechInfo.tsx`**  
+>
+>Convertir el elemento de `section` y sus elementos secundarios en una sola unidad y solicitar a AT que presente todo el contenido de esta región activa al usuario cada vez que cambien partes de ella.
+
+1. En el archivo **`AssistiveTechInfo`**, en la parte del `return`
+cuando se usa el elemento `<section>`, agregar lo siguiente:
+```js
+  return (
+    <section className='sr-only' aria-live='polite' aria-atomic='true'>
+      ...
+    </section>
+  );
+```
