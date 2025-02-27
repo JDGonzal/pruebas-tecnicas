@@ -8,7 +8,7 @@ function AssistiveTechInfo({
   matchedCards: [] | any[];
 }) {
   return (
-    <section className='sr-only'>
+    <section className='sr-only' aria-live='polite' aria-atomic='true'>
       <h2>Estado del juego</h2>
       <p>Número de pares coincidentes: {matchedCards.length / 2}</p>
       <p>
