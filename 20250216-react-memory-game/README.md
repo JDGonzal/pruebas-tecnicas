@@ -1664,3 +1664,113 @@ de `btnAria` y configuramos el valor de `aria-live` a `polite`:
 1. En el archivo **`App.tsx`**, renombrar este estado `isGameOver`
 por `areAllCardsMatched`.
 
+## 2:32:32 - Create AssistiveTechInfo component
+
+>[!IMPORTANT]
+>### Desafío:
+>1) En la carpeta **"components"**, crea un nuevo componente llamado "`AssistiveTechInfo`". El componente debe tomar dos propiedades, "`emojisData`" y "`matchedCards`". Debe devolver un elemento de `<section>` que contenga un elemento `<h2>` y dos elementos `<p>`, y mostrar el siguiente contenido:
+>     * `<h2>`: "Estado del juego"
+>     * `<p>`: "Número de pares coincidentes: x."
+>     * `<p>`: "Número de cartas que quedan por combinar: x."
+>2) Muestra el nuevo componente entre "`Form`" y "`MemoryCard`" cuando "`isGameOn`" sea verdadero y "`areAllCardsMatched`" sea falso. Recuerda pasar las propiedades.
+>3) Juega un juego de memoria para comprobar que todo funciona, tanto el contenido que se actualiza dinámicamente como la representación condicional del componente.
+>4) Agrega la clase "`sr-only`" al elemento de `<section>` en el componente `AssistiveTechInfo` para ocultarlo de la ventana.
+>
+>Por ahora, ¡no te preocupes por configurar los atributos aria en el nuevo componente!
+>
+>💡 Sugerencia: En el paso 1, usa los accesorios que recibas para hacer algunos cálculos dentro de los elementos `<p>`.
+
+1. Crear el archivo **`AssistiveTechInfo.tsx`**.
+2. Escribimos el _snippet_ `rfce` (_`React Function Export Component`_)
+y el me construye esta base:
+```js
+import React from 'react';
+
+function AssistiveTechInfo() {
+  return <div>AssistiveTechInfo</div>;
+}
+
+export default AssistiveTechInfo;
+```
+3. Cambiamos el `return`, añadiendo 3 elementos:
+     * `<h2>`: "Estado del juego"
+     * `<p>`: "Número de pares coincidentes: x."
+     * `<p>`: "Número de cartas que quedan por combinar: x."
+```js
+  return (
+    <section>
+      <h2>Estado del juego</h2>
+      <p>Número de pares coincidentes: x.</p>
+      <p>Número de cartas que quedan por combinar: x.</p>
+    </section>
+  );
+```
+4. Recibimos dos parámetros en el componente `AssistiveTechInfo`,
+que son `emojisData` y `matchedCards`:
+```js
+function AssistiveTechInfo({
+  emojisData,
+  matchedCards,
+}: {
+  emojisData: [] | any[];
+  matchedCards: [] | any[];
+}) {
+  ...
+}
+```
+5. Ponemos como variables a mostrar estos dos datos recibidos como 
+parámetros, en los elementos `<p>`:
+```js
+  return (
+    <section>
+      <h2>Estado del juego</h2>
+      <p>Número de pares coincidentes: {matchedCards.length / 2}</p>
+      <p>
+        Número de cartas que quedan por combinar:
+        {emojisData.length - matchedCards.length}
+      </p>
+    </section>
+  );
+```
+6. En el archivo **`App.tsx`**, importamos este nuevo componente:
+```js
+import AssistiveTechInfo from './components/AssistiveTechInfo';
+```
+7. Vamos a renderizar este nuevo componente dentro del `return` del
+componente `App`, entre el `... <Form .../>` y el `... <MemoryCard .../>`:
+```js
+  return (
+    <main>
+      <h1>Memory</h1>
+      {!isGameOn && <Form handleSubmit={startGame} />}
+      {isGameOn && !areAllCardsMatched && (
+        <AssistiveTechInfo
+          emojisData={emojisData}
+          matchedCards={matchedCards}
+        />
+      )}
+      {isGameOn && (
+        <MemoryCard
+          handleClick={turnCard}
+          data={emojisData}
+          selectedCards={selectedCards}
+          matchedCards={matchedCards}
+        />
+      )}
+    </main>
+  );
+```
+* Así se se ve el juego en el browser:  
+![Juego Inicial](images/2025-02-26_184124.png "Juego inicial")
+![Primer pareja seleccionada](images/2025-02-26_184432.png "Primer pareja seleccionada")
+
+8. Agregamos a la `<section>` del componente `AssistiveTechInfo`, un
+`className` con el valor de `"sr-only"`:
+```js
+  return (
+    <section className='sr-only'>
+      ...
+    </section>
+  );
+  );
+```
