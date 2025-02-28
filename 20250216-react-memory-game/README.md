@@ -1832,3 +1832,108 @@ cuando se usa el elemento `<section>`, agregar lo siguiente:
     </section>
   );
 ```
+
+## 2:50:46 - Create GameOver component
+
+>[!IMPORTANT]
+>### Desafío:
+>1) Dentro de la carpeta "`components`", crea un nuevo componente, "`GameOver`", que devuelva un `<div>` que contenga un elemento `<p>`. Utiliza el siguiente contenido y estilo:
+>     - `<div>` styling: "`wrapper wrapper--accent`"
+>     - `<p>` content: "`¡Has emparejado todas las tarjetas de memoria!`"
+>     - `<p>` styling: "`p--large`"
+>2) Representa "`GameOver`" condicionalmente sobre "`MemoryCard`" cuando "`areAllCardsMatched`" sea verdadero.
+>3) Juega un juego de memoria para comprobar que la representación condicional funciona.
+
+1. Creamos un nuevo archivo en la carpeta **"components"** de nombre
+**`GameOver.tsx`**.
+2. Escribimos el _snippet_ `rfce` (_`React Function Export Component`_)
+y el me construye esta base:
+```js
+import React from 'react';
+
+function GameOver() {
+  return <div>GameOver</div>;
+}
+
+export default GameOver;
+```
+3. Completamos el `return` con un `<div>` y un `<p>`, el texto sería
+`¡Has emparejado todas las tarjetas de memoria!`:
+```js
+function GameOver() {
+  return (
+    <div>
+      <p>¡Has emparejado todas las tarjetas de memoria!</p>
+    </div>
+  );
+}
+```
+4. Añadimos algunos `className`, tanto al `<div>` como al `<p>`:
+```js
+function GameOver() {
+  return (
+    <div className='wrapper wrapper--accent'>
+      <p className='p--large'>¡Has emparejado todas las tarjetas de memoria!</p>
+    </div>
+  );
+}
+```
+5. En el archivo **`App.tsx`**, importamos el nuevo componente:
+```js
+import GameOver from './components/GameOver';
+```
+6. Lo llamamos o renderizamos en el `return` del componente `App`, justo
+encima de la llamada al `<MemoryCard>` con el condicional que 
+`areAllCardsMatched` dea falso:
+```js
+      {areAllCardsMatched && <GameOver />}
+```
+
+>[!CAUTION]  
+>### GET https://emojihub.yurace.pro/api/all/category/animals-and-nature net::ERR_CONNECTION_REFUSED
+>Dado el anterior error, procedí con la siguiente solución:
+>1. Creación del archivo **`emojis-en.json`** y **`emojis-es.json`**, dentro
+>de la carpeta **"public"**
+>2. Este es un ejemplo de los archivos recién creados:`
+>* **`emojis-es.json`**
+>```json
+>[{"htmlCode":["&#128375;"],"name":"Araña"},{"htmlCode":["&#128376;"],"name":"Telaraña"},{"htmlCode":["&#129408;"],"name":"Cangrejo"},{"htmlCode":["&#129409;"],"name":"Cara de León"},{"htmlCode":["&#129410;"],"name":"Escorpión"}]
+>```
+>* **`emojis-en.json`**
+>```json
+>[{"htmlCode":["&#128375;"],"name":"Spider"},{"htmlCode":["&#128376;"],"name":"Spider web"},{"htmlCode":["&#129408;"],"name":"Crab"},{"htmlCode":["&#129409;"],"name":"Lion face"},{"htmlCode":["&#129410;"],"name":"Scorpion"}]
+>```
+>3. En el Componente `App`, agregué este código en la función `startGame()`:
+>```js
+>async function startGame(e: React.FormEvent) {
+>    e.preventDefault();
+>    let isLocalhost = false;
+>    try {
+>      const res = await fetch(
+>        'https://emojihub.yurace.pro/api/all/category/animals-and-nature'
+>      );
+>      if (!res.ok) {
+>        throw new Error('Could not fetch data from API');
+>      }
+>    } catch (error) {
+>      isLocalhost = true;
+>      console.error(error);
+>    }
+>    try {
+>      let response: Response;
+>      if (isLocalhost) {
+>        response = await fetch(`${window.location.origin}/emojis-es.json`);
+>      } else {
+>        response = await fetch(
+>          'https://emojihub.yurace.pro/api/all/category/animals-and-nature'
+>        );
+>      }
+>      ...
+>    } catch (error) {
+>      alert('An error occurred. Please try again later.');
+>      console.error(error);
+>    }
+>  }
+>```
+
+
