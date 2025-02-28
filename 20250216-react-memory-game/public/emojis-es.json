@@ -1,0 +1,980 @@
+[
+  {
+    "htmlCode": [
+      "&#128375;"
+    ],
+    "name": "Araña"
+  },
+  {
+    "htmlCode": [
+      "&#128376;"
+    ],
+    "name": "Telaraña"
+  },
+  {
+    "htmlCode": [
+      "&#129408;"
+    ],
+    "name": "Cangrejo"
+  },
+  {
+    "htmlCode": [
+      "&#129409;"
+    ],
+    "name": "Cara de León"
+  },
+  {
+    "htmlCode": [
+      "&#129410;"
+    ],
+    "name": "Escorpión"
+  },
+  {
+    "htmlCode": [
+      "&#129411;"
+    ],
+    "name": "Pavo"
+  },
+  {
+    "htmlCode": [
+      "&#129412;"
+    ],
+    "name": "Cara de Unicornio"
+  },
+  {
+    "htmlCode": [
+      "&#129413;"
+    ],
+    "name": "Águila"
+  },
+  {
+    "htmlCode": [
+      "&#129414;"
+    ],
+    "name": "Pato"
+  },
+  {
+    "htmlCode": [
+      "&#129415;"
+    ],
+    "name": "Murciélago"
+  },
+  {
+    "htmlCode": [
+      "&#129416;"
+    ],
+    "name": "Tiburón"
+  },
+  {
+    "htmlCode": [
+      "&#129417;"
+    ],
+    "name": "Búho"
+  },
+  {
+    "htmlCode": [
+      "&#129418;"
+    ],
+    "name": "Cara de Zorro"
+  },
+  {
+    "htmlCode": [
+      "&#129419;"
+    ],
+    "name": "Mariposa"
+  },
+  {
+    "htmlCode": [
+      "&#129420;"
+    ],
+    "name": "Ciervo"
+  },
+  {
+    "htmlCode": [
+      "&#129421;"
+    ],
+    "name": "Gorila"
+  },
+  {
+    "htmlCode": [
+      "&#129422;"
+    ],
+    "name": "Lagarto"
+  },
+  {
+    "htmlCode": [
+      "&#129423;"
+    ],
+    "name": "Rinoceronte"
+  },
+  {
+    "htmlCode": [
+      "&#129424;"
+    ],
+    "name": "Camarón"
+  },
+  {
+    "htmlCode": [
+      "&#129425;"
+    ],
+    "name": "Calamar"
+  },
+  {
+    "htmlCode": [
+      "&#129426;"
+    ],
+    "name": "Cara de Jirafa"
+  },
+  {
+    "htmlCode": [
+      "&#129427;"
+    ],
+    "name": "Cara de Cebra"
+  },
+  {
+    "htmlCode": [
+      "&#129428;"
+    ],
+    "name": "Erizo"
+  },
+  {
+    "htmlCode": [
+      "&#129429;"
+    ],
+    "name": "Saurópodo"
+  },
+  {
+    "htmlCode": [
+      "&#129430;"
+    ],
+    "name": "Tirano Saurio Rex"
+  },
+  {
+    "htmlCode": [
+      "&#129431;"
+    ],
+    "name": "Grillo"
+  },
+  {
+    "htmlCode": [
+      "&#129432;"
+    ],
+    "name": "Canguro"
+  },
+  {
+    "htmlCode": [
+      "&#129433;"
+    ],
+    "name": "Llama"
+  },
+  {
+    "htmlCode": [
+      "&#129434;"
+    ],
+    "name": "Pavo Real"
+  },
+  {
+    "htmlCode": [
+      "&#129435;"
+    ],
+    "name": "Hipopótamo"
+  },
+  {
+    "htmlCode": [
+      "&#129436;"
+    ],
+    "name": "Loro"
+  },
+  {
+    "htmlCode": [
+      "&#129437;"
+    ],
+    "name": "Mapache"
+  },
+  {
+    "htmlCode": [
+      "&#129438;"
+    ],
+    "name": "Langosta"
+  },
+  {
+    "htmlCode": [
+      "&#129439;"
+    ],
+    "name": "Mosquito"
+  },
+  {
+    "htmlCode": [
+      "&#129440;"
+    ],
+    "name": "Microbio"
+  },
+  {
+    "htmlCode": [
+      "&#129441;"
+    ],
+    "name": "Tejón"
+  },
+  {
+    "htmlCode": [
+      "&#129442;"
+    ],
+    "name": "Cisne"
+  },
+  {
+    "htmlCode": [
+      "&#129443;"
+    ],
+    "name": "Mamut"
+  },
+  {
+    "htmlCode": [
+      "&#129444;"
+    ],
+    "name": "Vejestorio"
+  },
+  {
+    "htmlCode": [
+      "&#129445;"
+    ],
+    "name": "Ranura"
+  },
+  {
+    "htmlCode": [
+      "&#129446;"
+    ],
+    "name": "Nutria"
+  },
+  {
+    "htmlCode": [
+      "&#129447;"
+    ],
+    "name": "Orangután"
+  },
+  {
+    "htmlCode": [
+      "&#129448;"
+    ],
+    "name": "Mofeta"
+  },
+  {
+    "htmlCode": [
+      "&#129449;"
+    ],
+    "name": "Flamenco"
+  },
+  {
+    "htmlCode": [
+      "&#129450;"
+    ],
+    "name": "Ostra"
+  },
+  {
+    "htmlCode": [
+      "&#129451;"
+    ],
+    "name": "Castor"
+  },
+  {
+    "htmlCode": [
+      "&#129452;"
+    ],
+    "name": "Bisonte"
+  },
+  {
+    "htmlCode": [
+      "&#129453;"
+    ],
+    "name": "Sello"
+  },
+  {
+    "htmlCode": [
+      "&#129454;"
+    ],
+    "name": "Perro Guía"
+  },
+  {
+    "htmlCode": [
+      "&#129455;"
+    ],
+    "name": "Bastón de Sondeo"
+  },
+  {
+    "htmlCode": [
+      "&#128000;"
+    ],
+    "name": "Rata"
+  },
+  {
+    "htmlCode": [
+      "&#128001;"
+    ],
+    "name": "Ratón"
+  },
+  {
+    "htmlCode": [
+      "&#128002;"
+    ],
+    "name": "Buey"
+  },
+  {
+    "htmlCode": [
+      "&#128003;"
+    ],
+    "name": "Búfalo de Agua"
+  },
+  {
+    "htmlCode": [
+      "&#128004;"
+    ],
+    "name": "Vaca"
+  },
+  {
+    "htmlCode": [
+      "&#128005;"
+    ],
+    "name": "Tigre"
+  },
+  {
+    "htmlCode": [
+      "&#128006;"
+    ],
+    "name": "Leopardo"
+  },
+  {
+    "htmlCode": [
+      "&#128007;"
+    ],
+    "name": "Conejo"
+  },
+  {
+    "htmlCode": [
+      "&#128008;"
+    ],
+    "name": "Gato"
+  },
+  {
+    "htmlCode": [
+      "&#128009;"
+    ],
+    "name": "Dragón"
+  },
+  {
+    "htmlCode": [
+      "&#128010;"
+    ],
+    "name": "Cocodrilo"
+  },
+  {
+    "htmlCode": [
+      "&#128011;"
+    ],
+    "name": "Ballena"
+  },
+  {
+    "htmlCode": [
+      "&#128012;"
+    ],
+    "name": "Caracol"
+  },
+  {
+    "htmlCode": [
+      "&#128013;"
+    ],
+    "name": "Serpiente"
+  },
+  {
+    "htmlCode": [
+      "&#128014;"
+    ],
+    "name": "Caballo"
+  },
+  {
+    "htmlCode": [
+      "&#128015;"
+    ],
+    "name": "Ram"
+  },
+  {
+    "htmlCode": [
+      "&#128016;"
+    ],
+    "name": "Cabra"
+  },
+  {
+    "htmlCode": [
+      "&#128017;"
+    ],
+    "name": "Oveja"
+  },
+  {
+    "htmlCode": [
+      "&#128018;"
+    ],
+    "name": "Mono"
+  },
+  {
+    "htmlCode": [
+      "&#128019;"
+    ],
+    "name": "Gallo"
+  },
+  {
+    "htmlCode": [
+      "&#128020;"
+    ],
+    "name": "Pollo"
+  },
+  {
+    "htmlCode": [
+      "&#128021;"
+    ],
+    "name": "Perro"
+  },
+  {
+    "htmlCode": [
+      "&#128022;"
+    ],
+    "name": "Cerdo"
+  },
+  {
+    "htmlCode": [
+      "&#128023;"
+    ],
+    "name": "Verraco"
+  },
+  {
+    "htmlCode": [
+      "&#128024;"
+    ],
+    "name": "Elefante"
+  },
+  {
+    "htmlCode": [
+      "&#128025;"
+    ],
+    "name": "Pez"
+  },
+  {
+    "htmlCode": [
+      "&#128026;"
+    ],
+    "name": "Concha Espiral"
+  },
+  {
+    "htmlCode": [
+      "&#128027;"
+    ],
+    "name": "Bicho"
+  },
+  {
+    "htmlCode": [
+      "&#128028;"
+    ],
+    "name": "Hormiga"
+  },
+  {
+    "htmlCode": [
+      "&#128029;"
+    ],
+    "name": "Abeja"
+  },
+  {
+    "htmlCode": [
+      "&#128030;"
+    ],
+    "name": "Mariquita"
+  },
+  {
+    "htmlCode": [
+      "&#128031;"
+    ],
+    "name": "Pez"
+  },
+  {
+    "htmlCode": [
+      "&#128032;"
+    ],
+    "name": "Pez Tropical"
+  },
+  {
+    "htmlCode": [
+      "&#128033;"
+    ],
+    "name": "Pez Globo"
+  },
+  {
+    "htmlCode": [
+      "&#128034;"
+    ],
+    "name": "Tortuga"
+  },
+  {
+    "htmlCode": [
+      "&#128035;"
+    ],
+    "name": "Polluelo Para Incubar"
+  },
+  {
+    "htmlCode": [
+      "&#128036;"
+    ],
+    "name": "Pollito"
+  },
+  {
+    "htmlCode": [
+      "&#128037;"
+    ],
+    "name": "Pollito Delantero"
+  },
+  {
+    "htmlCode": [
+      "&#128038;"
+    ],
+    "name": "Pájaro"
+  },
+  {
+    "htmlCode": [
+      "&#128039;"
+    ],
+    "name": "Pingüino"
+  },
+  {
+    "htmlCode": [
+      "&#128040;"
+    ],
+    "name": "Coala"
+  },
+  {
+    "htmlCode": [
+      "&#128041;"
+    ],
+    "name": "Caniche"
+  },
+  {
+    "htmlCode": [
+      "&#128042;"
+    ],
+    "name": "Dromedario"
+  },
+  {
+    "htmlCode": [
+      "&#128043;"
+    ],
+    "name": "Camello"
+  },
+  {
+    "htmlCode": [
+      "&#128044;"
+    ],
+    "name": "Delfín"
+  },
+  {
+    "htmlCode": [
+      "&#128045;"
+    ],
+    "name": "Cara de Ratón"
+  },
+  {
+    "htmlCode": [
+      "&#128046;"
+    ],
+    "name": "Cara de Vaca"
+  },
+  {
+    "htmlCode": [
+      "&#128047;"
+    ],
+    "name": "Cara de Tigre"
+  },
+  {
+    "htmlCode": [
+      "&#128048;"
+    ],
+    "name": "Cara de Conejo"
+  },
+  {
+    "htmlCode": [
+      "&#128049;"
+    ],
+    "name": "Cara de Gato"
+  },
+  {
+    "htmlCode": [
+      "&#128050;"
+    ],
+    "name": "Cara de Dragón"
+  },
+  {
+    "htmlCode": [
+      "&#128051;"
+    ],
+    "name": "Ballena Chorreando"
+  },
+  {
+    "htmlCode": [
+      "&#128052;"
+    ],
+    "name": "Cara de Caballo"
+  },
+  {
+    "htmlCode": [
+      "&#128053;"
+    ],
+    "name": "Cara de Mono"
+  },
+  {
+    "htmlCode": [
+      "&#128054;"
+    ],
+    "name": "Cara de Perro"
+  },
+  {
+    "htmlCode": [
+      "&#128055;"
+    ],
+    "name": "Cara de Cerdo"
+  },
+  {
+    "htmlCode": [
+      "&#128056;"
+    ],
+    "name": "Cara de Rana"
+  },
+  {
+    "htmlCode": [
+      "&#128057;"
+    ],
+    "name": "Cara de Hámster"
+  },
+  {
+    "htmlCode": [
+      "&#128058;"
+    ],
+    "name": "Cara de Lobo"
+  },
+  {
+    "htmlCode": [
+      "&#128059;"
+    ],
+    "name": "Cara de Oso"
+  },
+  {
+    "htmlCode": [
+      "&#128060;"
+    ],
+    "name": "Cara de Panda"
+  },
+  {
+    "htmlCode": [
+      "&#128061;"
+    ],
+    "name": "Nariz de Cerdo"
+  },
+  {
+    "htmlCode": [
+      "&#128062;"
+    ],
+    "name": "Huellas de Patas"
+  },
+  {
+    "htmlCode": [
+      "&#128063;"
+    ],
+    "name": "Ardilla Listada"
+  },
+  {
+    "htmlCode": [
+      "&#127792;"
+    ],
+    "name": "Castaña"
+  },
+  {
+    "htmlCode": [
+      "&#127793;"
+    ],
+    "name": "Planta de Semillero"
+  },
+  {
+    "htmlCode": [
+      "&#127794;"
+    ],
+    "name": "Árbol de Hoja Perenne"
+  },
+  {
+    "htmlCode": [
+      "&#127795;"
+    ],
+    "name": "Árbol de Hoja Caduca"
+  },
+  {
+    "htmlCode": [
+      "&#127796;"
+    ],
+    "name": "Palmera"
+  },
+  {
+    "htmlCode": [
+      "&#127797;"
+    ],
+    "name": "Cactus"
+  },
+  {
+    "htmlCode": [
+      "&#127799;"
+    ],
+    "name": "Tulipán"
+  },
+  {
+    "htmlCode": [
+      "&#127800;"
+    ],
+    "name": "Flor Alegre"
+  },
+  {
+    "htmlCode": [
+      "&#127801;"
+    ],
+    "name": "Rosa"
+  },
+  {
+    "htmlCode": [
+      "&#127802;"
+    ],
+    "name": "Hibisco"
+  },
+  {
+    "htmlCode": [
+      "&#127803;"
+    ],
+    "name": "Girasol"
+  },
+  {
+    "htmlCode": [
+      "&#127804;"
+    ],
+    "name": "Florecer"
+  },
+  {
+    "htmlCode": [
+      "&#127807;"
+    ],
+    "name": "Hierba"
+  },
+  {
+    "htmlCode": [
+      "&#127808;"
+    ],
+    "name": "Trébol"
+  },
+  {
+    "htmlCode": [
+      "&#127809;"
+    ],
+    "name": "Hoja de Arce"
+  },
+  {
+    "htmlCode": [
+      "&#127810;"
+    ],
+    "name": "Hoja Caida"
+  },
+  {
+    "htmlCode": [
+      "&#127811;"
+    ],
+    "name": "Hoja En El Viento"
+  },
+  {
+    "htmlCode": [
+      "&#127812;"
+    ],
+    "name": "Champiñón"
+  },
+  {
+    "htmlCode": [
+      "&#128144;"
+    ],
+    "name": "Ramo"
+  },
+  {
+    "htmlCode": [
+      "&#129344;"
+    ],
+    "name": "Flor Marchita"
+  },
+  {
+    "htmlCode": [
+      "&#128174;"
+    ],
+    "name": "Flor Blanca"
+  },
+  {
+    "htmlCode": [
+      "&#127798;"
+    ],
+    "name": "Pimiento Picante"
+  },
+  {
+    "htmlCode": [
+      "&#127805;"
+    ],
+    "name": "Mazorca de Maíz"
+  },
+  {
+    "htmlCode": [
+      "&#127806;"
+    ],
+    "name": "Oreja de Arroz"
+  },
+  {
+    "htmlCode": [
+      "&#127813;"
+    ],
+    "name": "Tomate"
+  },
+  {
+    "htmlCode": [
+      "&#127814;"
+    ],
+    "name": "Berenjena"
+  },
+  {
+    "htmlCode": [
+      "&#129361;"
+    ],
+    "name": "Palta"
+  },
+  {
+    "htmlCode": [
+      "&#129362;"
+    ],
+    "name": "Pepino"
+  },
+  {
+    "htmlCode": [
+      "&#129364;"
+    ],
+    "name": "Papa"
+  },
+  {
+    "htmlCode": [
+      "&#129365;"
+    ],
+    "name": "Zanahoria"
+  },
+  {
+    "htmlCode": [
+      "&#129382;"
+    ],
+    "name": "Brócoli"
+  },
+  {
+    "htmlCode": [
+      "&#129388;"
+    ],
+    "name": "Verde Frondoso"
+  },
+  {
+    "htmlCode": [
+      "&#129476;"
+    ],
+    "name": "Ajo"
+  },
+  {
+    "htmlCode": [
+      "&#129477;"
+    ],
+    "name": "Cebolla"
+  },
+  {
+    "htmlCode": [
+      "&#127815;"
+    ],
+    "name": "Uvas"
+  },
+  {
+    "htmlCode": [
+      "&#127816;"
+    ],
+    "name": "Melón"
+  },
+  {
+    "htmlCode": [
+      "&#127817;"
+    ],
+    "name": "Sandía"
+  },
+  {
+    "htmlCode": [
+      "&#127818;"
+    ],
+    "name": "Mandarina"
+  },
+  {
+    "htmlCode": [
+      "&#127819;"
+    ],
+    "name": "Limón"
+  },
+  {
+    "htmlCode": [
+      "&#127820;"
+    ],
+    "name": "Banana"
+  },
+  {
+    "htmlCode": [
+      "&#127821;"
+    ],
+    "name": "Piña"
+  },
+  {
+    "htmlCode": [
+      "&#127822;"
+    ],
+    "name": "Manzana Roja"
+  },
+  {
+    "htmlCode": [
+      "&#127823;"
+    ],
+    "name": "Manzana Verde"
+  },
+  {
+    "htmlCode": [
+      "&#127824;"
+    ],
+    "name": "Pera"
+  },
+  {
+    "htmlCode": [
+      "&#127825;"
+    ],
+    "name": "Durazno"
+  },
+  {
+    "htmlCode": [
+      "&#127826;"
+    ],
+    "name": "Guindas"
+  },
+  {
+    "htmlCode": [
+      "&#127827;"
+    ],
+    "name": "Fresa"
+  },
+  {
+    "htmlCode": [
+      "&#129373;"
+    ],
+    "name": "Kiwi"
+  },
+  {
+    "htmlCode": [
+      "&#129389;"
+    ],
+    "name": "Mango"
+  }
+]

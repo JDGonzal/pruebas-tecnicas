@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Form from './components/Form';
 import MemoryCard from './components/MemoryCard';
 import AssistiveTechInfo from './components/AssistiveTechInfo';
+import GameOver from './components/GameOver';
 
 export default function App() {
   const [isGameOn, setIsGameOn] = useState(false);
@@ -38,10 +39,27 @@ export default function App() {
 
   async function startGame(e: React.FormEvent) {
     e.preventDefault();
+    let isLocalhost = false;
     try {
-      const response = await fetch(
+      const res = await fetch(
         'https://emojihub.yurace.pro/api/all/category/animals-and-nature'
       );
+      if (!res.ok) {
+        throw new Error('Could not fetch data from API');
+      }
+    } catch (error) {
+      isLocalhost = true;
+      console.error(error);
+    }
+    try {
+      let response: Response;
+      if (isLocalhost) {
+        response = await fetch(`${window.location.origin}/emojis-es.json`);
+      } else {
+        response = await fetch(
+          'https://emojihub.yurace.pro/api/all/category/animals-and-nature'
+        );
+      }
       if (!response.ok) {
         throw new Error('Could not fetch data from API');
       }
@@ -115,6 +133,7 @@ export default function App() {
           matchedCards={matchedCards}
         />
       )}
+      {isGameOn && areAllCardsMatched && <GameOver />}
       {isGameOn && (
         <MemoryCard
           handleClick={turnCard}
