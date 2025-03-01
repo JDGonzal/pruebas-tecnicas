@@ -1936,4 +1936,71 @@ encima de la llamada al `<MemoryCard>` con el condicional que
 >  }
 >```
 
+## 2:54:05 - Add button to GameOver component
 
+>[!IMPORTANT]
+>### Desafío:
+>
+>**`App.tsx`**
+>
+>1) Crea una nueva función, "`resetGame()`". Como indica el nombre, la función debe reiniciar el juego, pero no debe modificar "`emojisData`" ni interactuar con la API de EmojiHub de ninguna manera.
+>2) Pasa esta función al componente "`<GameOver`" como el valor de una propiedad llamada "`handleClick`".
+>
+>**`GamoOver.tsx`**
+>
+>3) Representa una instancia del componente "`<RegularButton`" justo debajo del elemento `<p>`. El botón debe recibir "`handleClick`" como propiedad y su contenido debe ser "`Jugar de nuevo`".
+>4) Juega un juego y cuando hayas terminado, haz clic en el botón "`Jugar de nuevo`" para verificar que todo esté funcionando. Al hacer clic en el botón, el juego anterior debería desaparecer y, en su lugar, el componente "`Formulario`" debería volver a representarse.
+>
+>💡Sugerencia: Observa atentamente los componentes "`RegularButton`" y "`Form`" si no estás seguro de cómo usar el componente "`RegularButton`" aquí.
+
+1. Empecemos con el archivo **`App.tsx`**, creando la nueva función de nombre
+`resetGame()`, entre el `turnCard()` y el `return`:
+```js
+  function resetGame() {
+    setIsGameOn(false);
+    // no debe modificar "`emojisData`" ni interactuar con la API.
+    // setEmojisData([]); 
+    setSelectedCards([]);
+    setMatchedCards([]);
+    setAreAllCardsMatched(false);
+  }
+```
+2. Pasar esta función como un parámetro de nombre `handleClick`, cuando 
+llamamos el componente `<GameOver`:
+```js
+  return (
+    <main>
+      ...
+      {isGameOn && areAllCardsMatched && <GameOver handleClick={resetGame} />}
+      ...
+    </main>
+  );
+```
+3. Ahora bien en el archivo **`GamoOver.tsx`**, añadimos el nuevo parámetro
+de nombre `handleClick` y de tipo `function`:
+```js
+function GameOver({ handleClick }: { handleClick: () => void }) {
+  return (
+    ...
+  );
+}
+```
+4. Importamos el compornente `RegularButton` dentro del archivo 
+**`GamoOver.tsx`**:
+```js
+import RegularButton from './RegularButton';
+```
+5. Llamamos el componente `<RegularButton` , justo debajo del elemento `<p>`,
+Como un elemento contenedor enviando el `handleClick`:
+```js
+      <RegularButton handleClick={handleClick}>Volver a jugar</RegularButton>
+```
+
+>[!WARNING]  
+>El instructor dice que al ejecutar la función `resetGame()`:   
+> "`but it should not modify "emojisData" or interact with the EmojiHub API`"  
+> "`no debe modificar "emojisData" ni interactuar con la API de EmojiHub`"  
+>Pero al regresar al primer botón de `[Start Game]`, este vuelve a leer de
+>nuevo la API.  
+>
+>Ya veremos si mas adelante corrije este detalle o _error_.
