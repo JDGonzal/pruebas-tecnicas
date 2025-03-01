@@ -123,6 +123,15 @@ export default function App() {
     }
   }
 
+  function resetGame() {
+    setIsGameOn(false);
+    // no debe modificar "`emojisData`" ni interactuar con la API.
+    // setEmojisData([]);
+    setSelectedCards([]);
+    setMatchedCards([]);
+    setAreAllCardsMatched(false);
+  }
+
   return (
     <main>
       <h1>Memory</h1>
@@ -133,7 +142,7 @@ export default function App() {
           matchedCards={matchedCards}
         />
       )}
-      {isGameOn && areAllCardsMatched && <GameOver />}
+      {isGameOn && areAllCardsMatched && <GameOver handleClick={resetGame} />}
       {isGameOn && (
         <MemoryCard
           handleClick={turnCard}
