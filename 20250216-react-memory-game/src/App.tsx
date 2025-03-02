@@ -10,15 +10,10 @@ export default function App() {
   const [selectedCards, setSelectedCards] = useState([] as any[]);
   const [matchedCards, setMatchedCards] = useState([] as any[]);
   const [areAllCardsMatched, setAreAllCardsMatched] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-  console.log('areAllCardsMatched:', areAllCardsMatched);
+  console.log(isError);
 
-  // Este es el propuesto por el instructor
-  //   useEffect(() => {
-  //     if (selectedCards.length === 2 && selectedCards[0].name === selectedCards[1].name) {
-  //         setMatchedCards(prevMatchedCards => [...prevMatchedCards, ...selectedCards])
-  //     }
-  // }, [selectedCards])
   useEffect(() => {
     // Validamos si hay dos cartas y si estas coinciden en `name`
     if (
@@ -52,6 +47,7 @@ export default function App() {
       console.error(error);
     }
     try {
+      throw new Error('Prueba');
       let response: Response;
       if (isLocalhost) {
         response = await fetch(`${window.location.origin}/emojis-es.json`);
@@ -73,6 +69,7 @@ export default function App() {
     } catch (error) {
       alert('An error occurred. Please try again later.');
       console.error(error);
+      setIsError(true);
     }
   }
 
@@ -130,6 +127,10 @@ export default function App() {
     setSelectedCards([]);
     setMatchedCards([]);
     setAreAllCardsMatched(false);
+  }
+
+  function resetError() {
+    setIsError(false);
   }
 
   return (
