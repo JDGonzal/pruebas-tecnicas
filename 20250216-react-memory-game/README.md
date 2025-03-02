@@ -2026,3 +2026,67 @@ Como un elemento contenedor enviando el `handleClick`:
 >Hacer que un elementeo no-interactivo sea enfocable. Configurando el valor a `{-1}`, para hacer no-tabulable.
 >
 >![](images/2025-03-01_185800.png "")
+
+## 3:14:14 - Make GameOver component accessible
+
+>[!IMPORTANT]
+>### Desafío:
+>**`GamoOver.tsx`**
+>1) Utilizando el gancho o _hook_ `useRef`, el gancho o _hook_ `useEffect`, el método `.focus()` y el atributo `tabIndex`, agrega el foco al `<div>` cuando se renderiza este componente.
+>2) Juega un juego de memoria para comprobar que tu código funciona.
+>
+>⚠️ Advertencia: Utiliza la navegación con el teclado para ver el estilo de foco predeterminado de tu navegador en el `<div>`.
+
+1. Directamente en el archivo **`GamoOver.tsx`**, importamos los _hook_ de
+`useRef` y `useEffect`:
+```js
+import React, { useRef, useEffect } from 'react';
+```
+2. Asignamos a una constante de nombre `cardRef` el _hook_ `useRef` con
+un valor de `null`:
+```js
+const cardRef = useRef<HTMLDivElement>(null);
+```
+3. Ponemos en uso el _hook_ `useEffect` con el método `.focus()`, y un 
+intermedio `.current`:
+```js
+useEffect(() => {
+  if (cardRef.current) {
+    cardRef.current.focus();
+  }
+}, []);
+```
+4. El elemento `<div>`, establecemos una `ref` con el valor de `cardRef`, y
+de una vez agregamos un atributo de `tabIndex` con el valor de `-1`:
+```js
+    <div className='wrapper wrapper--accent' ref={cardRef} tabIndex={-1}>
+      ...
+    </div>
+```
+>[!CAUTION]  
+>#### El error `Cannot read properties of null (reading 'useRef')`
+>Estuve poniendo los nuevos _hook_ `useRef` y `useEffect`, dentro del 
+>componente `GameOver`, pero por fuera de la función principal, 
+>la solución fue poner todo dentro de la función principal:
+>```js
+>function GameOver({ handleClick }: { handleClick: () => void }) {
+>  const cardRef = useRef<HTMLDivElement>(null);
+>
+>  useEffect(() => {
+>    if (cardRef.current) {
+>      cardRef.current.focus();
+>    }
+>  }, []);
+>  return (
+>    <div className='wrapper wrapper--accent' ref={cardRef} tabIndex={-1}>
+>      <p className='p--large'>¡Has emparejado todas las tarjetas de memoria!</p>
+>      <RegularButton handleClick={handleClick}>Volver a jugar</RegularButton>
+>    </div>
+>  );
+>}
+>```
+
+>[!TIP]  
+>Al instructor le funciona que faltando uno para terminar la tecla `[Enter]`
+>descubre el último, pero en este caso la tecla `[Enter]` no completa el
+>proceso.
