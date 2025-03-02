@@ -2004,3 +2004,25 @@ Como un elemento contenedor enviando el `handleClick`:
 >nuevo la API.  
 >
 >Ya veremos si mas adelante corrije este detalle o _error_.
+
+## 3:02:07 - Accessibility issue in GameOver component
+
+## 3:03:45 - Aside: Focus as an accessibility tool
+
+>[!NOTE]
+>### Herramienta de acsesibilidad: Adicionando el foco en un nuevo elemento del DOM
+>|Problema | Solución|
+>|--|--|
+>Cuando un nuevo elemento o componente es renderizado en el DOM, este no es inmediatamnte presenta a los usuarios de tecnologías con asistencia.| Podemos por programación adicionar el foco en este nuevo nodo del DOM y así mostrar la pantalla lista para leer y su contenido es permitido pronto así como su renderizado.|
+>
+>#### La fórmula de la herramienta del "Foco"
+>* **El _hook_ `useRef` de `React`**  
+>Creando una referencia a un elemento `JSX` o `TSX`, accediendo a la propiedad `.current`, para usar el incorporado API del browser en este.
+>* **El _hook_ `useEffect` de `React`**  
+>Correr alguna parte del código cuando el componente se renderiza.
+>* **El método `focus` de `JavaScript`**  
+>Adicionar foco al node del DOM.
+>* **El atributo global `tabIndex`**  
+>Hacer que un elementeo no-interactivo sea enfocable. Configurando el valor a `{-1}`, para hacer no-tabulable.
+>
+>![](images/2025-03-01_185800.png "")
