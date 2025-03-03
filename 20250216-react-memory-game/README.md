@@ -2090,3 +2090,56 @@ de una vez agregamos un atributo de `tabIndex` con el valor de `-1`:
 >Al instructor le funciona que faltando uno para terminar la tecla `[Enter]`
 >descubre el último, pero en este caso la tecla `[Enter]` no completa el
 >proceso.
+
+
+# 5. Advanced Features
+
+## 3:18:11 - Identify error handling issue
+
+>[!NOTE]  
+>Sugerencia de un nuevo componente para el manejo de errores
+
+## 3:21:10 - Handle errors with useState
+
+>[!IMPORTANT]
+>### Desafío:
+>1) Crea una nueva variable de estado, "`isError`", con una función _setter_ correspondiente. Inicialízala en falso.
+>2) En la función "`startGame()`", establece "`isError`" en verdadero dentro del bloque `catch`.
+>3) En la parte inferior del componente App, justo antes de la declaración de retorno, crea una nueva función, "`resetError`", que establezca "`isError`" nuevamente en falso.
+>4) Dentro del bloque try en la función "`startGame()`", lanza un nuevo Error con un mensaje de error personalizado. Debajo de las variables de estado, registra "`isError`" en la consola.
+>5) Ejecuta tu código para verificar que todo esté funcionando como se esperaba.
+>
+>⚠️ Advertencia: No podrás probar la función "`resetError`" en esta etapa ya que aún no la estamos llamando.
+
+1. Borro el `console.log('areAllCardsMatched:', areAllCardsMatched);` en
+el archivo **`App.tsx`**.
+2. Borros el `useEffect` propuesto por el instructor.
+3. Agrego el `useState`, o _setter_, para `isError`, justo debajo del 
+último _setter_ o `useState`:
+```js
+  const [isError, setIsError] = useState(false);
+```
+4. Configuro en el segundo bloque `try/catch` de la función `startGame()`
+a verdadero el nuevo `isError` cuando se presenta un error, justo en el 
+`catch (error)`:
+```js
+   try {
+      ...
+      }
+      ...
+    } catch (error) {
+      ...
+      setIsError(true);
+    }
+```
+5. En el componente `App`, justo antes del `return`, creamos la función de
+nombre `resetError()`, y configuro `isError` a falso:
+```js
+  function resetError() {
+    setIsError(false);
+  }
+```
+6. Añadimos una prueba en la función `startGame()`, poniendo un 
+`throw new Error('Prueba');`, justo después del segundo `try {`.
+7. Pongo un `console.log(isError);`, justo debajo del _setter_ de este
+`isError`
