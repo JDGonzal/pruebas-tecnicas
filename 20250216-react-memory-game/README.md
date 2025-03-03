@@ -2143,3 +2143,135 @@ nombre `resetError()`, y configuro `isError` a falso:
 `throw new Error('Prueba');`, justo después del segundo `try {`.
 7. Pongo un `console.log(isError);`, justo debajo del _setter_ de este
 `isError`
+
+## 3:26:52 - Create and render ErrorCard component
+
+>[!IMPORTANT]
+>### Mega desafío:
+>1) En la carpeta **"components"**, crea un nuevo componente, "`ErrorCard`". El componente debe devolver un `<div>` que envuelva dos elementos `<p>` y una instancia del componente `<RegularButton`, mostrando el siguiente contenido:
+>     - `<p>` #1: "Lo sentimos, se produjo un error.".
+>     - `<p>` #2: "Vuelve más tarde o haz clic en el botón de abajo para intentar reiniciar el juego".
+>     - `<RegularButton`: "Reiniciar el juego"
+>2) Aplica el estilo "`ErrorCard`" con los siguientes nombres de clase:
+>     - `<div>`: "wrapper wrapper--accent"
+>     - `<p>` #1: "p--large"
+>     - `<p>` #2: "p--regular"
+>3) ¡Haz que "`ErrorCard`" sea accesible!
+>4) Representa "`ErrorCard`" condicionalmente aquí en el componente "`App`" debajo de "`<MemoryCard`" cuando "`isError`" sea verdadero.
+>5) Pasa la función "`resetError()`" a través de props al "`RegularButton`" en la "`ErrorCard`" y úsala en el controlador de eventos `onClick` en el componente "`RegularButton`".
+>6) Refactoriza la representación condicional del componente "`Form`" para que no se represente cuando haya un error.
+>7) Ejecuta tu código para probar que todo esté funcionando.
+>
+>💡 Sugerencia: Observa bien el componente "`GameOver`" si te quedas atascado.
+
+1. Empecemos por crear el archivo en la carpeta **"components"**, de nombre
+**`ErrorCard.tsx`**.
+2. Escribimos el _snippet_ `rfce` (_`React Function Export Component`_)
+y el me construye esta base:
+```js
+import React from 'react';
+
+function ErrorCard() {
+  return <div>ErrorCard</div>;
+}
+
+export default ErrorCard;
+```
+3. Agregamos al `return` tres elementos dentro del `<siv>`, dos `<p>` y un
+llamado al componente `<RegularButton>`, por ende se debe importar el 
+componente `RegularButton`:
+```js
+import React from 'react';
+import RegularButton from './RegularButton';
+
+function ErrorCard() {
+  return (
+    <div>
+      <p>Lo sentimos, se produjo un error.</p>
+      <p>
+        Vuelve más tarde o haz clic en el botón de abajo para intentar reiniciar
+        el juego
+      </p>
+      <RegularButton>Reiniciar el Juego</RegularButton>
+    </div>
+  );
+}
+
+export default ErrorCard;
+```
+4. Ponemos a cada elemento un `className`:
+```js
+  return (
+    <div className='wrapper wrapper--accent'>
+      <p className='p--large'>Lo sentimos, se produjo un error.</p>
+      <p className='p--regular'>
+        Vuelve más tarde o haz clic en el botón de abajo para intentar reiniciar
+        el juego
+      </p>
+      <RegularButton>Reiniciar el Juego</RegularButton>
+    </div>
+  );
+```
+5. Hacer el componente `ErrorCard` en el formato _accesible_, requiere
+añadir 4 elementos:
+      * Utilizando el gancho o _hook_ `useRef`.
+      * El gancho o _hook_ `useEffect`.
+      * El método `.focus()`.
+      * y el atributo `tabIndex`, agrega el foco al `<div>` cuando se renderiza este componente.
+* Recuerde que esto se usa dentro de la función principal del componente:
+```js
+import React, { useEffect, useRef } from 'react';
+import RegularButton from './RegularButton';
+
+function ErrorCard() {
+  const cardRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (cardRef.current) {
+      cardRef.current.focus();
+    }
+  }, []);
+
+  return (
+    <div className='wrapper wrapper--accent' ref={cardRef} tabIndex={-1}>
+      ...
+    </div>
+  );
+}
+```
+6. En el archivo **`App.tsx`**, importamos y renderizamos el nuevo 
+componente `ErrorCard`, justo debajo del llamado o renderizado de
+`<MemoryCard`, cuando `isError` sea verdadero, pasamos como _prop_ o
+parámetro la función `resetError()`:
+```js
+import ErrorCard from './components/ErrorCard';
+```
+```js
+      {isError && <ErrorCard handleClick={resetError} />}
+```
+7. El nuevo componente `ErrorCard`, debemos agregar este parámetro o 
+_prop_ de tipo función y enviárselo a su vez al otro componente 
+`<RegularButton`:
+```js
+function ErrorCard({ handleClick }: { handleClick: () => void }) {
+  ...
+  return (
+    <div className='wrapper wrapper--accent' ref={cardRef} tabIndex={-1}>
+      ...
+      <RegularButton handleClick={handleClick}>
+        Reiniciar el Juego
+      </RegularButton>
+    </div>
+  );
+}
+```
+8. De regreso al archivo **`App.tsx`**, ajustamos el llamado o renderizado
+al componente `<Form`, poniéndole de condicional que `!isError`:
+```js
+      {!isGameOn && !isError && <Form handleSubmit={startGame} />}
+```
+9. Borramos el `alert` de la función `startGame()`.
+* Así se ve cuando aparece el error:  
+![ErrorCard](images/2025-03-03_115759.png "ErrorCard") 
+
+>[!WARNING]
+>### Antes de pasar al siguiente punto, borrar o comentar del componente `App`, en la función `startGame()`, la línea de `throw new Error('Prueba');`.
