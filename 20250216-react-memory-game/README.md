@@ -2275,3 +2275,139 @@ al componente `<Form`, poniéndole de condicional que `!isError`:
 
 >[!WARNING]
 >### Antes de pasar al siguiente punto, borrar o comentar del componente `App`, en la función `startGame()`, la línea de `throw new Error('Prueba');`.
+
+## 3:34:34 - Refactor App to use formData
+
+>[!IMPORTANT]
+>### Desafío:
+>1) En la parte superior del componente `App`, antes de las variables de estado, crea una nueva variable, "`initialFormData`", y configúrala como un objeto con los siguientes pares clave-valor:
+>     - `category`: "animals-and-nature"
+>     - `number`: 10
+>2) Crea una nueva variable de estado, "`formData`", con una función de establecimiento correspondiente, y asígnale "`initialFormData`" como valor inicial.
+>3) Actualiza la URL en la solicitud de obtención para usar la categoría guardada en "`formData`" en lugar de la categoría codificada.
+>4) Actualiza el bucle for en la función "getRandomIndices" para usar el número guardado en "`formData`" en lugar del número codificado 5.
+>5) Ejecuta el código e inicia un juego para verificar que tu código refactorizado esté funcionando. Aún deberías obtener 10 tarjetas de memoria renderizadas en el mini navegador.
+>
+>💡 Sugerencia: En el paso 4, realiza alguna operación matemática en el número de `formData` para obtener la cantidad correcta de tarjetas de memoria.
+
+>[!TIP]  
+>Para iniciar este desafío requiero hacer un cambio en los archivos de la 
+>carpeta **"public"** de extensión **`*.json`**, para añadir un elemento al
+>principio de nombre `"animals-and-nature":`, antecedidio por una llave `{`
+>y cierro al final con otra llave `}`, al final:
+>
+>**`emojis-es.json`**
+>```json
+>{
+>  "animals-and-nature": [
+>    {
+>      "htmlCode": [
+>        "&#128375;"
+>      ],
+>      "name": "Araña"
+>    },
+>    {
+>      "htmlCode": [
+>        "&#128376;"
+>      ],
+>      "name": "Telaraña"
+>    },
+>    ...
+>  ]
+>}
+>```
+>**`emojis-en.json`**
+>```json
+>{
+>  "animals-and-nature": [
+>    {
+>      "htmlCode": ["&#128375;"],
+>      "name": "Spider"
+>    },
+>    {
+>      "htmlCode": ["&#128376;"],
+>      "name": "Spider web"
+>    },
+>    ...
+>  ]
+>}
+>```
+>Luego en **`App.tsx`**, en la función `startGame()` , dentro del `try`
+>defino el `data` antes:
+>```js
+>    try {
+>      let response: Response;
+>      let data: any;
+>      if (isLocalhost) {
+>        response = await fetch(`${window.location.origin}/emojis-es.json`);
+>        data = await response.json();
+>        data = await data['animals-and-nature'];
+>      } else {
+>        response = await fetch(
+>          'https://emojihub.yurace.pro/api/all/category/animals-and-nature'
+>        );
+>        data = await response.json();
+>      }
+>      ...
+>    } catch (error) {
+>      ...
+>    }
+>```
+1. En el archivo **`App.tsx`**, defino un tipo para determinar el objeto a
+usar, con `string` y `number`:
+```js
+  type initialFormDataType = {
+    category: string;
+    number: number;
+  };
+```
+2. Ahora si creo la variable `initialFormData`, del tipo recién creado y le asignamos valores iniciales:
+```js
+  const initialFormData: initialFormDataType = {
+    category: 'animals-and-nature',
+    number: 10,
+  };
+```
+3. Creamos un _hook_ tipo `useState` de nombre `formData`, con el valor
+inicial de `initialFormData`:
+```js
+  const [formData, setFormData] = useState(initialFormData);
+```
+4. Cambiamos en la función `startGame()`, al momento de utilizar el valor
+quemado de `'animals-and-nature'`, por el de `formData`:
+```js
+    try {
+      let response: Response;
+      let data: any;
+      if (isLocalhost) {
+        response = await fetch(`${window.location.origin}/emojis-es.json`);
+        data = await response.json();
+        data = await data[formData.category];
+      } else {
+        response = await fetch(
+          `https://emojihub.yurace.pro/api/all/category/${formData.category}`
+        );
+        data = await response.json();
+      }
+      if (!response.ok) {
+        throw new Error('Could not fetch data from API');
+      }
+      ...
+    } catch (error) {
+      console.error(error);
+      setIsError(true);
+    }
+```
+5. En la función `getRandomIndices()`, cambiamos el valor quemado de `5`, 
+por el de `formData`, teniendo en cuenta que el valor de `formData.number`
+solo necesitamos la mitad: 
+```js  
+  function getRandomIndices(data: any[]) {
+    ...
+    for (let i = 0; i < formData.number / 2; i++) {
+      ...
+    }
+    ...
+  }
+
+```
