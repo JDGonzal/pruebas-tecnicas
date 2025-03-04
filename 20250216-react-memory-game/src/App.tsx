@@ -6,12 +6,22 @@ import GameOver from './components/GameOver';
 import ErrorCard from './components/ErrorCard';
 
 export default function App() {
+  type initialFormDataType = {
+    category: string;
+    number: number;
+  };
+  const initialFormData: initialFormDataType = {
+    category: 'animals-and-nature',
+    number: 10,
+  };
+
   const [isGameOn, setIsGameOn] = useState(false);
   const [emojisData, setEmojisData] = useState([] as any[]);
   const [selectedCards, setSelectedCards] = useState([] as any[]);
   const [matchedCards, setMatchedCards] = useState([] as any[]);
   const [areAllCardsMatched, setAreAllCardsMatched] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [formData, setFormData] = useState(initialFormData);
 
   console.log(isError);
 
@@ -38,7 +48,7 @@ export default function App() {
     let isLocalhost = false;
     try {
       const res = await fetch(
-        'https://emojihub.yurace.pro/api/all/category/animals-and-nature'
+        `https://emojihub.yurace.pro/api/all/category/${formData.category}`
       );
       if (!res.ok) {
         throw new Error('Could not fetch data from API');
@@ -48,20 +58,22 @@ export default function App() {
       console.error(error);
     }
     try {
-      // throw new Error('Prueba');
       let response: Response;
+      let data: any;
       if (isLocalhost) {
         response = await fetch(`${window.location.origin}/emojis-es.json`);
+        data = await response.json();
+        data = await data[formData.category];
       } else {
         response = await fetch(
-          'https://emojihub.yurace.pro/api/all/category/animals-and-nature'
+          `https://emojihub.yurace.pro/api/all/category/${formData.category}`
         );
+        data = await response.json();
       }
       if (!response.ok) {
         throw new Error('Could not fetch data from API');
       }
-      const data = await response.json();
-      // const dataSample = data.slice(0, 5);
+
       const dataSlice = await getDataSlice(data);
       const emojisArray = await getEmojisArray(dataSlice);
 
@@ -82,7 +94,7 @@ export default function App() {
   function getRandomIndices(data: any[]) {
     const ramdonInidicesArray = [] as number[];
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < formData.number / 2; i++) {
       const randomNum = Math.floor(Math.random() * data.length);
       if (!ramdonInidicesArray.includes(randomNum)) {
         ramdonInidicesArray.push(randomNum);
