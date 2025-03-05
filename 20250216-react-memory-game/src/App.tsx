@@ -5,11 +5,23 @@ import AssistiveTechInfo from './components/AssistiveTechInfo';
 import GameOver from './components/GameOver';
 import ErrorCard from './components/ErrorCard';
 
+const categoryList = [
+  ['animals-and-nature', 'animales-y-naturaleza'],
+  ['food-and-drink', 'comidas-y-bebidas'],
+  ['travel-and-places', 'viajes-y-lugares'],
+  ['objects', 'objetos'],
+  ['symbols', 'símbolos'],
+];
+const numberList = [10, 20, 30, 40, 50];
+
+let isLocalhost = false;
+
 export default function App() {
   type initialFormDataType = {
     category: string;
     number: number;
   };
+
   const initialFormData: initialFormDataType = {
     category: 'animals-and-nature',
     number: 10,
@@ -21,9 +33,28 @@ export default function App() {
   const [matchedCards, setMatchedCards] = useState([] as any[]);
   const [areAllCardsMatched, setAreAllCardsMatched] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [language, setLanguage] = useState(0);
+  const [didLoad, setDidLoad] = useState(false);
   const [formData, setFormData] = useState(initialFormData);
 
-  console.log(isError);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch(
+          `https://emojihub.yurace.pro/api/all/category/${formData.category}`
+        );
+        if (!res.ok) throw new Error('Could not fetch data from API');
+      } catch (error) {
+        setLanguage(1);
+        isLocalhost = true;
+        console.error(error);
+      }
+    }
+    if (!didLoad) {
+      setDidLoad(true);
+      fetchData();
+    }
+  }, [didLoad]);
 
   useEffect(() => {
     // Validamos si hay dos cartas y si estas coinciden en `name`
@@ -43,37 +74,30 @@ export default function App() {
     }
   }, [matchedCards]);
 
+  function handleFormChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const { name, value } = e.target;
+    console.log('name:', name, 'value:', value);
+    setFormData({ ...formData, [name]: value });
+  }
+
   async function startGame(e: React.FormEvent) {
     e.preventDefault();
-    let isLocalhost = false;
-    try {
-      const res = await fetch(
-        `https://emojihub.yurace.pro/api/all/category/${formData.category}`
-      );
-      if (!res.ok) {
-        throw new Error('Could not fetch data from API');
-      }
-    } catch (error) {
-      isLocalhost = true;
-      console.error(error);
-    }
     try {
       let response: Response;
-      let data: any;
-      if (isLocalhost) {
-        response = await fetch(`${window.location.origin}/emojis-es.json`);
-        data = await response.json();
-        data = await data[formData.category];
+      if (isLocalhost || language === 1) {
+        console.log('category:', formData.category);
+        response = await fetch(
+          `${window.location.origin}/${formData.category}.json`
+        );
       } else {
         response = await fetch(
           `https://emojihub.yurace.pro/api/all/category/${formData.category}`
         );
-        data = await response.json();
       }
       if (!response.ok) {
         throw new Error('Could not fetch data from API');
       }
-
+      const data = await response.json();
       const dataSlice = await getDataSlice(data);
       const emojisArray = await getEmojisArray(dataSlice);
 
@@ -148,7 +172,15 @@ export default function App() {
   return (
     <main>
       <h1>Memory</h1>
-      {!isGameOn && !isError && <Form handleSubmit={startGame} />}
+      {!isGameOn && !isError && (
+        <Form
+          handleSubmit={startGame}
+          categoryList={categoryList}
+          numberList={numberList}
+          language={language}
+          handleChange={handleFormChange}
+        />
+      )}
       {isGameOn && !areAllCardsMatched && (
         <AssistiveTechInfo
           emojisData={emojisData}
