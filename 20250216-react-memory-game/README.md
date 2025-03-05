@@ -2411,3 +2411,270 @@ solo necesitamos la mitad:
   }
 
 ```
+
+## 3:42:18 - Create form elements
+
+>[!IMPORTANT]
+>### Desafío:
+>**`Form.tsx`**
+>
+>1) Crea dos elementos de selección: uno para la categoría de emoji y otro para la cantidad de tarjetas de memoria. Cada elemento de selección debe tener un nombre, un id y un controlador de evento `onChange`. Usa los siguientes valores:
+>     - Categoría: `name="category"`, `id="category"`, `onChange={handleChange}`
+>     - Número de tarjetas: `name="number"`, `id="number"`, `onChange={handleChange}`
+>2) Dentro de cada elemento de selección, crea cinco elementos de opción, usando los siguientes valores:
+>     - Categoría: "`animals-and-nature`", "`food-and-drink`", "`travel-and-places`", "`objects`", "`symbols`"
+>     - Categoría: "`animales-y-naturaleza`", "`comida-y-bebidas`", "`viajes-y-lugares`", "`objetos`", "`símbolos`"
+>     - Número: `10`, `20`, `30`, `40`, `50`
+>3) Dale a cada elemento de selección una etiqueta que describa el menú de selección.
+>
+>**`App.tsx`**
+>
+>4) Crea una nueva función, "`handleFormChange()`". Debe recibir el evento como parámetro. Utilice el evento para obtener el nombre y el valor de la opción seleccionada y, por ahora, simplemente registre el nombre y el valor en la consola.
+>5) Pase "`handleFormChange()`" como la propiedad "`handleChange`" al componente "`Form`". Recuerde recibir también la propiedad.
+>6) Ejecute el código y seleccione algunas opciones en el formulario para probar su código.
+
+>[!TIP]
+>#### Esto lo hacemos porque la conexión al API está rota.
+>Para iniciar este desafío, voy a renombrar los archivos `*.json` de la 
+>carpeta **"public"**, para que su nombre refleje las categorías solicitadas
+>con los datos cargados en cada uno y borrar la categoría incluída en los
+>archivos **`emojis-en.json`** y **`emojis-es.json`**.
+>1. Renombro el archivos **`emojis-es.json`** a 
+**`animales-y-naturaleza.json`**.
+>2. Renombro el archivos **`emojis-en.json`** a 
+**`animals-and-nature.json`**.
+>3. Quito a ambos archivo **`*.json`**, las llaves iniciales `{` y finales `}`,
+>junto con el texto de `"animals-and-nature":`
+>4. Definimos de nuevo la constante y el tipo para `initialFormData`:
+>```js
+>type initialFormDataType = {
+>    category: string;
+>    number: number;
+>  };
+>
+>  const initialFormData: initialFormDataType = {
+>    category: 'animals-and-nature',
+>    number: 10,
+>  };
+>```
+>5. Creo 4 archivos en _Español_ y 4 archivos en _English_, para las 
+>nueva categorías que vamos a requerir, todos tipo `*.json`:
+>
+>|Español|English|
+>|--|--|
+>|`comidas-y-bebidas`<br>`viajes-y-lugares`<br>`objetos`<br>`símbolos` | `food-and-drink`<br>`travel-and-places`<br>`objects`<br>`symbols` |
+>6. Creo en **`App.tsx`**, dos _hook_ de tipo `useState`:
+>```js
+>  const [language, setLanguage] = useState(0);
+>  const [didLoad, setDidLoad] = useState(false);
+>```
+>7. Defino una variable global, por fuera de la función `App()`:
+>```js
+>let isLocalhost = false;
+>```
+>8. Añado un _hook_ de tipo `useEffect`, para validar si el API esta bueno o
+>roto, en caso de fallar, paso el idioma a `1`, y el `isLocalhost` a `true`:
+>```js
+>  useEffect(() => {
+>    async function fetchData() {
+>      try {
+>        const res = await fetch(
+>          >`https://emojihub.yurace.pro/api/all/category/${formData.category}`
+>        );
+>        if (!res.ok) throw new Error('Could not fetch data from API');
+>      } catch (error) {
+>        setLanguage(1);
+>        isLocalhost = true;
+>        console.error(error);
+>      }
+>    }
+>    if (!didLoad) {
+>      setDidLoad(true);
+>      fetchData();
+>    }
+>  }, [didLoad]);
+>```
+>9. Así quedaría la función `startGame()`:
+>```js
+>  async function startGame(e: React.FormEvent) {
+>    e.preventDefault();
+>    try {
+>      let response: Response;
+>      if (isLocalhost || language === 1) {
+>        response = await fetch(
+>          `${window.location.origin}/${formData.category}.json`
+>        );
+>      } else {
+>        response = await fetch(
+>          `https://emojihub.yurace.pro/api/all/category/${formData.category}`
+>        );
+>      }
+>      ...
+>    } catch (error) {
+>      ...
+>    }
+>  }
+>```
+
+1. En el archivo **`App.tsx`**, me pide un ajuste al llamar o renderizar el
+componente `<Form`:
+```js
+      {!isGameOn && !isError && <Form handleSubmit={()=>startGame} />}
+```
+2. Creamos dos `<div>`, con el `className` con este texto
+ `form__inner-wrapper`,
+antes de `<RegularButton`:
+```js
+  return (
+    <form className='wrapper' onSubmit={handleSubmit}>
+      <div className='form__inner-wrapper'>{/*Category select goes here*/}</div>
+      <div className='form__inner-wrapper'>{/*Number select goes here*/}</div>
+      <RegularButton type='submit'>Start Game</RegularButton>
+    </form>
+  );
+```
+3. Creo el primer elemento `<select>` con `name`, `id`, y `onChange`:
+```js
+      <div className='form__inner-wrapper'>
+        <select name='category' id='category' onChange={handleChange}></select>
+      </div>
+      <div className='form__inner-wrapper'>
+        {' '}
+        <select name='number' id='number' onChange={handleChange}></select>
+      </div>
+```
+4 Creo la función `handleChange()` dentro del componente `Form`:
+```js
+function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
+  console.log(e.target.value);
+}
+```
+5. Creo antes la función `App()`, dos listas para `category` y para
+`numbers`:
+```js
+const categoryList = [
+  ['animals-and-nature', 'animales-y-naturaleza'],
+  ['food-and-drink', 'comida-y-bebida'],
+  ['travel-and-places', 'viajes-y-lugares'],
+  ['objects', 'objetos'],
+  ['symbols', 'símbolos'],
+];
+const numberList = [10, 20, 30, 40, 50];
+```
+6. Añado al momento de llamar o renderizar el componente `<Form`, 
+los siguientes _props_ o parámetros:
+```js
+      {!isGameOn && !isError && (
+        <Form
+          handleSubmit={startGame}
+          categoryList={categoryList}
+          numberList={numberList}
+          language={language}
+        />
+      )}
+```
+7. En el archivo **`Forms.tsx`**, recibo y valido los nuevos _props_ o
+parámetros:
+```js
+export default function Form({
+  handleSubmit,
+  categoryList,
+  numberList,
+  language,
+}: {
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  categoryList: string[][];
+  numberList: number[];
+  language: number;
+}) {
+  return (
+    <form className='wrapper' onSubmit={handleSubmit}>
+    ...
+    </form>
+  );
+}
+```
+8. En los `<select>`, del `return`, hago un `.map` de cada lista recibida,
+para ponerla en pantalla como un `<option>`:
+```js
+  return (
+    <form className='wrapper' onSubmit={handleSubmit}>
+      <div className='form__inner-wrapper'>
+        <select name='category' id='category' onChange={handleChange}>
+          {categoryList.map((category, index) => (
+            <option key={index} value={category[language]}>
+              {category[language]}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div className='form__inner-wrapper'>
+        <select name='number' id='number' onChange={handleChange}>
+          {numberList.map((number, index) => (
+            <option key={index} value={number}>
+              {number}
+            </option>
+          ))}
+        </select>
+      </div>
+      ...
+    </form>
+  );
+```
+9. Agrego los elemento `<label>`, antes de cada `<select>` con los texto de:
+    * `Seleccione una categoría de emoji`
+    * `Seleccione el número de tarjetas de memoria` 
+```js
+  return (
+    <form className='wrapper' onSubmit={handleSubmit}>
+      <div className='form__inner-wrapper'>
+        <label htmlFor='category'>Seleccione una categoría de emoji</label>
+        ...
+      </div>
+      <div className='form__inner-wrapper'>
+        <label htmlFor='number'>
+          Seleccione el número de tarjetas de memoria
+        </label>
+        ...
+      </div>
+      ...
+    </form>
+  );
+```
+## 3:57:44 - Save form selections in state
+>[!NOTE]  
+>Paso añadido de una vez en el paso 10, con el 
+>`setFormData({ ...formData, [name]: value });` dentro de la función 
+>`handleFormChange`
+
+10. En el archivo **`App.tsx`**, creamos la función `handleFormChange()`:
+```js
+  function handleFormChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const { name, value } = e.target;
+    console.log('name:', name, 'value:', value);
+    setFormData({ ...formData, [name]: value });
+  }  
+```
+11. Enviamos al `<Form`, como otro _prop_ o parámetro el valor de 
+`handleChange={handleFormChange}`.
+12. En el archivo **`Form.tsx`**, añado la recepción de ese nuevo _prop_ o
+parámetro:
+```js
+export default function Form({
+  handleSubmit,
+  categoryList,
+  numberList,
+  language,
+  handleChange,
+}: {
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  categoryList: string[][];
+  numberList: number[];
+  language: number;
+  handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}) {
+  return (
+    ...
+  )
+```
+13. Borro la función que había creado con el mismo nombre `handleChange()`.
