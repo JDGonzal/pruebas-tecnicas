@@ -2,23 +2,23 @@
   "category": [
     {
       "name": "Animals and nature",
-      "value": "animals-and-nature"
+      "value": ["animals-and-nature", "animales-y-naturaleza"]
     },
     {
       "name": "Food and drink",
-      "value": "food-and-drink"
+      "value": ["food-and-drink", "comidas-y-bebidas"]
     },
     {
       "name": "Travel and places",
-      "value": "travel-and-places"
+      "value": ["travel-and-places", "viajes-y-lugares"]
     },
     {
       "name": "Objects",
-      "value": "objects"
+      "value": ["objects", "objetos"]
     },
     {
       "name": "Symbols",
-      "value": "symbols"
+      "value": ["symbols", "símbolos"]
     }
   ],
   "number": [

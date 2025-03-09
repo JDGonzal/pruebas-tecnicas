@@ -2678,3 +2678,208 @@ export default function Form({
   )
 ```
 13. Borro la función que había creado con el mismo nombre `handleChange()`.
+
+## 4:00:19 - Refactor form pt. 1
+
+1. Teniendo en cuenta que desde el principio tenemos el archivo 
+**`data.json`**, en la carpeta **"data"**, le ajustamos para que tenga 
+también la versión en español:
+```json
+{
+  "category": [
+    {
+      "name": "Animals and nature",
+      "value": ["animals-and-nature", "animales-y-naturaleza"]
+    },
+    {
+      "name": "Food and drink",
+      "value": ["food-and-drink", "comidas-y-bebidas"]
+    },
+    {
+      "name": "Travel and places",
+      "value": ["travel-and-places", "viajes-y-lugares"]
+    },
+    {
+      "name": "Objects",
+      "value": ["objects", "objetos"]
+    },
+    {
+      "name": "Symbols",
+      "value": ["symbols", "símbolos"]
+    }
+  ],
+  "number": [
+    {
+      "value": "10"
+    },
+    {
+      "value": "20"
+    },
+    {
+      "value": "30"
+    },
+    {
+      "value": "40"
+    },
+    {
+      "value": "50"
+    }
+  ]
+}
+```
+2. Creamos el archivo **`Select.tsx`** en la carpeta **"components"**, con lo
+básico de un _snippet_ de `rfce`:
+```js
+import React from 'react';
+
+function Select() {
+  return <div>Select</div>;
+}
+
+export default Select;
+```
+3. Ajustamos el componente `Select`, para que importe los datos de `data`
+y recibimos unos _props_ o parámetros al estilo del componente `Form`, 
+como son `handleChange` y `language`:
+```js
+import React from 'react';
+import data from '../data/data.json';
+
+function Select({
+  language,
+  handleChange,
+}: {
+  language: number;
+  handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}) {
+  console.log('data:', data);
+}
+
+export default Select;
+```
+4. En el archivo **`Form.tsx`**, importamos el nuevo componente 
+`Select`.
+5. Comentamos todo el `<div` lo debajo del elemento `<form` , en el `return`, 
+teniendo cuidadeo de dejar solo el llamado o renderizado de `<RegularButton`.
+6. Debajo del elemento `<form`, llamamos el nuevo componente `<Select`,
+llamando los _props_ o parámetros de `onChange={handleChange}` y
+`language`:
+```js
+import React from 'react';
+import RegularButton from './RegularButton';
+import Select from './Select';
+
+export default function Form({
+  handleSubmit,
+  categoryList,
+  numberList,
+  language,
+  handleChange,
+}: {
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  categoryList: string[][];
+  numberList: number[];
+  language: number;
+  handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}) {
+  return (
+    <form className='wrapper' onSubmit={handleSubmit}>
+      <Select language={language} handleChange={handleChange} />
+      {/*<div className='form__inner-wrapper'>
+        ...
+      </div>*/}
+      <RegularButton type='submit'>Start Game</RegularButton>
+    </form>
+  );
+}
+```
+7. Antes del elemento `<form`, encerramos todo en un `<div` con un 
+`className='form-container'`, y agrear un elemento `<p` con un
+`className='p--regular'`:
+```js
+<div className='form-container'>
+      <p className='p--regular'>
+        Personaliza el juego seleccionando una categoría de emoji y una cantidad de tarjetas de memoria.
+      </p>
+      <form className='wrapper' onSubmit={handleSubmit}>
+        <Select language={language} handleChange={handleChange} />
+        {/*...*/}
+        <RegularButton type='submit'>Start Game</RegularButton>
+      </form>
+    </div>
+```
+
+>[!IMPORTANT]
+>### Desafío:
+>**`Select.tsx`**
+>
+>1) Utiliza una combinación del método `Object.entries()` y el método `.map()` para iterar sobre el objeto "`data`" y crear un div similar a los que están comentados actualmente en el componente "`Form`". Dentro del div debería haber una etiqueta y un elemento select, pero por ahora, omite los elementos option.
+>2) Guarda todo esto en una nueva variable, "`selectEl`", y devuelve esta variable en la parte inferior del componente.
+>
+>💡 Consejos:
+>   * Si no estás seguro de cómo usar `Object.entries()`, entonces echa un vistazo a este [scrim](https://v2.scrimba.com/build-a-mobile-app-with-firebase-c0g/~08).
+> * Puedes encadenar `.map()` con `Object.entries()`.
+> * Recuerda establecer una clave en el div.
+>⚠️ Advertencia: Nuestro formulario ahora estará roto ya que no hay elementos de opción en los menús de selección.
+
+7. En el archivo **`Select.tsx`**, uso `Object.entries()`:
+```js
+function Select({
+  language,
+  handleChange,
+}: {
+  language: number;
+  handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}) {
+  Object.entries(data).map(([key, value]) => (
+    <div>{console.log('key:', key, 'value:', value)}</div>
+  ));
+}
+
+export default Select;
+```
+8. Ponemos el `<div`, el `<label` y el `<select`, similares al los del
+componente `Form`, en vez del `console.log()`:
+```js
+function Select({
+  language,
+  handleChange,
+}: {
+  language: number;
+  handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}) {
+  Object.entries(data).map(([key, value]) => (
+    <div key={key} className='form__inner-wrapper'>
+      <label htmlFor={key}>Seleccione una {key}</label>
+      <select name={key} id={key} onChange={handleChange}></select>
+    </div>
+  ));
+}
+```
+9. Llevamos este `Object.entries()` a una constante de nombre `selectEl` y
+añadimos el `return` de `selectEl`:
+```js
+function Select({
+  language,
+  handleChange,
+}: {
+  language: number;
+  handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}) {
+  const selectEl = Object.entries(data).map(([key, value]) => (
+    <div key={key} className='form__inner-wrapper'>
+      <label htmlFor={key}>Seleccione una {key}</label>
+      <select name={key} id={key} onChange={handleChange}></select>
+    </div>
+  ));
+
+  return <>{selectEl}</>
+}
+
+export default Select;
+```
+
+* Así luce hasta el momento los elementos `<Select`, tomados de
+**`data.json`**:  
+![Componentes `<Select`](images/2025-03-09_172735.png "Componentes `<Select`")
+
