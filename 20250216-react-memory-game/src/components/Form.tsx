@@ -1,5 +1,6 @@
 import React from 'react';
 import RegularButton from './RegularButton';
+import Select from './Select';
 
 export default function Form({
   handleSubmit,
@@ -15,8 +16,13 @@ export default function Form({
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }) {
   return (
-    <form className='wrapper' onSubmit={handleSubmit}>
-      <div className='form__inner-wrapper'>
+    <div className='form-container'>
+      <p className='p--regular'>
+        Personaliza el juego seleccionando una categoría de emoji y una cantidad de tarjetas de memoria.
+      </p>
+      <form className='wrapper'>
+        <Select language={language} handleChange={handleChange} />
+        {/*<div className='form__inner-wrapper'>
         <label htmlFor='category'>Seleccione una categoría de emoji</label>
         <select name='category' id='category' onChange={handleChange}>
           {categoryList.map((category, index) => (
@@ -37,8 +43,9 @@ export default function Form({
             </option>
           ))}
         </select>
-      </div>
-      <RegularButton type='submit'>Start Game</RegularButton>
-    </form>
+      </div>*/}
+        <RegularButton type='submit'>Start Game</RegularButton>
+      </form>
+    </div>
   );
 }
