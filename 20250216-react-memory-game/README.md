@@ -2978,3 +2978,87 @@ function Option({...}) {
 no se envían al componente `Form`.
 3. En el archivo **`Form.tsx`**, borramos `categoryList` y `numberList`.
 4. En el archivo **`Apptsx`** borro los `console.log()`.
+
+## 4:12:13 - Improve accessibility of Form component
+
+>[!IMPORTANT]
+>### Desafío:
+>**`App.tsx`**
+>
+>1) Crear una nueva variable de estado, "`isFirstRender`", con una función de establecimiento correspondiente e inicializarla como verdadera.
+>2) Identificar dónde deberíamos cambiar "`isFirstRender`" de verdadero a falso y usar la función de establecimiento para hacerlo.
+>3) Pasar "`isFirstRender`" como una propiedad al componente "`Form`".
+>
+>**`Form.tsx`**
+>
+>4) Condiciona el foco del div para que se muestre cuando "isFirstRender" sea falso.
+>5) Pon a prueba tu código jugando un juego de memoria. Asegúrate de navegar solo con el teclado. Cuando el formulario se muestre por segunda vez, deberías ver el estilo de contorno predeterminado del navegador (en Chrome es azul).
+
+1. En el archivo **`App.tsx`**, creamos la constante `isFirstRender`
+con el _hook_ de tipo `useState`:
+```js
+  const [isFirstRender, setIsFirstRender] = useState(true);
+```
+2. En la función `startGame()`, justo después del `catch()`, 
+llamamos la función `setIsFirstRender()` dentro de un `finally`:
+```js
+  async function startGame(e: React.FormEvent) {
+    ...
+    try {
+      ...
+    } catch (error) {
+      ...
+    }
+     finally {
+      setIsFirstRender(false);
+     }
+  }
+```
+3. Envío el valor de `isFirstRender`, como ptro _prop_ o propiedada cuando
+se rederiza `<Form`
+4. En el archivo **`Form.tsx`**, añadimos el nuevo _prop_ de tipo `boolean`
+```js
+export default function Form({
+  handleSubmit,
+  language,
+  handleChange,
+  isFirstRender,
+}: {
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  language: number;
+  handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  isFirstRender: boolean;
+}) {
+  return ()
+}
+```
+5. En el componente `Form`, importamos `useRef` y `useEffect` de `react`:
+```js
+import React, { useRef, useEffect } from 'react';
+```
+6. Borremos todo lo que está entre comentarios:
+```js
+        {/*<div className='form__inner-wrapper'>
+        ...
+      </div>*/}
+```
+7. Creamos la constante `divRef`, la definimos como un `useRef(null)`, para
+luego asignar en el primer `<div` un `ref={divRef}`, lo mismo que un
+`tabIndex={-1}`:
+```js
+export default function Form(...) {
+  const divRef = useRef<HTMLDivElement>(null);
+
+  return (
+    <div className='form-container' ref={divRef}>
+      ...
+    </div>
+  );
+}
+```
+8. Agregamos el `useEffect` debajo del `useRef` y encima del `return`:
+```js
+  useEffect(() => {
+    !isFirstRender && divRef.current?.focus();
+  }, []);
+```
