@@ -19,16 +19,6 @@ function EmojiButton({
       ? decodeEntity(emoji.htmlCode[0])
       : '?';
 
-  // Condicionales que hice inicialmente
-  // let btnStyle = 'btn--emoji__';
-  // if (selectedCardsEntry) {
-  //   btnStyle += 'back--selected';
-  // } else if (matchedCardsEntry) {
-  //   btnStyle += 'back--matched';
-  // } else {
-  //   btnStyle += 'front';
-  // }
-  // Operador Ternario sugeridas por el instructor
   const btnStyle = selectedCardsEntry
     ? 'btn--emoji__back--selected'
     : matchedCardsEntry

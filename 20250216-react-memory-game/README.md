@@ -3062,3 +3062,254 @@ export default function Form(...) {
     !isFirstRender && divRef.current?.focus();
   }, []);
 ```
+
+## 4:20:50 - Outro
+
+>[!NOTE]  
+>Aprovechamos este item para añadir la posibilidad de seleccionar el 
+>idioma, al menos `English` o `Español`:
+1. Primero construyo el archivo **`language.json`** en la carpeta
+**"data"**:
+```json
+[
+  {
+    "App_h1": "Memory Game",
+    "Form_p": "Customize the game by selecting an emoji category and a number of memory cards.",
+    "Form_RegularButton": "Start Game",
+    "Select_label_cat": "Select a category:",
+    "Select_label_num": "Select the number of cards:",
+    "ErrorCard_p1": "Sorry, there was an error.",
+    "ErrorCard_p2": "Please come back later or click the button belowto try restarting the game.",
+    "ErrorCard_RegularButton": "Restart Game",
+    "GameOver_p": "You've matched all the memory cards!",
+    "GameOver_RegularButton": "Play Again"
+  },
+  {
+    "App_h1": "Juego de Memoria",
+    "Form_p": "Personaliza el juego seleccionando una categoría de emojis y un número de tarjetas de memoria.",
+    "Form_RegularButton": "Comenzar Juego",
+    "Select_label_cat": "Selecciona una categoría:",
+    "Select_label_num": "Selecciona el número de tarjetas:",
+    "ErrorCard_p1": "Lo siento, hubo un error.",
+    "ErrorCard_p2": "Por favor, vuelve más tarde o haz clic en el botón de abajo para intentar reiniciar el juego.",
+    "ErrorCard_RegularButton": "Reiniciar Juego",
+    "GameOver_p": "¡Has emparejado todas las tarjetas de memoria!",
+    "GameOver_RegularButton": "Jugar de Nuevo"
+  }
+]
+```
+2. En el archivo **`App.tsx`**, realizo la importación de este archivo:
+```js
+import languageData from './data/language.json';
+```
+3. Empezando en el componente `App`, cambio el `<h1` del `return`, por esto:
+```js
+      <h1>{languageData[language].App_h1}</h1>
+```
+4. Añanado al renderizado del componente `<Form`, el envío del 
+`languageData`, a su vez lo añado en la lista de propiedades o _props_ o
+parámetros del componente `Form`:
+```js
+      {!isGameOn && !isError && (
+        <Form
+          handleSubmit={startGame}
+          language={language}
+          handleChange={handleFormChange}
+          isFirstRender={isFirstRender}
+          languageData={languageData}
+        />
+      )}
+```
+```js
+export default function Form({
+  handleSubmit,
+  language,
+  handleChange,
+  isFirstRender,
+  languageData,
+}: {
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  language: number;
+  handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  isFirstRender: boolean;
+  languageData: string[] | any[];
+}) {...}
+```
+5. En el componente `Form`, cambio el elemento `<p` por lo de `languageData`
+```js
+      <p className='p--regular'>{languageData[language].Form_p}</p>
+```
+6. El renderizado del `<RegularButton`, cambio el `Start Game`, por
+el valor de `languageData`:
+```js
+        <RegularButton type='submit'>
+          {languageData[language].Form_RegularButton}
+        </RegularButton>
+```
+7. Añado al renderizado del componente `>Select`, el envío del 
+`languageData`, a su vez lo añado en la lista de propiedades o _props_ o
+parámetros del componente `Select`:
+```js
+        <Select
+          language={language}
+          handleChange={handleChange}
+          languageData={languageData}
+        />
+```
+```js
+function Select({
+  language,
+  handleChange,
+  languageData,
+}: {
+  language: number;
+  handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  languageData: string[] | any[];
+}) {...}
+```
+8. Añado al renderizado del componente `<ErrorCard`, el envío del 
+`languageData`, a su vez lo añado en la lista de propiedades o _props_ o
+parámetros del componente `ErrorCard`:
+```js
+        <ErrorCard
+          handleClick={resetError}
+          language={language}
+          languageData={languageData}
+        />
+```
+```js
+function ErrorCard({
+  handleClick,
+  language,
+  languageData,
+}: {
+  handleClick: () => void;
+  language: number;
+  languageData: string[] | any[];
+}) {
+  ...
+  return (...)}
+```
+9. En el componente `ErrorCard`, cambiamos los elementos por `languageData`:
+```js
+  return (
+    <div className='wrapper wrapper--accent' ref={cardRef} tabIndex={-1}>
+      <p className='p--large'>{languageData[language].ErrorCard_p1}</p>
+      <p className='p--regular'>{languageData[language].ErrorCard_p2}</p>
+      <RegularButton handleClick={handleClick}>
+      {languageData[language].ErrorCard_RegularButton}
+      </RegularButton>
+    </div>
+  );
+```
+10. Añado al renderizado del componente `<GameOver`, el envío del 
+`languageData`, a su vez lo añado en la lista de propiedades o _props_ o
+parámetros del componente `GameOver`:
+```js
+        <GameOver
+          handleClick={resetGame}
+          language={language}
+          languageData={languageData}
+        />
+```
+```js
+function GameOver({
+  handleClick,
+  language,
+  languageData,
+}: {
+  handleClick: () => void;
+  language: number;
+  languageData: string[] | any[];
+}) {...}
+```
+11. En el componente `GameOver`, cambiamos los elementos por `languageData`:
+```js
+function GameOver(...) {
+  ...
+  return (
+    <div className='wrapper wrapper--accent' ref={cardRef} tabIndex={-1}>
+      <p className='p--large'>{languageData[language].GameOver_p}</p>
+      <RegularButton handleClick={handleClick}>{languageData[language].GameOver_RegularButton}</RegularButton>
+    </div>
+  );
+}
+```
+12. Borramos los elementos que se comentaron, junto con los `console.log`.
+13. En el Archivo **`Form.tsx`**, agregamos justo arriba del renderizado de
+`<RegularButton`, un par de simples `<input`, dentro de un `<div`:
+```js
+        <div>
+          <input
+            onChange={handleChange}
+            type='radio'
+            name='idiom'
+            value='0'
+            id='en'
+            checked={language === 0}
+          />
+          <label htmlFor='en'>English</label>
+          <br />
+          <input
+            onChange={handleChange}
+            type='radio'
+            name='idiom'
+            value='1'
+            id='es'
+            checked={language === 1}
+          />
+          <label htmlFor='es'>Español</label>
+        </div>
+```
+14. Como estamos reutilizando el `handleChange`, lo debemos definir mejor
+en el componente `Form`:
+```js
+export default function Form({
+  handleSubmit,
+  language,
+  handleChange,
+  isFirstRender,
+  languageData,
+}: {
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  language: number;
+  handleChange: (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+      | any
+  ) => void;
+  isFirstRender: boolean;
+  languageData: string[] | any[];
+}) {...}
+```
+15. En el archivo **`App.tsx`**, cambio tanto el `initialFormDataType`, como
+`initialFormData`:
+```js
+  type initialFormDataType = {
+    category: string;
+    number: number;
+    idiom?: number;
+  };
+
+  const initialFormData: initialFormDataType = {
+    category: 'animals-and-nature',
+    number: 10,
+    idiom: 0,
+  };
+```
+16. En el `useEffect` de `[didLoad]`, comento la línea de `// setLanguage(1);`.
+17. Llamo la función `setLanguage()`, en la función `handleFormChange`:
+```js
+  function handleFormChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+    if (name === 'idiom') {
+      setLanguage(Number(value));
+    }
+  }
+```
+18. En la función `startGame()`, quito del condicional `|| language === 1`.

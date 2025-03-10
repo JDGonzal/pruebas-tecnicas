@@ -21,16 +21,6 @@ export default function MemoryCard({
     // Clono con otro nombre
     const matchedCardsEntry = matchedCards.find((card) => card.index === index);
 
-    // Condicionales que hice inicialmente
-    // let cardStyle = 'card-item--';
-    // if (selectedCardsEntry) {
-    //   cardStyle += 'selected';
-    // } else if (matchedCardsEntry) {
-    //   cardStyle += 'matched';
-    // } else {
-    //   cardStyle += 'default';
-    // }
-    // Operador Ternario sugeridas por el instructor
     const cardStyle = selectedCardsEntry
       ? 'card-item--selected'
       : matchedCardsEntry

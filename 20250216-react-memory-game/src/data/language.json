@@ -1,0 +1,26 @@
+[
+  {
+    "App_h1": "Memory Game",
+    "Form_p": "Customize the game by selecting an emoji category and a number of memory cards.",
+    "Form_RegularButton": "Start Game",
+    "Select_label_cat": "Select a category:",
+    "Select_label_num": "Select the number of cards:",
+    "ErrorCard_p1": "Sorry, there was an error.",
+    "ErrorCard_p2": "Please come back later or click the button belowto try restarting the game.",
+    "ErrorCard_RegularButton": "Restart Game",
+    "GameOver_p": "You've matched all the memory cards!",
+    "GameOver_RegularButton": "Play Again"
+  },
+  {
+    "App_h1": "Juego de Memoria",
+    "Form_p": "Personaliza el juego seleccionando una categoría de emojis y un número de tarjetas de memoria.",
+    "Form_RegularButton": "Comenzar Juego",
+    "Select_label_cat": "Selecciona una categoría:",
+    "Select_label_num": "Selecciona el número de tarjetas:",
+    "ErrorCard_p1": "Lo siento, hubo un error.",
+    "ErrorCard_p2": "Por favor, vuelve más tarde o haz clic en el botón de abajo para intentar reiniciar el juego.",
+    "ErrorCard_RegularButton": "Reiniciar Juego",
+    "GameOver_p": "¡Has emparejado todas las tarjetas de memoria!",
+    "GameOver_RegularButton": "Jugar de Nuevo"
+  }
+]
