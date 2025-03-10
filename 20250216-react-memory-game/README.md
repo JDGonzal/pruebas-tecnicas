@@ -2883,3 +2883,98 @@ export default Select;
 **`data.json`**:  
 ![Componentes `<Select`](images/2025-03-09_172735.png "Componentes `<Select`")
 
+
+## 4:05:15 - Refactor form pt. 2
+
+1. Creamos el archivo **`Option.tsx`** en la carpeta **"components"** y le
+agregamos el _snippet_ `rfce`:
+```js
+import React from 'react';
+
+function Option() {
+  return <div>Option</div>;
+}
+
+export default Option;
+```
+2. En el archivo **`Select.tsx`**, importo el componente `Option` y
+lo renderizo debajo del elemento `<option`, con  un parámetro o _prop_
+de nombre `valueArray`, con el contenido del `value`:
+```js
+  const selectEl = Object.entries(data).map(([key, value]) => (
+    <div key={key} className='form__inner-wrapper'>
+      <label htmlFor={key}>Seleccione una {key}</label>
+      <select name={key} id={key} onChange={handleChange}>
+        <Option language={language} valueArray={value} />
+      </select>
+    </div>
+  ));
+```
+3. Ahora bien en el archivo **`Option.tsx`**, recibimos estos nuevos 
+parámetros:
+```js
+function Option({
+  language,
+  valueArray,
+}: {
+  language: number;
+  valueArray: string[] | any[];
+}) {
+  console.log('laguage:', language, 'valueArray:', valueArray);
+  return <>Option</>;
+}
+```
+
+>[!IMPORTANT]
+>### Desafío:
+>1) Iterar sobre el "valueArray" que recibimos como propiedad y crear un elemento de opción.
+>2) Almacenar todo esto en una nueva variable, "optionEl", y devolver esta variable en la parte inferior del componente.
+>
+>💡 Consejos:
+>* Observa atentamente el componente "Select" y el archivo "data" para comprender cómo puedes usar el "valueArray".
+>* Usa un operador ternario para configurar condicionalmente el contenido de texto del elemento de opción.
+>* Recuerda configurar una clave en la etiqueta de opción.
+
+>[!TIP]  
+>Volví a ajustar el archivo **`data.json`**, haciendo que la clave `name`
+>también sea un arreglo:
+>```json
+>{
+>  "category": [
+>    {"name": ["Animals and nature", "Animales y naturaleza"],
+>      "value": ["animals-and-nature", "animales-y-naturaleza"]},
+>    {"name": ["Food and drink", "Comidas y bebidas"],
+>      "value": ["food-and-drink", "comidas-y-bebidas"]},
+>    {"name": ["Travel and places", "Viajes y lugares"],
+>      "value": ["travel-and-places", "viajes-y-lugares"]},
+>    {"name": ["Objects", "Objetos"],
+>      "value": ["objects", "objetos"]},
+>    {"name": ["Symbols", "Símbolos"],
+>      "value": ["symbols", "símbolos"]}
+>  ],
+>  "number": [
+>    {"value": "10"},
+>    {"value": "20"},
+>    {"value": "30"},
+>    {"value": "40"},
+>    {"value": "50"}
+>  ]
+>}
+>```
+
+1. En el archivo **`Option.tsx`**, la iteración usando `.map()`, llevándolo
+a una constante y haciendo el `return` de esa constante:
+```js
+function Option({...}) {
+  const optionEl = valueArray.map(({name, value}) => (
+    <option key={value} value={name ? value[language] : value}>
+      {name ? name[language] : value}
+    </option>
+  ));
+  return <>{optionEl}</>;
+}
+```
+2. Borramos de **`App.tsx`**, los `categoryList` y `numberList`, por ende
+no se envían al componente `Form`.
+3. En el archivo **`Form.tsx`**, borramos `categoryList` y `numberList`.
+4. En el archivo **`Apptsx`** borro los `console.log()`.

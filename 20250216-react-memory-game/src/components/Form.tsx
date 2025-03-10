@@ -4,14 +4,10 @@ import Select from './Select';
 
 export default function Form({
   handleSubmit,
-  categoryList,
-  numberList,
   language,
   handleChange,
 }: {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
-  categoryList: string[][];
-  numberList: number[];
   language: number;
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }) {
@@ -20,7 +16,7 @@ export default function Form({
       <p className='p--regular'>
         Personaliza el juego seleccionando una categoría de emoji y una cantidad de tarjetas de memoria.
       </p>
-      <form className='wrapper'>
+      <form className='wrapper' onSubmit={handleSubmit}>
         <Select language={language} handleChange={handleChange} />
         {/*<div className='form__inner-wrapper'>
         <label htmlFor='category'>Seleccione una categoría de emoji</label>

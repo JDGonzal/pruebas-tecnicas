@@ -5,15 +5,6 @@ import AssistiveTechInfo from './components/AssistiveTechInfo';
 import GameOver from './components/GameOver';
 import ErrorCard from './components/ErrorCard';
 
-const categoryList = [
-  ['animals-and-nature', 'animales-y-naturaleza'],
-  ['food-and-drink', 'comidas-y-bebidas'],
-  ['travel-and-places', 'viajes-y-lugares'],
-  ['objects', 'objetos'],
-  ['symbols', 'símbolos'],
-];
-const numberList = [10, 20, 30, 40, 50];
-
 let isLocalhost = false;
 
 export default function App() {
@@ -76,8 +67,10 @@ export default function App() {
 
   function handleFormChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const { name, value } = e.target;
-    console.log('name:', name, 'value:', value);
-    setFormData({ ...formData, [name]: value });
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   }
 
   async function startGame(e: React.FormEvent) {
@@ -85,7 +78,6 @@ export default function App() {
     try {
       let response: Response;
       if (isLocalhost || language === 1) {
-        console.log('category:', formData.category);
         response = await fetch(
           `${window.location.origin}/${formData.category}.json`
         );
@@ -175,8 +167,6 @@ export default function App() {
       {!isGameOn && !isError && (
         <Form
           handleSubmit={startGame}
-          categoryList={categoryList}
-          numberList={numberList}
           language={language}
           handleChange={handleFormChange}
         />
