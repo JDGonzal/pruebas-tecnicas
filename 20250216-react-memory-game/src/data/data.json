@@ -1,23 +1,23 @@
 {
   "category": [
     {
-      "name": "Animals and nature",
+      "name": ["Animals and nature", "Animales y naturaleza"],
       "value": ["animals-and-nature", "animales-y-naturaleza"]
     },
     {
-      "name": "Food and drink",
+      "name": ["Food and drink", "Comidas y bebidas"],
       "value": ["food-and-drink", "comidas-y-bebidas"]
     },
     {
-      "name": "Travel and places",
+      "name": ["Travel and places", "Viajes y lugares"],
       "value": ["travel-and-places", "viajes-y-lugares"]
     },
     {
-      "name": "Objects",
+      "name": ["Objects", "Objetos"],
       "value": ["objects", "objetos"]
     },
     {
-      "name": "Symbols",
+      "name": ["Symbols", "Símbolos"],
       "value": ["symbols", "símbolos"]
     }
   ],
