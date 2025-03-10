@@ -1,7 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import RegularButton from './RegularButton';
 
-function ErrorCard({ handleClick }: { handleClick: () => void }) {
+function ErrorCard({
+  handleClick,
+  language,
+  languageData,
+}: {
+  handleClick: () => void;
+  language: number;
+  languageData: string[] | any[];
+}) {
   const cardRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (cardRef.current) {
@@ -11,13 +19,10 @@ function ErrorCard({ handleClick }: { handleClick: () => void }) {
 
   return (
     <div className='wrapper wrapper--accent' ref={cardRef} tabIndex={-1}>
-      <p className='p--large'>Lo sentimos, se produjo un error.</p>
-      <p className='p--regular'>
-        Vuelve más tarde o haz clic en el botón de abajo para intentar reiniciar
-        el juego
-      </p>
+      <p className='p--large'>{languageData[language].ErrorCard_p1}</p>
+      <p className='p--regular'>{languageData[language].ErrorCard_p2}</p>
       <RegularButton handleClick={handleClick}>
-        Reiniciar el Juego
+      {languageData[language].ErrorCard_RegularButton}
       </RegularButton>
     </div>
   );

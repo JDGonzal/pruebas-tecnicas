@@ -1,7 +1,15 @@
 import React, { useRef, useEffect } from 'react';
 import RegularButton from './RegularButton';
 
-function GameOver({ handleClick }: { handleClick: () => void }) {
+function GameOver({
+  handleClick,
+  language,
+  languageData,
+}: {
+  handleClick: () => void;
+  language: number;
+  languageData: string[] | any[];
+}) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -11,8 +19,8 @@ function GameOver({ handleClick }: { handleClick: () => void }) {
   }, []);
   return (
     <div className='wrapper wrapper--accent' ref={cardRef} tabIndex={-1}>
-      <p className='p--large'>¡Has emparejado todas las tarjetas de memoria!</p>
-      <RegularButton handleClick={handleClick}>Volver a jugar</RegularButton>
+      <p className='p--large'>{languageData[language].GameOver_p}</p>
+      <RegularButton handleClick={handleClick}>{languageData[language].GameOver_RegularButton}</RegularButton>
     </div>
   );
 }

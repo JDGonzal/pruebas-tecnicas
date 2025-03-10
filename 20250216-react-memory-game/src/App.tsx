@@ -4,6 +4,7 @@ import MemoryCard from './components/MemoryCard';
 import AssistiveTechInfo from './components/AssistiveTechInfo';
 import GameOver from './components/GameOver';
 import ErrorCard from './components/ErrorCard';
+import languageData from './data/language.json';
 
 let isLocalhost = false;
 
@@ -11,11 +12,13 @@ export default function App() {
   type initialFormDataType = {
     category: string;
     number: number;
+    idiom?: number;
   };
 
   const initialFormData: initialFormDataType = {
     category: 'animals-and-nature',
     number: 10,
+    idiom: 0,
   };
 
   const [isFirstRender, setIsFirstRender] = useState(true);
@@ -37,7 +40,7 @@ export default function App() {
         );
         if (!res.ok) throw new Error('Could not fetch data from API');
       } catch (error) {
-        setLanguage(1);
+        // setLanguage(1);
         isLocalhost = true;
         console.error(error);
       }
@@ -72,13 +75,16 @@ export default function App() {
       ...formData,
       [name]: value,
     });
+    if (name === 'idiom') {
+      setLanguage(Number(value));
+    }
   }
 
   async function startGame(e: React.FormEvent) {
     e.preventDefault();
     try {
       let response: Response;
-      if (isLocalhost || language === 1) {
+      if (isLocalhost) {
         response = await fetch(
           `${window.location.origin}/${formData.category}.json`
         );
@@ -99,10 +105,9 @@ export default function App() {
     } catch (error) {
       console.error(error);
       setIsError(true);
-    }
-     finally {
+    } finally {
       setIsFirstRender(false);
-     }
+    }
   }
 
   async function getDataSlice(data: any[]) {
@@ -140,14 +145,9 @@ export default function App() {
   }
 
   function turnCard(name: string, index: number) {
-    console.log('Clicked');
-
-    // console.log(`The emoji '${name}' at index '${index}' was clicked`);
-    // setSelectedCards([{ name, index }]);
-    // const selectedCardEntry = selectedCards.find((card) => card.index === index );
-    if (/*!selectedCardEntry &&*/ selectedCards.length < 2) {
+    if (selectedCards.length < 2) {
       setSelectedCards([...selectedCards, { name, index }]);
-    } else if (/*!selectedCardEntry &&*/ selectedCards.length === 2) {
+    } else if (selectedCards.length === 2) {
       setSelectedCards([{ name, index }]);
     }
   }
@@ -167,13 +167,14 @@ export default function App() {
 
   return (
     <main>
-      <h1>Memory</h1>
+      <h1>{languageData[language].App_h1}</h1>
       {!isGameOn && !isError && (
         <Form
           handleSubmit={startGame}
           language={language}
           handleChange={handleFormChange}
           isFirstRender={isFirstRender}
+          languageData={languageData}
         />
       )}
       {isGameOn && !areAllCardsMatched && (
@@ -182,7 +183,13 @@ export default function App() {
           matchedCards={matchedCards}
         />
       )}
-      {isGameOn && areAllCardsMatched && <GameOver handleClick={resetGame} />}
+      {isGameOn && areAllCardsMatched && (
+        <GameOver
+          handleClick={resetGame}
+          language={language}
+          languageData={languageData}
+        />
+      )}
       {isGameOn && (
         <MemoryCard
           handleClick={turnCard}
@@ -191,7 +198,13 @@ export default function App() {
           matchedCards={matchedCards}
         />
       )}
-      {isError && <ErrorCard handleClick={resetError} />}
+      {isError && (
+        <ErrorCard
+          handleClick={resetError}
+          language={language}
+          languageData={languageData}
+        />
+      )}
     </main>
   );
 }

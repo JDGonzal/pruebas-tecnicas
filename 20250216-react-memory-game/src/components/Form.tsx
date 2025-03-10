@@ -7,11 +7,18 @@ export default function Form({
   language,
   handleChange,
   isFirstRender,
+  languageData,
 }: {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   language: number;
-  handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  handleChange: (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+      | any
+  ) => void;
   isFirstRender: boolean;
+  languageData: string[] | any[];
 }) {
   const divRef = useRef<HTMLDivElement>(null);
 
@@ -21,13 +28,37 @@ export default function Form({
 
   return (
     <div className='form-container' ref={divRef} tabIndex={-1}>
-      <p className='p--regular'>
-        Personaliza el juego seleccionando una categoría de emoji y una cantidad
-        de tarjetas de memoria.
-      </p>
+      <p className='p--regular'>{languageData[language].Form_p}</p>
       <form className='wrapper' onSubmit={handleSubmit}>
-        <Select language={language} handleChange={handleChange} />
-        <RegularButton type='submit'>Start Game</RegularButton>
+        <Select
+          language={language}
+          handleChange={handleChange}
+          languageData={languageData}
+        />
+        <div>
+          <input
+            onChange={handleChange}
+            type='radio'
+            name='idiom'
+            value='0'
+            id='en'
+            checked={language === 0}
+          />
+          <label htmlFor='en'>English</label>
+          <br />
+          <input
+            onChange={handleChange}
+            type='radio'
+            name='idiom'
+            value='1'
+            id='es'
+            checked={language === 1}
+          />
+          <label htmlFor='es'>Español</label>
+        </div>
+        <RegularButton type='submit'>
+          {languageData[language].Form_RegularButton}
+        </RegularButton>
       </form>
     </div>
   );
