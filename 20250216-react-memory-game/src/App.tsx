@@ -18,6 +18,7 @@ export default function App() {
     number: 10,
   };
 
+  const [isFirstRender, setIsFirstRender] = useState(true);
   const [isGameOn, setIsGameOn] = useState(false);
   const [emojisData, setEmojisData] = useState([] as any[]);
   const [selectedCards, setSelectedCards] = useState([] as any[]);
@@ -99,6 +100,9 @@ export default function App() {
       console.error(error);
       setIsError(true);
     }
+     finally {
+      setIsFirstRender(false);
+     }
   }
 
   async function getDataSlice(data: any[]) {
@@ -169,6 +173,7 @@ export default function App() {
           handleSubmit={startGame}
           language={language}
           handleChange={handleFormChange}
+          isFirstRender={isFirstRender}
         />
       )}
       {isGameOn && !areAllCardsMatched && (

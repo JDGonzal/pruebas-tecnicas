@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import RegularButton from './RegularButton';
 import Select from './Select';
 
@@ -6,40 +6,27 @@ export default function Form({
   handleSubmit,
   language,
   handleChange,
+  isFirstRender,
 }: {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   language: number;
   handleChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  isFirstRender: boolean;
 }) {
+  const divRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    !isFirstRender && divRef.current?.focus();
+  }, []);
+
   return (
-    <div className='form-container'>
+    <div className='form-container' ref={divRef} tabIndex={-1}>
       <p className='p--regular'>
-        Personaliza el juego seleccionando una categoría de emoji y una cantidad de tarjetas de memoria.
+        Personaliza el juego seleccionando una categoría de emoji y una cantidad
+        de tarjetas de memoria.
       </p>
       <form className='wrapper' onSubmit={handleSubmit}>
         <Select language={language} handleChange={handleChange} />
-        {/*<div className='form__inner-wrapper'>
-        <label htmlFor='category'>Seleccione una categoría de emoji</label>
-        <select name='category' id='category' onChange={handleChange}>
-          {categoryList.map((category, index) => (
-            <option key={index} value={category[language]}>
-              {category[language]}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className='form__inner-wrapper'>
-        <label htmlFor='number'>
-          Seleccione el número de tarjetas de memoria
-        </label>
-        <select name='number' id='number' onChange={handleChange}>
-          {numberList.map((number, index) => (
-            <option key={index} value={number}>
-              {number}
-            </option>
-          ))}
-        </select>
-      </div>*/}
         <RegularButton type='submit'>Start Game</RegularButton>
       </form>
     </div>
