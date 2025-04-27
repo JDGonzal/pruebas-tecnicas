@@ -1,0 +1,17 @@
+{
+  "name": "20250425-background-removal",
+  "version": "1.0.0",
+  "description": "[![Elimina el Fondo de Cualquier Imagen con Node.js y Javascript](images/2025-04-25_%20184055.png \"Elimina el Fondo de Cualquier Imagen con Node.js y Javascript\")](https://www.youtube.com/watch?v=kNfozI7Mbbs)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@imgly/background-removal-node": "1.4.5",
+    "20250425-background-removal": "file:"
+  }
+}

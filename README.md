@@ -12,4 +12,5 @@ Pruebas y ejercicios siguiendo varios canales de Youtube
 - [2024-12-19 Polyrhythms JavaScript Project Tutorial](./20241219_Polyrhythms/README.md)
 - [2024-12-30 JavaScript Christmas Calendar Tutorial 🎄](./20241230-JavaScript_Christmas_Calendar/README.md)
 - [2025-02-16 Build a Memory Game in React Tutorial](./20250216-react-memory-game/README.md)
+- [2025-04-25 ¡Elimina el Fondo de Cualquier Imagen con Node.js y Javascript en segundos!](./20250425-background-removal/README.md)
 
