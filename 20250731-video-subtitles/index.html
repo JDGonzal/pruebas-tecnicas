@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Generador de subtítulos automáticos para videos usando IA. Sube tu video y obtén subtítulos en minutos."
+    />
+    <meta
+      name="keywords"
+      content="subtítulos, IA, OpenAI, videos, transcripción"
+    />
+    <meta name="author" content="JDGonzal" />
+    <meta name="theme-color" content="#4CAF50" />
+    <meta name="robots" content="index, follow" />
+    <title>Sudoku</title>
+    <link rel="shortcut icon" href="video-subtitles_64x64.png" />
+
+    <title>Generador de Subtítulos con IA</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>🎬 Generador de Subtítulos con IA</h1>
+        <p>Sube tu video y genera subtítulos automáticamente usando OpenAI</p>
+      </header>
+
+      <main>
+        <!-- Configuración de API Key -->
+        <section class="api-config">
+          <h2>Configuración</h2>
+          <div class="input-group">
+            <label for="apiKey">API Key de OpenAI:</label>
+            <input type="password" id="apiKey" placeholder="sk-..." />
+            <button id="saveApiKey">Guardar</button>
+          </div>
+          <div class="api-status" id="apiStatus"></div>
+        </section>
+
+        <!-- Subida de archivo -->
+        <section class="upload-section">
+          <h2>Subir Video</h2>
+          <div class="upload-area" id="uploadArea">
+            <div class="upload-content">
+              <div class="upload-icon">📁</div>
+              <p>Arrastra tu video aquí o haz clic para seleccionar</p>
+              <p class="upload-hint">
+                Formatos soportados: MP4, MOV, AVI, MKV (máx. 25MB)
+              </p>
+            </div>
+            <input type="file" id="videoFile" accept="video/*" hidden />
+          </div>
+
+          <div class="file-info" id="fileInfo" style="display: none">
+            <h3>Archivo seleccionado:</h3>
+            <div class="file-details">
+              <span id="fileName"></span>
+              <span id="fileSize"></span>
+            </div>
+            <video
+              id="videoPreview"
+              controls
+              style="max-width: 100%; height: 200px"
+            ></video>
+          </div>
+        </section>
+
+        <!-- Opciones de transcripción -->
+        <section class="options-section">
+          <h2>Opciones de Transcripción</h2>
+          <div class="options-grid">
+            <div class="option-group">
+              <label for="language">Idioma:</label>
+              <select id="language">
+                <option value="es">Español</option>
+                <option value="en">Inglés</option>
+                <option value="fr">Francés</option>
+                <option value="de">Alemán</option>
+                <option value="it">Italiano</option>
+                <option value="pt">Portugués</option>
+              </select>
+            </div>
+
+            <div class="option-group">
+              <label for="model">Modelo:</label>
+              <select id="model">
+                <option value="whisper-1">Whisper-1</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- Botón de procesamiento -->
+        <section class="process-section">
+          <button id="processBtn" class="process-btn" disabled>
+            <span class="btn-text">Generar Subtítulos</span>
+            <span class="btn-loader" style="display: none">⏳</span>
+          </button>
+        </section>
+
+        <!-- Progreso -->
+        <section
+          class="progress-section"
+          id="progressSection"
+          style="display: none"
+        >
+          <h2>Procesando...</h2>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-text" id="progressText">
+            Preparando archivo...
+          </div>
+        </section>
+
+        <!-- Resultados -->
+        <section
+          class="results-section"
+          id="resultsSection"
+          style="display: none"
+        >
+          <h2>Subtítulos Generados</h2>
+          <div class="subtitle-preview">
+            <h3>Vista previa:</h3>
+            <div class="subtitle-content" id="subtitleContent"></div>
+          </div>
+
+          <div class="download-section">
+            <button id="downloadBtn" class="download-btn">
+              📥 Descargar archivo SRT
+            </button>
+            <button id="newProcessBtn" class="secondary-btn">
+              🔄 Procesar otro video
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <p>Powered by OpenAI Whisper API</p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
