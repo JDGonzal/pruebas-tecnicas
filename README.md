@@ -15,3 +15,4 @@ Pruebas y ejercicios siguiendo varios canales de Youtube
 - [2025-02-16 Build a Memory Game in React Tutorial](./20250216-react-memory-game/README.md)
 - [2025-04-25 ¡Elimina el Fondo de Cualquier Imagen con Node.js y Javascript en segundos!](./20250425-background-removal/README.md)
 - [2025-07-31 Crea Subtitulos con OPENAI](./20250731-video-subtitles/README.md)
+- [2025-09-16 Repaso a Algoritmos](./20250916-Algoritms/README.md)
