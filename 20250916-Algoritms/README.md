@@ -1,5 +1,30 @@
 # Simples ejercicios para recordar uso de algoritmos
 
+>[!IMPORTANT]
+>
+>## Conceptos y notaciones fundamentales de la Big O Notation
+>
+>No te preocupes si suena demasiado técnico o complejo al inicio. Aquí te explico paso a paso y con ejemplos, pero antes es importante comprender los conceptos básicos.
+>
+>Big O mide la eficiencia de un algoritmo en términos de tiempo y espacio.
+>
+> * **Time complexity**: Mide cuánto "tiempo" toma un algoritmo en función del tamaño de la entrada (no en términos de segundos, sino de el número de operaciones que un algoritmo realiza en función al input de entrada, más en los ejemplos...).
+> * **Space complexity**: Mide cuánta memoria (espacio) toma un algoritmo en función del tamaño de la entrada.
+>
+> Y aquí están las notaciones fundamentales de la Big O notation:
+>
+> * **O(1)**: Tiempo constante. No importa el tamaño de la entrada, el tiempo de ejecución es siempre el mismo.
+> * **O(n)**: Tiempo lineal. El tiempo de ejecución aumenta linealmente con el tamaño de la entrada.
+> * **O(n^2)**: Tiempo cuadrático. El tiempo de ejecución aumenta cuadráticamente con el tamaño de la entrada.
+> * **O(log n)**: Tiempo logarítmico. El tiempo de ejecución disminuye logarítmicamente con el tamaño de la entrada.
+> * **O(n log n)**: Tiempo log-lineal. El tiempo de ejecución aumenta logarítmicamente con el tamaño de la entrada.
+> * **O(n!)**: Tiempo factorial. El tiempo de ejecución aumenta factorialmente con el tamaño de la entrada.
+>
+> Ahora veamos una gráfica de Big O notation para visualizar mejor cómo se comparan estas complejidades.
+>
+> <img src="https://paper-attachments.dropbox.com/s_2D428973624E7FC84C7D69D11421DE762BEA6B6F3361231FCDCAE0425D14526F_1664885448372_Untitled.drawio+17.png" jsaction="" class="sFlh5c FyHeAf iPVvYb" style="max-width: 745px; height: 456px; margin: 0px; width: 745px;" alt="Big O Cheat Sheet – Time Complexity Chart" jsname="kn3ccd">
+
+
 ## 01. Generar un arreglo de **n** elementos y guardar en un archivo. </br> **`01-createArray.js`**
 
 1. Importo dos elementos:
@@ -80,28 +105,28 @@ function guardarArray(arreglo) {
 >
 >**Características implementadas:**
 >
->- Generación automática de un array de 20 números aleatorios (entre 1 y 100)
->- Implementación completa del algoritmo Bubble Sort con optimización (detección temprana si ya está ordenado)
->- Visualización detallada del proceso de ordenamiento paso a paso
->- Estadísticas de rendimiento (comparaciones e intercambios)
->- Verificación automática de que el array está correctamente ordenado
+>* Generación automática de un array de 20 números aleatorios (entre 1 y 100)
+>* Implementación completa del algoritmo Bubble Sort con optimización (detección temprana si ya está ordenado)
+>* Visualización detallada del proceso de ordenamiento paso a paso
+>* Estadísticas de rendimiento (comparaciones e intercambios)
+>* Verificación automática de que el array está correctamente ordenado
 >
 >**Funcionalidades del programa:**
 >
->- Muestra el array original desordenado
->- Ejecuta el algoritmo Bubble Sort mostrando cada pasada
->- Indica cada intercambio realizado durante el proceso
->- Muestra el estado del array después de cada pasada
->- Proporciona estadísticas finales del algoritmo
->- Verifica que el resultado final esté correctamente ordenado
+>* Muestra el array original desordenado
+>* Ejecuta el algoritmo Bubble Sort mostrando cada pasada
+>* Indica cada intercambio realizado durante el proceso
+>* Muestra el estado del array después de cada pasada
+>* Proporciona estadísticas finales del algoritmo
+>* Verifica que el resultado final esté correctamente ordenado
 >
 >**Resultado de la prueba:**
 >
->- Array original: 20 números aleatorios desordenados
->- Proceso: 16 pasadas con optimización (se detuvo cuando no hubo más intercambios)
->- Estadísticas: 184 comparaciones y 74 intercambios
->- Resultado: Array correctamente ordenado de menor a mayor
->- Verificación: Confirmado que el ordenamiento es correcto
+>* Array original: 20 números aleatorios desordenados
+>* Proceso: 16 pasadas con optimización (se detuvo cuando no hubo más intercambios)
+>* Estadísticas: 184 comparaciones y 74 intercambios
+>* Resultado: Array correctamente ordenado de menor a mayor
+>* Verificación: Confirmado que el ordenamiento es correcto
 >
 >El algoritmo Bubble Sort está completamente funcional y muestra de manera educativa cómo funciona el proceso de ordenamiento burbuja.
 >
@@ -224,33 +249,33 @@ main()
 >
 >**Funcionalidad implementada:**
 >
->- Algoritmo completo de Selection Sort (ordenamiento por selección)
->- Generación automática de un array de 20 números aleatorios
->- Visualización detallada del proceso de ordenamiento paso a paso
->- Estadísticas de rendimiento (comparaciones e intercambios)
->- Verificación automática de que el array está correctamente ordenado
+>* Algoritmo completo de Selection Sort (ordenamiento por selección)
+>* Generación automática de un array de 20 números aleatorios
+>* Visualización detallada del proceso de ordenamiento paso a paso
+>* Estadísticas de rendimiento (comparaciones e intercambios)
+>* Verificación automática de que el array está correctamente ordenado
 >
 >**Características del algoritmo Selection Sort:**
 >
->- En cada pasada, busca el elemento mínimo en la parte no ordenada del array
->- Intercambia el elemento mínimo encontrado con el primer elemento de la parte no ordenada
->- Muestra claramente cuándo encuentra un nuevo mínimo y cuándo realiza intercambios
->- Indica cuando un elemento ya está en su posición correcta
+>* En cada pasada, busca el elemento mínimo en la parte no ordenada del array
+>* Intercambia el elemento mínimo encontrado con el primer elemento de la parte no ordenada
+>* Muestra claramente cuándo encuentra un nuevo mínimo y cuándo realiza intercambios
+>* Indica cuando un elemento ya está en su posición correcta
 >
 >**Resultado de la prueba:**
 >
->- Array original: 20 números aleatorios desordenados
->- Proceso: 19 pasadas (n-1 para un array de 20 elementos)
->- Estadísticas: 190 comparaciones y 18 intercambios
->- Resultado: Array correctamente ordenado de menor a mayor
->- Verificación: Confirmado que el ordenamiento es correcto
+>* Array original: 20 números aleatorios desordenados
+>* Proceso: 19 pasadas (n-1 para un array de 20 elementos)
+>* Estadísticas: 190 comparaciones y 18 intercambios
+>* Resultado: Array correctamente ordenado de menor a mayor
+>* Verificación: Confirmado que el ordenamiento es correcto
 >
 >**Ventajas del Selection Sort mostradas:**
 >
->- Número fijo de comparaciones: O(n²)
->- Número mínimo de intercambios: máximo n-1 intercambios
->- Algoritmo in-place (no requiere memoria adicional significativa)
->- Comportamiento predecible independiente del estado inicial del array
+>* Número fijo de comparaciones: O(n²)
+>* Número mínimo de intercambios: máximo n-1 intercambios
+>* Algoritmo in-place (no requiere memoria adicional significativa)
+>* Comportamiento predecible independiente del estado inicial del array
 >
 >La función `selectionSort()` está completamente implementada y funcional, mostrando de manera educativa cómo opera este algoritmo de ordenamiento.
 >
@@ -463,33 +488,33 @@ function main() {
 >
 >**Funcionalidad implementada:**
 >
->- Algoritmo completo de Insertion Sort (ordenamiento por inserción)
->- Generación automática de un array de 20 números aleatorios
->- Visualización detallada del proceso de ordenamiento paso a paso
->- Estadísticas de rendimiento (comparaciones y desplazamientos)
->- Verificación automática de que el array está correctamente ordenado
+>* Algoritmo completo de Insertion Sort (ordenamiento por inserción)
+>* Generación automática de un array de 20 números aleatorios
+>* Visualización detallada del proceso de ordenamiento paso a paso
+>* Estadísticas de rendimiento (comparaciones y desplazamientos)
+>* Verificación automática de que el array está correctamente ordenado
 >
 >**Características del algoritmo Insertion Sort:**
 >
->- Comienza desde el segundo elemento (índice 1) y va insertando cada elemento en su posición correcta dentro de la parte ya ordenada
->- Muestra claramente la parte ordenada vs el elemento a insertar en cada pasada
->- Desplaza elementos mayores hacia la derecha para hacer espacio al elemento actual
->- Indica cuándo un elemento ya está en su posición correcta
+>* Comienza desde el segundo elemento (índice 1) y va insertando cada elemento en su posición correcta dentro de la parte ya ordenada
+>* Muestra claramente la parte ordenada vs el elemento a insertar en cada pasada
+>* Desplaza elementos mayores hacia la derecha para hacer espacio al elemento actual
+>* Indica cuándo un elemento ya está en su posición correcta
 >
 >**Resultado de la prueba:**
 >
->- Array original: 20 números aleatorios desordenados
->- Proceso: 19 pasadas (desde índice 1 hasta n-1)
->- Estadísticas: 124 comparaciones y 109 desplazamientos
->- Resultado: Array correctamente ordenado de menor a mayor
->- Verificación: Confirmado que el ordenamiento es correcto
+>* Array original: 20 números aleatorios desordenados
+>* Proceso: 19 pasadas (desde índice 1 hasta n-1)
+>* Estadísticas: 124 comparaciones y 109 desplazamientos
+>* Resultado: Array correctamente ordenado de menor a mayor
+>* Verificación: Confirmado que el ordenamiento es correcto
 >
 >**Ventajas del Insertion Sort mostradas:**
 >
->- Eficiente para arrays pequeños o parcialmente ordenados
->- Algoritmo estable (mantiene el orden relativo de elementos iguales)
->- Algoritmo in-place (requiere solo O(1) memoria adicional)
->- Adaptativo: mejor rendimiento en arrays ya parcialmente ordenados
+>* Eficiente para arrays pequeños o parcialmente ordenados
+>* Algoritmo estable (mantiene el orden relativo de elementos iguales)
+>* Algoritmo in-place (requiere solo O(1) memoria adicional)
+>* Adaptativo: mejor rendimiento en arrays ya parcialmente ordenados
 >
 >La función `insertionSort()` está completamente implementada y funcional, mostrando de manera educativa cómo opera este algoritmo de ordenamiento que simula la forma natural de ordenar cartas en la mano.
 >
@@ -678,7 +703,7 @@ function main() {
 5. Llevo la mitad del arreglo derecho a `right`: </br> `let right = arr.filter((x) => x > pivot);`
 6. Devuelvo valores haciendo recursividad a la función `quickSort()`: </br> `return [...quickSort(left), pivot, ...quickSort(right)];`
 7. Llamo la función `quickSort()` con el parámetro `arrayBase`: </br> `const arrayOrdenado = quickSort(arrayBase);`
-8. Muestro el arreglo ordenado (_aunque con errores_): </br> `console.log('✅ Array Ordenado: [' + arrayOrdenado + ']'); `
+8. Muestro el arreglo ordenado (_aunque con errores_): </br> `console.log('✅ Array Ordenado: [' + arrayOrdenado + ']');`
 
 
 ## 07. Listas enlazadas conla _class_ `Node`. </br> **`07-linkedList.js`**
@@ -810,4 +835,162 @@ list.print();
 6
 ```
 
+>[!TIP]
+>
+>### Utilidad para verificar si el arreglo está ordenado
+>
+> 1. Creo el archivo **`utils\verifySorted.ts`**.
+> 2. Hago una función exportable tipo flecha de nombre `verificarArrayOrdenado()`.
+> 3. El arreglo recibido usamos el método `every`, que tiene esta estructura: </br></br>
+> `(method) Array<any>.every(predicate: (value: any, index: number, array: any[]) => unknown, thisArg?: any): boolean (+1 overload)`</br></br>
+> Determina si todos los miembros de una matriz satisfacen la prueba especificada.</br></br>
+>`@param predicate`</br>
+> Una función que acepta hasta tres argumentos. El método every llama a la función de predicado para cada elemento del array hasta que este devuelva un valor que pueda convertirse al valor booleano falso o hasta el final del array.</br></br>
+>`@param thisArg`</br>
+> Un objeto al que la palabra clave "`this`" puede referirse en la función de predicado. Si se omite "`thisArg`", se usa "`undefined`" como valor de "`this`".
+>
+> 4. Usamos en la función _callback_, los valores de `val`, `i` y `arr`.
+> 5. Recorremos el `arr` con estas condiciones: El índice `i` es estricto igual a `0` `OR` </br> El `arr` en la posición anterior o `arr[i - 1]` es menor o igual al valor actual o `val`.
+> 6. Este sería el resultado del método `verificarArrayOrdenado` y el uso de `every`:
+> ```js
+>// @ts-check
+>
+>// Función para verificar si un array está ordenado de menor a mayor
+>export const verificarArrayOrdenado = (arr: Array<any>) => {
+>    const estaOrdenado = arr.every((val: any, i: number, arr: any[]) => i === 0 || arr[i - 1] <= val);
+>  console.log(
+>  `\n🔍 Verificación: El array ${estaOrdenado ? 'SÍ' : 'NO'} está correctamente ordenado.`
+>);
+> ```
+> 7. Importamos la función donde se usa el `every` y reemplazamos con la función `verificarArrayOrdenado`.
+>
+
+## 08. Ordenar un arreglo usando las funciones propias de `JavaScript` </br> **`08-arraySort.js`**
+
+1. Importamos los métodos `verificarArrayOrdenado` y `generarNumeroAleatorio`, luego definimos la constante `CANTIDAD`:
+```js
+const { generarNumeroAleatorio } = require('./utils/randomArray.js');
+const { verificarArrayOrdenado } = require('./utils/verifySorted.ts');
+
+const CANTIDAD = 20;
+```
+2. Creamos la constante `arrayAleatorio` usando el tipo especial de objeto `Array`, con el método `from()`, indicando la longitud `length`, cargando en un _callback_ el valor de la función `generarNumeroAleatorio()`:
+```js
+// Crear un array con `CANTIDAD` números aleatorios
+const arrayAleatorio = Array.from({ length: CANTIDAD }, () =>
+  generarNumeroAleatorio()
+);
+```
+3. Muestro el arreglo original:
+```js
+console.log(`📊 Array Original: [${arrayAleatorio.join(', ')}]`);
+```
+4. Hago el ordenamiento con los métodos `slice()` y luego `sort()`, con dos valores en el _callback_ `a` y `b`, restando `a - b`, los llevo a la constante `arrayOrdenado`:
+```js
+const arrayOrdenado = arrayAleatorio.slice().sort((a, b) => a - b);
+```
+5. Muestro el array ordenado
+```js
+console.log(`✅ Array Ordenado: [${arrayOrdenado.join(', ')}]`);
+```
+6. Verifico con la función importada `verificarArrayOrdenado` .
+
+
+## 09. Generar la secuencia de Fibonacci. </br> **`10-pascalTriangle.js`**
+
+>[!NOTE]
+>
+>**Funcionalidad implementada:**
+>
+>* Captura de entrada por pantalla para solicitar la cantidad de números de Fibonacci
+>* Dos métodos de generación: iterativo y recursivo
+>* Validación de entrada (números enteros no negativos)
+>* Medición de tiempo de ejecución para comparar rendimiento
+>* Información matemática detallada sobre la secuencia
+>
+>**Características del programa:**
+>
+>* **Método iterativo**: Eficiente O(n), genera la secuencia >completa
+>* **Método recursivo**: Para comparación educativa, limitado a n ≤ 35 por su complejidad O(2^n)
+>* Muestra propiedades matemáticas como suma total y aproximación a la razón áurea (φ)
+>* Información educativa sobre Fibonacci y sus aplicaciones en la naturaleza
+>
+>**Resultado de las pruebas:**
+>
+>* Entrada: 10 números de Fibonacci
+>* Secuencia generada: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+>* Suma total: 88
+>* Razón áurea aproximada: 1.619048 (muy cercana a φ ≈ 1.618034)
+>* Comparación de rendimiento: método recursivo ~2.17x más lento que el iterativo
+>
+>**Características educativas:**
+>
+>* Explica la fórmula matemática F(n) = F(n-1) + F(n-2)
+>* Muestra la diferencia de complejidad entre métodos iterativo y recursivo
+>* Incluye información sobre aplicaciones en la naturaleza
+>* Calcula y muestra la aproximación a la razón áurea para secuencias largas
+>
+>**Validaciones incluidas:**
+>
+>* Manejo de entradas inválidas (no números, números negativos)
+>* Caso especial para cantidad = 0
+>* Limitación inteligente del método recursivo para evitar tiempos excesivos
+>
+>El programa es completamente funcional y educativo, mostrando tanto la implementación práctica como las propiedades matemáticas fascinantes de la secuencia de Fibonacci.
+>
+
+
+## 10. Triángulo de Pascal. </br> **`10-pascalTriangle.js`**
+
+>[!NOTE]
+>
+>**Funcionalidad implementada:**
+>
+>* Captura de entrada por pantalla para solicitar el número de filas del triángulo
+>* Generación del triángulo de Pascal usando coeficientes binomiales
+>* Dos formatos de visualización: visual (para triángulos pequeños ≤15 filas) y tabular
+>* Validación completa del triángulo generado
+>* Análisis de propiedades matemáticas
+>
+>**Características del programa:**
+>
+>* **Cálculo eficiente**: Usa la fórmula optimizada de coeficientes binomiales C(n,k)
+>* **Formato visual**: Muestra el triángulo centrado y alineado para números pequeños
+>* **Formato tabular**: Lista cada fila con su índice para mejor legibilidad
+>* **Validación automática**: Verifica simetría, número de elementos y sumas de filas
+>* **Propiedades matemáticas**: Muestra sumas de filas (potencias de 2) y números triangulares
+>
+>**Resultado de las pruebas:**
+>
+>* Entrada: 20 filas del triángulo de Pascal
+>* Generación exitosa de todas las filas desde la 0 hasta la 19
+>* Validación completa: ✅ Triángulo válido y correcto
+>* Tiempo de generación: ~0.14 ms (muy eficiente)
+>* Total de elementos: 210 números generados
+>
+>**Propiedades matemáticas verificadas:**
+>
+>* Cada fila es perfectamente simétrica
+>* Suma de la fila n = 2^n (potencias de 2)
+>* Elementos representan coeficientes binomiales C(n,k)
+>* Números triangulares en la diagonal izquierda
+>* Cada elemento es la suma de los dos elementos superiores
+>
+>**Características educativas:**
+>
+>* Información histórica sobre Blaise Pascal
+>* Explicación de las propiedades matemáticas
+>* Aplicaciones en combinatoria, probabilidad y álgebra
+>* Relación con expansiones binomiales (a+b)^n
+>* Conexión con secuencias famosas (Fibonacci, números triangulares)
+>
+>**Validaciones incluidas:**
+>
+>* Manejo de entradas inválidas (no números, números negativos)
+>* Caso especial para 0 filas
+>* Advertencia para números grandes (>20 filas)
+>* Verificación automática de la correctitud del triángulo
+>
+>El programa es completamente funcional, educativo y robusto, proporcionando una herramienta completa para generar y estudiar el triángulo de Pascal con sus fascinantes propiedades matemáticas.
+>
 
