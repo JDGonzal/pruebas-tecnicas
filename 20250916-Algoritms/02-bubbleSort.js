@@ -1,6 +1,7 @@
 // Algoritmo de ordenamiento Bubble Sort
 console.log('=== Algoritmo de Ordenamiento Burbuja (Bubble Sort) ===');
 const { crearArrayAleatorio } = require('./utils/randomArray.js');
+const { verificarArrayOrdenado } = require('./utils/verifySorted.ts');
 
 const CANTIDAD = 20;
 
@@ -74,14 +75,7 @@ function main() {
   // console.log(`✅ Array Ordenado: [${arrayOrdenado}]`);
 
   // Verificar que el ordenamiento es correcto
-  const estaOrdenado = arrayOrdenado.every(
-    (val, i, arr) => i === 0 || arr[i - 1] <= val
-  );
-  console.log(
-    `\n🔍 Verificación: El array ${
-      estaOrdenado ? 'SÍ' : 'NO'
-    } está correctamente ordenado.`
-  );
+  verificarArrayOrdenado(arrayOrdenado);
 }
 
 // Ejecutar el programa
