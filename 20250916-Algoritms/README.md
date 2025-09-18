@@ -850,7 +850,7 @@ list.print();
 > Un objeto al que la palabra clave "`this`" puede referirse en la función de predicado. Si se omite "`thisArg`", se usa "`undefined`" como valor de "`this`".
 >
 > 4. Usamos en la función _callback_, los valores de `val`, `i` y `arr`.
-> 5. Recorremos el `arr` con estas condiciones: El índice `i` es estricto igual a `0` `OR` </br> El `arr` en la posición anterior o `arr[i - 1]` es menor o igual al valor actual o `val`.
+> 5. Recorremos el `arr` con estas condiciones: El índice `i` es estricto igual a `0` _OR_ </br> El `arr` en la posición anterior o `arr[i - 1]` es menor o igual al valor actual o `val`.
 > 6. Este sería el resultado del método `verificarArrayOrdenado` y el uso de `every`:
 > ```js
 >// @ts-check
@@ -896,7 +896,7 @@ console.log(`✅ Array Ordenado: [${arrayOrdenado.join(', ')}]`);
 6. Verifico con la función importada `verificarArrayOrdenado` .
 
 
-## 09. Generar la secuencia de Fibonacci. </br> **`10-pascalTriangle.js`**
+## 09. Generar la secuencia de Fibonacci. </br> **`09-fibonacci.js`**
 
 >[!NOTE]
 >
@@ -939,6 +939,134 @@ console.log(`✅ Array Ordenado: [${arrayOrdenado.join(', ')}]`);
 >El programa es completamente funcional y educativo, mostrando tanto la implementación práctica como las propiedades matemáticas fascinantes de la secuencia de Fibonacci.
 >
 
+1. Importamos a `readLine`, para leer mas adelante un dato por pantalla, lo que requiere definir una constante, en este caso `rl`, como una `createInterface` y mas abajo se usará en la función `procesarFibonacci()`, usando el método `question()`, con el mensaje y el _callback_:
+```js
+const readline = require('readline');
+
+// Crear interfaz para leer entrada del usuario
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+// Función principal para procesar la entrada del usuario
+function procesarFibonacci() {
+  rl.question(
+    'Ingresa la cantidad de números de Fibonacci a generar: ',
+    (respuesta) => {
+      const cantidad = parseInt(respuesta);
+  }
+}
+```
+2. Tenemos dos métodos, hacer el proceso con _iteración_ o con _recursividad_, empecemos con _iteración_ en la función `fibonacciIterativo(n)`, validando los tres primeros valores: `0`, `1`, y `2`:
+```js
+// Función para generar la secuencia de Fibonacci (método iterativo)
+function fibonacciIterativo(n) {
+  if (n <= 0) return [];
+  if (n === 1) return [0];
+  if (n === 2) return [0, 1];
+}
+```
+3. Ahora si el proceso para valores mayores a `2`: </br>» Creando una constante `secuencia` de tipo arreglo inicializado con `[0, 1]`, </br> » Luego un ciclo _for_, </br>» Para al final retornar esta `secuencia`:
+```js
+  const secuencia = [0, 1];
+
+  for (let i = 2; i < n; i++) {
+    const siguiente = secuencia[i - 1] + secuencia[i - 2];
+    secuencia.push(siguiente);
+  }
+
+  return secuencia;
+```
+4. Luego probemos con la función con _recursividad_ de nombre `fibonacciRecursivo(n)` y empezamos igual al enterior, para valores `0`, `1`, y `2`:
+```js
+function fibonacciRecursivo(n) {
+  if (n <= 0) return 0;
+  if (n === 1) return 0;
+  if (n === 2) return 1;
+}
+```
+5. Ahora si hacemos la _recursividad_, en una línea con retornando la llamada a la misma función `fibonacciRecursivo()` sumando dos elementos:
+```js
+  return fibonacciRecursivo(n - 1) + fibonacciRecursivo(n - 2);
+```
+6. Creamos la función `secuenciaFibonacciRecursiva(cantidad)` que va a llamar a `fibonacciRecursivo()`: </br> » Creamos el arreglo `secuencia` vacío, </br> » Ahora si el ciclo _for_ desde `1`, hasta que sea menor o igual a `cantidad`, </br> » El ciclo es haciendo `push` de lo arrojado de `fibonacciRecursivo(i)` </br>» Retornamos el arreglo `secuencia`:
+```js
+// Función para generar secuencia usando recursión
+function secuenciaFibonacciRecursiva(cantidad) {
+  const secuencia = [];
+  for (let i = 1; i <= cantidad; i++) {
+    secuencia.push(fibonacciRecursivo(i));
+  }
+  return secuencia;
+}
+```
+7. El proceso principal es `procesarFibonacci()`, que ya vimos tiene `rl.question` y la asignación a `cantidad`:
+```js
+function procesarFibonacci() {
+  rl.question(
+    'Ingresa la cantidad de números de Fibonacci a generar: ',
+    (respuesta) => {
+      const cantidad = parseInt(respuesta);
+  }
+}
+```
+8. Validamos que lo leído por pantalla sea número, positivo y mayor a cero:
+```js
+      // Validar entrada
+      if (isNaN(cantidad) || cantidad < 0) {
+        console.log('❌ Error: Debes ingresar un número entero no negativo.');
+        rl.close();
+        return;
+      }
+
+      if (cantidad === 0) {
+        console.log('📊 Secuencia vacía para cantidad = 0');
+        rl.close();
+        return;
+      }
+```
+9. Dentro del _callback_ de `rl.question` llamamos cada uno de los dos métodos: </br> » `fibonacciIterativo(cantidad);` </br> » `secuenciaFibonacciRecursiva(cantidad);` </br> Para ambos antes y después, cargamos dos variables para hallar la diferencia y ver el tiempo usado para cada proceso:
+```js
+      const inicioIterativo = performance.now();
+      const secuenciaIterativa = fibonacciIterativo(cantidad);
+      const finIterativo = performance.now();
+      const tiempoIterativo = finIterativo - inicioIterativo;
+```
+```js
+      // Método recursivo (solo para números pequeños debido a la complejidad exponencial)
+      if (cantidad <= 35) {
+        const inicioRecursivo = performance.now();
+        const secuenciaRecursiva = secuenciaFibonacciRecursiva(cantidad);
+        const finRecursivo = performance.now();
+        const tiempoRecursivo = finRecursivo - inicioRecursivo;
+      }
+```
+10. A modo de estadísticas vemos la diferencia entre cada proceso a nivel de tiempo:
+```js
+        // Comparación de rendimiento
+        console.log('\n⚡ Comparación de rendimiento:');
+        console.log(`Método iterativo: ${tiempoIterativo.toFixed(4)} ms`);
+        console.log(`Método recursivo: ${tiempoRecursivo.toFixed(4)} ms`);
+        console.log(
+          `Diferencia: ${(tiempoRecursivo / tiempoIterativo).toFixed(
+            2
+          )}x más lento el recursivo`
+        );
+```
+11. Hay mas validaciones a nivel académico y la sugerencia de que el método `secuenciaFibonacciRecursiva()`, solo se puede procesar si la `cantidad` es menor o igual a `35`.
+12. Se cierra el `rl`
+```js
+      rl.close();
+```
+13. Mostramo el resultado:
+```js
+      // mostrar la secuencia
+      console.log('Secuencia:', secuenciaIterativa);
+      console.log(`Tiempo de ejecución: ${tiempoIterativo.toFixed(4)} ms`);
+
+```
+14. Llamamos la función principal: </br> `procesarFibonacci();`
 
 ## 10. Triángulo de Pascal. </br> **`10-pascalTriangle.js`**
 
@@ -993,4 +1121,122 @@ console.log(`✅ Array Ordenado: [${arrayOrdenado.join(', ')}]`);
 >
 >El programa es completamente funcional, educativo y robusto, proporcionando una herramienta completa para generar y estudiar el triángulo de Pascal con sus fascinantes propiedades matemáticas.
 >
+
+1. Importamos a `readLine`, para leer mas adelante un dato por pantalla, lo que requiere definir una constante, en este caso `rl`, como una `createInterface` y mas abajo se usará en la función `procesarTrianguloPascal()`, usando el método `question()`, con el mensaje y el _callback_:
+```js
+const readline = require('readline');
+
+// Crear interfaz para leer entrada del usuario
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+// Función principal para procesar la entrada del usuario
+function procesarTrianguloPascal() {
+  rl.question(
+    'Ingresa el número de filas del triángulo de Pascal a generar: ',
+    (respuesta) => {
+      const numFilas = parseInt(respuesta);
+  }
+}
+```
+2. Empezamos con el método `generarTrianguloPascal(numFilas)`: </br> » Creamo la constante `triangulo` como un arreglo vacío, </br> » El ciclo _for_ para cargar el arreglo `triangulo`, llamando la función, por crear, `generarFila(i)`, </br> » Y luego retornar el `triangulo`:
+```js
+// Función para generar el triángulo de Pascal completo
+function generarTrianguloPascal(numFilas) {
+  const triangulo = [];
+  for (let i = 0; i < numFilas; i++) {
+    triangulo.push(generarFila(i));
+  }
+  return triangulo;
+}
+```
+3. Vamos a crear la función `generarFila(numeroFila)`, </br> » Creamos la constante `fila` como un arreglo vacío, </br> » Hacemos un ciclo _for_ hasta que sea menor o igual a `numeroFila`, </br> » Cargamos el arreglo `fila` con la función `coeficienteBinomial(numeroFila, k)`, por crear, </br> » Al final retornamos la `fila`:
+```js
+// Función para generar una fila del triángulo de Pascal
+function generarFila(numeroFila) {
+  const fila = [];
+  for (let k = 0; k <= numeroFila; k++) {
+    fila.push(coeficienteBinomial(numeroFila, k));
+  }
+  return fila;
+}
+```
+4. Ahora si la función mas compleja `coeficienteBinomial(n, k)`, lo primero es si el valor de `k` es exactamente igual a `0` _OR_ `k` es exactamente igual a `n`, retornamos `1`:
+```js
+  if (k === 0 || k === n) return 1;
+```
+5. Si `k` es mayor a `n`, retornamos `0`:
+```js
+  if (k > n) return 0;
+```
+6. Optimización: usar la propiedad `C(n, k) = C(n, n-k)`:
+```js
+  if (k > n - k) k = n - k;
+```
+7. Inicializamos la variable `resultado` en `1`:
+```js
+  let resultado = 1;
+```
+8. En este ciclo _for_, la fórmula es: </br> » El `resultado` por `(n - i)` </br> » Y ese valor lo divido entre `(i + 1)`:
+```js
+  for (let i = 0; i < k; i++) {
+    resultado = (resultado * (n - i)) / (i + 1);
+  }
+```
+9. Por último de este método `coeficienteBinomial()`, retornamos el `resultado`, redondeado:
+```js
+  return Math.round(resultado);
+```
+10. La función que se hizo en el paso 1, y dentro del _callback_ de `rl.question`, va la validación que el datos recibido por pantalla sea un número, mayor a `0` y ojalá menor a `20`:
+```js
+function procesarTrianguloPascal() {
+  rl.question(
+    'Ingresa el número de filas del triángulo de Pascal a generar: ',
+    (respuesta) => {
+      const numFilas = parseInt(respuesta);
+
+      // Validar entrada
+      if (isNaN(numFilas) || numFilas < 0) {
+        console.log('❌ Error: Debes ingresar un número entero no negativo.');
+        rl.close();
+        return;
+      }
+
+      if (numFilas === 0) {
+        console.log('📊 Triángulo vacío para 0 filas');
+        rl.close();
+        return;
+      }
+
+      if (numFilas > 20) {
+        console.log(
+          '⚠️  Advertencia: Números grandes pueden ser difíciles de visualizar'
+        );
+      }
+    }
+}
+```
+11. Llamamos la función `generarTrianguloPascal(numFilas)`, cargando la constante `triangulo`, solo por estadísticas , cargamos un `inicio` y `fin`, dar la diferencia:
+```js
+      // Generar el triángulo
+      const inicio = performance.now();
+      const triangulo = generarTrianguloPascal(numFilas);
+      const fin = performance.now();
+      const tiempoEjecucion = fin - inicio;
+```
+12. En un ciclo simple recorremos el arreglo y lo mostramos por pantalla, cada fila es otro arreglo, adicional podemos mostrar el tiempo utilizado:
+```js
+      // Ciclo simple para mostrar el triangulo
+      for (let i = 0; i < triangulo.length; i++) {
+        console.log(`Fila ${i}: [${triangulo[i]}]`);
+      }
+      console.log(`Tiempo de ejecución: ${tiempoEjecucion.toFixed(4)} ms`);
+```
+13. Se cierra el `rl`
+```js
+      rl.close();
+```
+14. Llamamos la función principal: </br> `procesarTrianguloPascal();`
 
