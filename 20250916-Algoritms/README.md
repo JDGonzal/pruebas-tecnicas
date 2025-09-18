@@ -1,5 +1,19 @@
 # Simples ejercicios para recordar uso de algoritmos
 
+## Indice
+
+0. [Conceptos y notaciones fundamentales de la Big O Notation](#conceptos-y-notaciones-fundamentales-de-la-big-o-notation)
+1. [01-createarray.js](#01-generar-un-arreglo-de-n-elementos-y-guardar-en-un-archivo--01-createarrayjs)
+2. [02-bubblesort.js](#02-ordenar-un-arreglo-por-tipo-burbuja-o-burbble-02-bubblesortjs)
+3. [03-selectionsort.js](#03-ordenar-un-arreglo-por-tipo-selección-o-selection-03-selectionsortjs)
+4. [04-insertionsort.js](#04-ordenar-un-arreglo-por-tipo-inserción-o-insertion--04-insertionsortjs)
+5. [05-mergesort.js](#05-ordenar-un-arreglo-por-tipo-mezcla-o-merge--05-mergesortjs)
+6. [06-mergesort.js](#06-repetir-el-ejercicio-de-mezcla-o-merge--06-mergesortjs)
+7. [07-linkedlist.js](#07-listas-enlazadas-conla-class-node--07-linkedlistjs)
+8. [08-arraysort.js](#08-ordenar-un-arreglo-usando-las-funciones-propias-de-javascript--08-arraysortjs)
+9. [09-fibonacci.js](#09-generar-la-secuencia-de-fibonacci--09-fibonaccijs)
+10. [10-pascaltriangle.js](#10-triángulo-de-pascal--10-pascaltrianglejs)
+
 >[!IMPORTANT]
 >
 >## Conceptos y notaciones fundamentales de la Big O Notation
