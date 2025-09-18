@@ -3,20 +3,25 @@
 ## Indice
 
 0. [Conceptos y notaciones fundamentales de la Big O Notation](#conceptos-y-notaciones-fundamentales-de-la-big-o-notation)
-1. [01-createarray.js](#01-generar-un-arreglo-de-n-elementos-y-guardar-en-un-archivo--01-createarrayjs)
-2. [02-bubblesort.js](#02-ordenar-un-arreglo-por-tipo-burbuja-o-burbble-02-bubblesortjs)
-3. [03-selectionsort.js](#03-ordenar-un-arreglo-por-tipo-selección-o-selection-03-selectionsortjs)
-4. [04-insertionsort.js](#04-ordenar-un-arreglo-por-tipo-inserción-o-insertion--04-insertionsortjs)
-5. [05-mergesort.js](#05-ordenar-un-arreglo-por-tipo-mezcla-o-merge--05-mergesortjs)
-6. [06-mergesort.js](#06-repetir-el-ejercicio-de-mezcla-o-merge--06-mergesortjs)
-7. [07-linkedlist.js](#07-listas-enlazadas-conla-class-node--07-linkedlistjs)
-8. [08-arraysort.js](#08-ordenar-un-arreglo-usando-las-funciones-propias-de-javascript--08-arraysortjs)
+1. [01-createArray.js](#01-generar-un-arreglo-de-n-elementos-y-guardar-en-un-archivo--01-createarrayjs)
+2. [02-bubbleSort.js](#02-ordenar-un-arreglo-por-tipo-burbuja-o-burbble-02-bubblesortjs)
+3. [03-selectionSort.js](#03-ordenar-un-arreglo-por-tipo-selección-o-selection-03-selectionsortjs)
+4. [04-insertionSort.js](#04-ordenar-un-arreglo-por-tipo-inserción-o-insertion--04-insertionsortjs)
+5. [05-mergeSort.js](#05-ordenar-un-arreglo-por-tipo-mezcla-o-merge--05-mergesortjs)
+6. [06-mergeSort.js](#06-repetir-el-ejercicio-de-mezcla-o-merge--06-mergesortjs)
+7. [07-linkedList.js](#07-listas-enlazadas-conla-class-node--07-linkedlistjs)
+8. [08-arraySort.js](#08-ordenar-un-arreglo-usando-las-funciones-propias-de-javascript--08-arraysortjs)
 9. [09-fibonacci.js](#09-generar-la-secuencia-de-fibonacci--09-fibonaccijs)
-10. [10-pascaltriangle.js](#10-triángulo-de-pascal--10-pascaltrianglejs)
+10. [10-pascalTriangle.js](#10-triángulo-de-pascal--10-pascaltrianglejs)
+11. [11-occurrenceNumber.js](#11-ocurrencias-de-caracteres-en-un-string--11-occurrencenumberjs)
+12. [12-occurrenceNumber.js](#12-ocurrencias-de-caracteres-en-un-string--12-occurrencenumberjs)
+13. [13-minInMatrix.js](#13-imprimir-el-valor-mínimo-en-un-arreglo-multi-dimensional--13-mininmatrixjs)
 
 >[!IMPORTANT]
 >
 >## Conceptos y notaciones fundamentales de la Big O Notation
+>
+>[🔙](#indice)
 >
 >No te preocupes si suena demasiado técnico o complejo al inicio. Aquí te explico paso a paso y con ejemplos, pero antes es importante comprender los conceptos básicos.
 >
@@ -40,6 +45,8 @@
 
 
 ## 01. Generar un arreglo de **n** elementos y guardar en un archivo. </br> **`01-createArray.js`**
+
+[🔙](#indice)
 
 1. Importo dos elementos:
 ```js
@@ -114,6 +121,8 @@ function guardarArray(arreglo) {
 ```
 
 ## 02. Ordenar un arreglo por tipo **Burbuja** o **Burbble**.</br> **`02-bubbleSort.js`**
+
+[🔙](#indice)
 
 >[!NOTE]
 >
@@ -259,6 +268,8 @@ main()
 
 ## 03. Ordenar un arreglo por tipo **Selección** o **Selection**.</br> **`03-selectionSort.js`**
 
+[🔙](#indice)
+
 >[!NOTE]
 >
 >**Funcionalidad implementada:**
@@ -397,6 +408,8 @@ function main() {
 
 ## 04. Ordenar un arreglo por tipo **Inserción** o **Insertion**. </br> **`04-insertionSort.js`**
 
+[🔙](#indice)
+
 1. Empezamos con dos funciones que son las que crean el arreglo aleatorio y una constante del número de elementos:
 ```js
 const CANTIDAD = 20;
@@ -497,6 +510,8 @@ function main() {
 
 
 ## 05. Ordenar un arreglo por tipo **Mezcla** o **Merge**. </br> **`05-mergeSort.js`**
+
+[🔙](#indice)
 
 >[!NOTE]
 >
@@ -682,6 +697,8 @@ function main() {
 >
 >### Crear una utilidad para tener un arreglo aleatorio
 >
+>[🔙](#indice)
+>
 > 1. Creo la carpeta **"utils"**
 > 2. Dentro creo el archivo **`randomArray.js`**.
 > 3. Con este código:
@@ -709,6 +726,7 @@ function main() {
 
 ## 06. Repetir el ejercicio de **Mezcla** o **Merge**. </br> **`06-mergeSort.js`**
 
+[🔙](#indice)
 
 1. Obtengo un arreglo aleatorio, llamando la función de `utils` de nombre `crearArrayAleatorio()` , dentro de `arrayBase`: </br> `const arrayBase = crearArrayAleatorio(CANTIDAD);`
 2. En la función `quickSort()` con el parámetro de un arreglo: </br> `function quickSort(arr) {`</br>`}`
@@ -721,6 +739,8 @@ function main() {
 
 
 ## 07. Listas enlazadas conla _class_ `Node`. </br> **`07-linkedList.js`**
+
+[🔙](#indice)
 
 1. creo una _class_ para estructurar de nombre `Node`, este con un `constructor` que recibe un `value` y dos atributos, el valor `actual` y el `nextTo`:
 ```js
@@ -853,6 +873,8 @@ list.print();
 >
 >### Utilidad para verificar si el arreglo está ordenado
 >
+>[🔙](#indice)
+>
 > 1. Creo el archivo **`utils\verifySorted.ts`**.
 > 2. Hago una función exportable tipo flecha de nombre `verificarArrayOrdenado()`.
 > 3. El arreglo recibido usamos el método `every`, que tiene esta estructura: </br></br>
@@ -880,6 +902,8 @@ list.print();
 >
 
 ## 08. Ordenar un arreglo usando las funciones propias de `JavaScript` </br> **`08-arraySort.js`**
+
+[🔙](#indice)
 
 1. Importamos los métodos `verificarArrayOrdenado` y `generarNumeroAleatorio`, luego definimos la constante `CANTIDAD`:
 ```js
@@ -911,6 +935,8 @@ console.log(`✅ Array Ordenado: [${arrayOrdenado.join(', ')}]`);
 
 
 ## 09. Generar la secuencia de Fibonacci. </br> **`09-fibonacci.js`**
+
+[🔙](#indice)
 
 >[!NOTE]
 >
@@ -1084,6 +1110,8 @@ function procesarFibonacci() {
 
 ## 10. Triángulo de Pascal. </br> **`10-pascalTriangle.js`**
 
+[🔙](#indice)
+
 >[!NOTE]
 >
 >**Funcionalidad implementada:**
@@ -1253,4 +1281,171 @@ function procesarTrianguloPascal() {
       rl.close();
 ```
 14. Llamamos la función principal: </br> `procesarTrianguloPascal();`
+
+
+## 11. Ocurrencias de caracteres en un string </br> **`11-occurrenceNumber.js`**
+
+[🔙](#indice)
+
+0. Dado esta entrada `aabcbabcacbabce`, obtener esta salida `a5b5c4e1`
+1. Defino la constante `str`:
+```js
+const input = 'aabcbabcacbabce';
+console.log('Input:text: ', input);
+```
+2. Ordeno el `input`, dentro de `sort`:
+```js
+const sort = input.split('').sort().join('');
+console.log('Sorted text:', sort);
+```
+3. Dos arrays, uno para `char` y otro para `count`, luego el índice para estos arreglos `k`:
+```js
+let char = [sort[0]];
+let count = [0];
+let k = 0;
+```
+4. Ciclo para recorrer las ocurrencias:
+```ja
+for (let i = 0; i < sort.length; i++) {
+```
+5. Si el caracter actual o `sort[i]` es igual al caracter siguiente o `sort[i + 1]` _OR_ no hay caracteres después `!sort[i + 1]`, asigno a `k` el largo de `char`:
+```js
+  if (sort[i] === sort[i + 1] || !sort[i + 1]) {
+    k = char.length - 1;
+  }
+```
+6. En caso contrario, cargo los arreglos `char` y `count` con un nuevo elemento:
+```js
+  else {
+    char.push(sort[i + 1]);
+    count.push(0);
+  }
+```
+7. Incremento el valor en la posición `k`, para el arreglo `count` y cierro el ciclo:
+```js
+  // 07. Increment the count of the current char
+  count[k]++;
+}
+```
+8. Creo el string `output`:
+```js
+let output = '';
+```
+9. Ciclo _for_ , con el límite de los arreglos, ya se de `char` o `count`, y lleno `output`, con los valores de estos arreglos:
+```js
+for (let i = 0; i < char.length; i++) {
+  output = output + char[i] + count[i];
+}
+```
+10. Muestro los resultados de `output`
+```js
+console.log(output);
+```
+
+
+## 12. Ocurrencias de caracteres en un string </br> **`12-occurrenceNumber.js`**
+
+[🔙](#indice)
+
+0. Dado esta entrada `aabcbabcacbabce`, obtener esta salida `a5b5c4e1`
+1. Defino la constante `input` y la muestro:
+```js
+const input = 'aabcbabcacbabce';
+console.log(`Input: ${input}`);
+```
+2. Organizo la `input` en `sorted` y la muestro:
+```js
+const sorted = input.split('').sort().join('');
+console.log(`Sorted: ${sorted}`);
+```
+3. Creo la función `countOccurrences(str)`, para contar las ocurrencias:
+```js
+function countOccurrences(str) {}
+```
+4. En esta función defino el objeto `ocurrences`:
+```js
+  const occurrences = {};
+```
+5. Hago un ciclo `for` para recorrer el string, tomando `char of str`, cargo el objeto con la _key_ `char` y el _value_ del objeto es el valor actual _OR_ `0` y luego `+ 1`:
+```js
+  for (const char of str) {
+    occurrences[char] = (occurrences[char] || 0) + 1;
+  }
+```
+6. Muestro el objeto `ocurrences` y retorno este valor:
+```js
+  console.log('Object:', occurrences);
+  // Occurrences object:{ a: 5, b: 5, c: 4, e: 1 }
+  return occurrences;
+```
+7. Hago la función `formatOccurrences`, que va a retornar el objeto convertido en un simple string, con el formato requerido:
+```js
+function formatOccurrences(occurrences) {
+  return Object.entries(occurrences)
+    .map(([char, count]) => `${char}${count}`)
+    .join('');
+}
+```
+8. Llamo las funciones para contar las ocurrencias y llevar a `ocurrences` y luego cargar el valor con formato a `output`:
+```js
+const occurrences = countOccurrences(sorted);
+const output = formatOccurrences(occurrences);
+```
+9. Muestro la variable `output` con el resultado esperado:
+```js
+console.log(`Output: ${output}`);
+```
+10. Este es el resultado esperado:
+```yml
+=== Count the Number of Occurrences ===
+Input : aabcbabcacbabce
+Sorted: aaaaabbbbbcccce
+Object: { a: 5, b: 5, c: 4, e: 1 }
+Output: a5b5c4e1
+```
+
+## 13. Imprimir el valor mínimo en un arreglo multi-dimensional </br> **`13-minInMatrix.js`**
+
+[🔙](#indice)
+
+0. Dado un arreglo que puede ser esta entrada </br> `2 5 8`</br> `2 7 4` </br> `5 6 1`, obtener esta respuesta `1`
+1. Defino el arreglo a trabajar:
+```js
+const array = [
+  [2, 5, 8],
+  [2, 7, 4],
+  [5, 6, 1],
+];
+```
+2. Empiezo la función para imprimir el valor mínimo:
+```js
+function printMin(str) {
+}
+```
+3. Inicializo la variable a comparar con el valor maximo:
+```js
+  let min = 999;
+```
+4. Empiezo un ciclo `for`, para recorrer las filas, es el ciclo MAYOR:
+```js
+  for (let i = 0; i < str.length; i++) {
+
+  }
+```
+5. Ciclo para recorrer las columnas en cada fila:
+```js
+    for (let j = 0; j < str[1].length; j++) {
+
+    }
+```
+6. Con un condicional hallo el elemento mas pequeño:
+```js
+      if (str[i][j] < min) min = str[i][j];
+```
+7. Muestro el valor final en pantalla:
+```js
+  console.log('Min value is: ', min);
+```
+8. Llamo la función `printMin(array)`
+9. El resultado esperado es : </br> `Min value is:  1`
 
